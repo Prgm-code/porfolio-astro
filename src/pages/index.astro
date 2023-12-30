@@ -1,0 +1,59 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
+import Badge from "../components/Badge.astro";
+import GitHubIcon from "../icons/GitHub.astro";
+import LinkedInIcon from "../icons/LinkedIn.astro";
+import SocialPill from "../components/SocialPill.astro";
+import MailIcon from "../icons/Mail.astro";
+---
+
+<Layout
+  title="Portfolio de Patricio Gómez Meneses - Desarrollador y Programador Web"
+  description="Desarrollador y Programador Web, Ingeniero Electronico & Master FullStack Web Developmet. Desde Puerto Montt Chile 🇨🇱, creando aplicaciones y soluciones web modernas. Especializado en el uso de de Frameworks modernos con JavaScript."
+>
+  <main>
+    <section class="w-full mx-auto lg:w-[740px] py-44">
+      <img
+        class="rounded-full w-24 h-24 mb-4"
+        src="https://lh3.googleusercontent.com/a/ACg8ocIf0myyzMZRN1n-QDW78FORANENdNp9Ck9TdAKOWsECzw=s96-c"
+        alt="profile photo"
+      />
+      <h1 class="text-white text-5xl font-bold flex flex-row gap-x-4 pb-10">
+        Hey, soy Patricio<a
+          href="https://www.linkedin.com/in/prgm/"
+          target="_blank"
+          rel="noopener"
+          class="flex justify-center items-center"
+        >
+          <Badge>Disponible para trabajar</Badge>
+        </a>
+      </h1>
+      <h2 class="text-2xl text-wrap">
+        <span>Ingeniero Electronico & Master FullStack Web Developmet.</span>
+        <span class="text-yellow-200/90"
+          >Desde Puerto Montt Chile 🇨🇱, creando aplicaciones y soluciones web
+          modernas.</span
+        ><span class="opacity-75">
+          Especializado en el uso de de Frameworks modernos con JavaScript.</span
+        >
+      </h2>
+      <nav class="flex gap-x-2 mt-8">
+        <SocialPill href="https://www.linkedin.com/in/prgm/">
+          <LinkedInIcon class="size-6" />
+           LinkedIn
+        </SocialPill>
+        <SocialPill href="https://www.github.com/prgm-code">
+          <GitHubIcon class="size-6" />
+           GitHub
+        </SocialPill>
+        <SocialPill href="mailto:patricio@prgmdev.com">
+          <MailIcon class="size-6" />
+           Patricio@prgmdev.com
+        </SocialPill>
+      </nav>
+    </section>
+  </main>
+
+  <style></style>
+</Layout>
