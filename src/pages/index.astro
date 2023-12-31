@@ -6,21 +6,27 @@ import GitHubIcon from "../icons/GitHub.astro";
 import LinkedInIcon from "../icons/LinkedIn.astro";
 import SocialPill from "../components/SocialPill.astro";
 import MailIcon from "../icons/Mail.astro";
+import WhatsAppIcon from "../icons/WhatsApp.astro";
+import Experience from "../components/Experience.astro";
+import SectionContainer from "../components/SectionContainer.astro";
+import Brifcase from "../icons/Brifcase.astro";
+import CodeIcon from "../icons/Code.astro";
+import Projects from "../components/Projects.astro";
 ---
 
 <Layout
   title="Porfolio de Patricio Gómez Meneses - Desarrollador y Programador Web"
   description="Desarrollador y Programador Web, Ingeniero Electronico & Master FullStack Web Developmet. Desde Puerto Montt Chile 🇨🇱, creando aplicaciones y soluciones web modernas. Especializado en el uso de de Frameworks modernos con JavaScript."
 >
-  <main>
-    <section class="w-full mx-auto lg:w-[740px] py-44">
+  <main class="px-4"> 
+    <SectionContainer class="py-40 pb-24">
       <img
         class="rounded-full w-24 h-24 mb-4"
         src="https://lh3.googleusercontent.com/a/ACg8ocIf0myyzMZRN1n-QDW78FORANENdNp9Ck9TdAKOWsECzw=s96-c"
         alt="profile photo"
       />
-      <h1 class="text-white text-5xl font-bold flex flex-row gap-x-4 pb-10">
-        Hey, soy Patricio<a
+      <h1 class="text-white text-3xl md:text-4xl lg:text-5xl font-bold flex flex-row gap-x-4 pb-6 lg:pb-10">
+        Hola, soy Patricio<a
           href="https://www.linkedin.com/in/prgm/"
           target="_blank"
           rel="noopener"
@@ -29,7 +35,7 @@ import MailIcon from "../icons/Mail.astro";
           <Badge>Disponible para trabajar</Badge>
         </a>
       </h1>
-      <h2 class="text-2xl text-wrap">
+      <h2 class="text-xl lg:text-2xl text-wrap max-w-[700px]">
         <span>Ingeniero Electronico & Master FullStack Web Developmet.</span>
         <span class="text-yellow-200/90"
           >Desde Puerto Montt Chile 🇨🇱, creando aplicaciones y soluciones web
@@ -38,22 +44,36 @@ import MailIcon from "../icons/Mail.astro";
           Especializado en el uso de de Frameworks modernos con JavaScript.</span
         >
       </h2>
-      <nav class="flex gap-x-2 mt-8">
+      <nav class="flex gap-4 mt-8 text-wrap" >
         <SocialPill href="https://www.linkedin.com/in/prgm/">
-          <LinkedInIcon class="size-6" />
+          <LinkedInIcon class="size-4 lg:size-5" />
            LinkedIn
         </SocialPill>
         <SocialPill href="https://www.github.com/prgm-code">
-          <GitHubIcon class="size-6" />
+          <GitHubIcon class="size-4 lg:size-6" />
            GitHub
         </SocialPill>
         <SocialPill href="mailto:patricio@prgmdev.com">
-          <MailIcon class="size-6" />
+          <MailIcon class="size-4 lg:size-6" />
            Patricio@prgmdev.com
         </SocialPill>
+        <SocialPill href="https://wa.me/56978146577?text=Hola%20Patricio,%20quisiera%20contactarte">
+          <WhatsAppIcon class="size-4 lg:size-6" />
+           WhatsApp
       </nav>
-    </section>
+    </SectionContainer>
+    <SectionContainer id="experiencia">
+      <h2 class="text-2xl font-semibold mb-6 flex gap-x-3 items-center">
+        <Brifcase class="size-6" />
+        Experiencia Laboral</h2>
+      <Experience />
+    </SectionContainer>
+    <SectionContainer id="proyectos">
+      <h2 class="text-2xl font-semibold mb-6 flex gap-x-3 items center">
+        <CodeIcon class="size-7" />
+        Proyectos
+      </h2>
+      <Projects />
+    </SectionContainer>
   </main>
-
-  <style></style>
 </Layout>

@@ -1,0 +1,59 @@
+---
+const PROJECTS = [
+  {
+    title: "Project 1",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor, nunc eget ultricies aliquam, nisl nisl aliquet nunc, nec aliquam nisl nisl nec nisl. Donec auctor, nunc eget ultricies aliquam, nisl nisl aliquet nunc, nec aliquam nisl nisl nec nisl.",
+    link: "#",
+    image: "https://via.placeholder.com/150",
+    tags: ["HTML", "CSS", "JavaScript"],
+  },
+  {
+    title: "Project 2",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor, nunc eget ultricies aliquam, nisl nisl aliquet nunc, nec aliquam nisl nisl nec nisl. Donec auctor, nunc eget ultricies aliquam, nisl nisl aliquet nunc, nec aliquam nisl nisl nec nisl.",
+    link: "#",
+    image: "https://via.placeholder.com/150",
+    tags: ["HTML", "CSS", "JavaScript"],
+  },
+  {
+    title: "Project 3",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor, nunc eget ultricies aliquam, nisl nisl aliquet nunc, nec aliquam nisl nisl nec nisl. Donec auctor, nunc eget ultricies aliquam, nisl nisl aliquet nunc, nec aliquam nisl nisl nec nisl.",
+    link: "#",
+    image: "https://via.placeholder.com/150",
+    tags: ["HTML", "CSS", "JavaScript"],
+  },
+  {
+    title: "Project 4",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor, nunc eget ultricies aliquam, nisl nisl aliquet nunc, nec aliquam nisl nisl nec nisl. Donec auctor, nunc eget ultricies aliquam, nisl nisl aliquet nunc, nec aliquam nisl nisl nec nisl.",
+    link: "#",
+    image: "https://via.placeholder.com/150",
+    tags: ["HTML", "CSS", "JavaScript"],
+  },
+  {
+    title: "Project 5",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor, nunc eget ultricies aliquam, nisl nisl aliquet nunc, nec aliquam nisl nisl nec nisl. Donec auctor, nunc eget ultricies aliquam, nisl nisl aliquet nunc, nec aliquam nisl nisl nec nisl.",
+    link: "#",
+    image: "https://via.placeholder.com/150",
+    tags: ["HTML", "CSS", "JavaScript"],
+  },
+];
+---
+
+{
+  PROJECTS.map(({title, description, tags, image} ) => (
+    <article>
+      <h3>{title}</h3>
+      <p>{description}</p>
+      <ul>
+        {tags.map((tag) => (
+          <li>{tag}</li>
+        ))}
+      </ul>
+      <img src={image} alt="Imagen del Projecto">
+    </article>
+  ))
+}
