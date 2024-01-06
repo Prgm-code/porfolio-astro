@@ -16,14 +16,15 @@ const { title, description } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
   <body class="">
     <div
-      class="absolute top-0 z-[-2] h-screen w-screen bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"
+      class="absolute top-0 z-[-2] md:h-screen w-screen bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"
       >
     </div>
       <Header />
@@ -50,5 +51,13 @@ const { title, description } = Astro.props;
     html {
       scroll-behavior: auto;
     }
+    
   }
+   /* Media query para pantallas menores a 500px */
+   @media (max-width: 500px) {
+        .bg-custom-gradient {
+          /* Ajusta el gradiente para que sea más alargado en pantallas pequeñas */
+          background-image: radial-gradient(ellipse 100% 200% at 50% 0%, rgba(120,119,198,0.3), rgba(255,255,255,0));
+        }
+      }
 </style>
