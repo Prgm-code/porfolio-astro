@@ -2,6 +2,7 @@
 import "@fontsource-variable/onest";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import ParticleComponentAstro from "../components/ParticlesComponent.astro";
 
 interface Props {
   title: string;
@@ -16,7 +17,7 @@ const { title, description } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
@@ -24,15 +25,32 @@ const { title, description } = Astro.props;
   </head>
   <body class="">
     <div
+      id="particles"
       class="absolute top-0 z-[-2] md:h-screen w-screen bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"
-      >
+    >
+      <ParticleComponentAstro class="bg-transparent w-full" />
     </div>
+    <div id="content">
       <Header />
       <slot />
       <Footer />
+    </div>
   </body>
 </html>
 <style is:global>
+  /* Estilo para asegurar que el texto y las imágenes no se mezclen con las partículas */
+  #particles {
+    z-index: -1000 !important; /* Importante para asegurar que las partículas queden de fondo */
+  }
+
+  /* Asegúrate de que los contenidos que no deben estar detrás de las partículas tengan un z-index mayor */
+  #content {
+    position: relative;
+    z-index: 1; /* Mayor que el de las partículas */
+  }
+
+  /* Ajustes adicionales para otros elementos según sea necesario */
+
   :root {
     color-scheme: light dark;
   }
@@ -51,13 +69,16 @@ const { title, description } = Astro.props;
     html {
       scroll-behavior: auto;
     }
-    
   }
-   /* Media query para pantallas menores a 500px */
-   @media (max-width: 500px) {
-        .bg-custom-gradient {
-          /* Ajusta el gradiente para que sea más alargado en pantallas pequeñas */
-          background-image: radial-gradient(ellipse 100% 200% at 50% 0%, rgba(120,119,198,0.3), rgba(255,255,255,0));
-        }
-      }
+  /* Media query para pantallas menores a 500px */
+  @media (max-width: 500px) {
+    .bg-custom-gradient {
+      /* Ajusta el gradiente para que sea más alargado en pantallas pequeñas */
+      background-image: radial-gradient(
+        ellipse 100% 200% at 50% 0%,
+        rgba(120, 119, 198, 0.3),
+        rgba(255, 255, 255, 0)
+      );
+    }
+  }
 </style>
