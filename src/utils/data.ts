@@ -104,14 +104,14 @@ export const EXPERIENCE = [
       title: "Application UI code in Tailwind CSS",
       description:
         "Get access to over 20+ pages including a dashboard layout, charts, kanban board, calendar, and pre-order E-commerce & Marketing pages.",
-      link: "#",
+        more: " Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit facere non vitae soluta illo commodi tempora unde facilis ex odio. Eligendi distinctio blanditiis perferendis officiis harum reprehenderit ratione aspernatur maxime.",
     },
     {
       date: "March 2022",
       title: "Marketing UI design in Figma",
       description:
         "All of the pages and components are first designed in Figma and we keep a parity between the two versions even as we update the project.",
-      link: "#",
+        more: " Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit facere non vitae soluta illo commodi tempora unde facilis ex odio. Eligendi distinctio blanditiis perferendis officiis harum reprehenderit ratione aspernatur maxime. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit facere non vitae soluta illo commodi tempora unde facilis ex odio. Eligendi distinctio blanditiis perferendis officiis harum reprehenderit ratione aspernatur maxime.",
     },
     {
       date: "April 2022",
