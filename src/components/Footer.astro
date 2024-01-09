@@ -1,32 +1,43 @@
-<footer
-  class="rounded-lg  m-4  w-full xl:w-[1120px] mx-auto mb-10 mt-10 "
->
+---
+import GithubIcon from "../icons/GitHub.astro";
+import AstroIcon from "../icons/Astro.astro";
+---
+
+<footer class="rounded-lg m-4 w-full xl:w-[1120px] mx-auto mb-10 mt-10">
   <div
     class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between opacity-80"
   >
     <span class="text-sm sm:text-center text-yellow-200/80"
-      >© 2023 <a
-        href="https://www.linkedin.com/"
+      >© 2024 <a
+        href="https://github.com/Prgm-code/"
         target="_blank"
         class="hover:underline">PRGM-Code™</a
-      >. All Rights Reserved 
-      <span class="text-indigo-200/50 hidden xl:inline">(but some rights might be negotiable over a good cup of coffee)</span>
-
+      >. All Rights Reserved
+      <span class="text-indigo-200/50 hidden xl:inline"
+        >(but some rights might be negotiable over a good cup of coffee)</span
+      >
     </span>
     <ul
       class="flex flex-wrap items-center mt-3 text-sm font-medium text-white/90 sm:mt-0"
     >
       <li>
-        <a href="#" class="hover:underline me-4 md:me-6">Sobre mí</a>
+        <a
+          href="https://astro.build/"
+          target="_blank"
+
+          class="hover:underline me-4 md:me-6 flex flex-row items-center gap-x-1"
+          >Build with <span class="flex flex-row items-center"
+            ><AstroIcon class="size-5 text-white" />astro
+          </span></a
+        >
       </li>
       <li>
-        <a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a>
-      </li>
-      <li>
-        <a href="#" class="hover:underline me-4 md:me-6">Licensing</a>
-      </li>
-      <li>
-        <a href="#" class="hover:underline">contacto</a>
+        <a
+          href="https://github.com/Prgm-code/porfolio-astro"
+          target="_blank"
+          class="hover:underline me-4 md:me-6 flex flex-row items-center gap-x-1"
+          ><GithubIcon class="size-5" />View Code</a
+        >
       </li>
     </ul>
   </div>
