@@ -18,7 +18,7 @@ import Projects from "../components/Projects.astro";
   description="Ingeniero Electrónico y Desarrollador Web Full Stack. Desde Puerto Montt, Chile 🇨🇱, diseño y desarrollo soluciones web innovadoras. Me enfoco en Frameworks de JavaScript para la creación de aplicaciones dinámicas y escalables."
 >
   <main class="px-4">
-    <SectionContainer class="py-24 pb-24">
+    <SectionContainer class="py-24 pb-24 animate" id="intro-section">
       <img
         class="rounded-full w-24 h-24 mb-4"
         src="https://lh3.googleusercontent.com/a/ACg8ocIf0myyzMZRN1n-QDW78FORANENdNp9Ck9TdAKOWsECzw=s96-c"
@@ -68,20 +68,29 @@ import Projects from "../components/Projects.astro";
           WhatsApp
         </SocialPill>
       </nav>
-      <SectionContainer id="experiencia">
-        <h2 class="text-3xl font-semibold mb-6 flex gap-x-3 items-center pt-24">
-          <Brifcase class="size-6" />
-          Experiencia Laboral
-        </h2>
-        <Experience />
-      </SectionContainer>
-      <SectionContainer id="proyectos">
-        <h2 class="text-3xl font-semibold mb-6 pt-20 flex gap-x-3 items center">
-          <CodeIcon class="size-10" />
-          Proyectos
-        </h2>
-        <Projects />
-      </SectionContainer>
+    </SectionContainer>
+    <SectionContainer id="experiencia" class="animate">
+      <h2 class="text-3xl font-semibold mb-6 flex gap-x-3 items-center pt-24">
+        <Brifcase class="size-6" />
+        Experiencia Laboral
+      </h2>
+      <Experience />
+    </SectionContainer>
+    <SectionContainer id="proyectos" class="animate">
+      <h2 class="text-3xl font-semibold mb-6 pt-20 flex gap-x-3 items-center">
+        <CodeIcon class="size-10" />
+        Proyectos
+      </h2>
+      <Projects />
     </SectionContainer>
   </main>
+  <script>
+    // JavaScript para agregar la clase 'show' después de que la página se haya cargado
+    document.addEventListener("DOMContentLoaded", () => {
+      const elements = document.querySelectorAll(".animate");
+      elements.forEach((el) => {
+        el.classList.add("show");
+      });
+    });
+  </script>
 </Layout>
