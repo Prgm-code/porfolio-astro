@@ -7,6 +7,10 @@ import HTMLIcon from "../icons/HTML.astro";
 import CSSIcon from "../icons/CSS.astro";
 import JavaScriptIcon from "../icons/JavaScript.astro";
 import NodeJSIcon from "../icons/NodeJS.astro";
+import TursoIcon from "../icons/TursoIcon.astro";
+import MongoDBIcon from "../icons/MongoDBIcon.astro";
+import HadoopIcon from "../icons/HadoopIcon.astro";
+import JupyterIcon from "../icons/JupyterIcon.astro";
 
 const TAGS = {
   NEXTJS: {
@@ -15,22 +19,24 @@ const TAGS = {
     class: "size-4",
   },
   REACT: {
-    name: ReactIcon,
+    name: "React",
+    icon: ReactIcon,
     class: "size-4",
   },
   TAILWIND: {
     name: "Tailwind CSS",
+    icon: TailwindIcon,
     class: "size-4",
   },
   TYPESCRIPT: {
     name: "TypeScript",
-    class: "size-4",
     icon: TypeScriptIcon,
+    class: "size-4",
   },
   WEBPACK: {
     name: "Webpack",
-    class: "size-4",
     icon: WebpackIcon,
+    class: "size-4",
   },
   HTML: {
     name: "HTML",
@@ -47,60 +53,88 @@ const TAGS = {
     icon: JavaScriptIcon,
     class: "size-4",
   },
-  NodeJS: {
+  NODEJS: {
     name: "Node.js",
     icon: NodeJSIcon,
+    class: "size-4",
+  },
+  TURSO: {
+    name: "TursoDB",
+    icon: TursoIcon,
+    class: "size-4",
+  },
+  MONGODB: {
+    name: "MongoDB",
+    icon: MongoDBIcon,
+    class: "size-4",
+  },
+  HADOOP: {
+    name: "Hadoop",
+    icon: HadoopIcon,
+    class: "size-4",
+  },
+  JUPYTER: {
+    name: "Jupyter",
+    icon: JupyterIcon,
     class: "size-4",
   },
 };
 
 export const PROJECTS = [
   {
-    title: "Project 1",
+    title: "Yo-Leo",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor, nunc eget ultricies aliquam, nisl nisl aliquet nunc, nec aliquam nisl nisl nec nisl. Donec auctor, nunc eget ultricies aliquam, nisl nisl aliquet nunc, nec aliquam nisl nisl nec nisl.",
-    
+      "Aplicación para la digitalización de procesos educativos desarrollada para la empresa Gelymar. Esta aplicación está diseñada para mejorar la lectura en niños a través de actividades interactivas y seguimiento personalizado, actualmente en producción y en uso por distintas instituciones regionales.",
     image: "https://via.placeholder.com/150",
-    tags: [TAGS.HTML, TAGS.CSS, TAGS.JAVASCRIPT],
+    tags: [TAGS.REACT, TAGS.NODEJS, TAGS.JAVASCRIPT],
   },
   {
-    title: "Project 2",
+    title: "Geop",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor, nunc eget ultricies aliquam, nisl nisl aliquet nunc, nec aliquam nisl nisl nec nisl. Donec auctor, nunc eget ultricies aliquam, nisl nisl aliquet nunc, nec aliquam nisl nisl nec nisl.",
+      "Sistema de gestión geográfica desarrollado para Naviera La Península. Utiliza tecnologías modernas para la localización y control de operaciones logísticas, ayudando a mejorar la eficiencia en la gestión de rutas y recursos.",
     image: "https://via.placeholder.com/150",
-    tags: [TAGS.HTML, TAGS.CSS, TAGS.JAVASCRIPT],
+    tags: [TAGS.NEXTJS, TAGS.TYPESCRIPT, TAGS.MONGODB],
   },
-
   {
-    title: "Typescript Webpack Clima App",
+    title: "Honorarios.Plus",
     description:
-      "La aplicación de clima obtiene datos meteorológicos a través de la localización GPS actual o de una ciudad de referencia. Además, indica la dirección del viento y su velocidad, animando dinámicamente la veleta indicadora de dirección. Haciendo uso de la API gratuita de OpenWeather, esta aplicación fue creada con propósitos educativos.",
-    link: "https://prgm-weather-app.netlify.app/",
-    image: "/projects/projectClima.webp",
-    tags: [TAGS.HTML, TAGS.CSS, TAGS.TYPESCRIPT, TAGS.WEBPACK],
+      "Aplicación en desarrollo para la gestión de citas profesionales en los ámbitos de educación y psicología. Permite la programación de citas y la emisión de recibos de honorarios, usando tecnologías como Next.js, NestJS, y TursoDB.",
+    link: "https://honorarios.plus",
+    image: "/projects/honorariosPlus.webp",
+    tags: [TAGS.NEXTJS, TAGS.TURSO],
+  },
+  {
+    title: "Big Data Analytics Platform",
+    description:
+      "Plataforma de análisis de Big Data desarrollada como proyecto final de máster, utilizando un clúster Hadoop. Integra Node.js, React, y JupyterHub para la gestión y análisis de datos a gran escala, permitiendo el procesamiento colaborativo de datos.",
+    image: "/projects/TFM.webp",
+    tags: [TAGS.NODEJS, TAGS.REACT, TAGS.HADOOP, TAGS.JUPYTER],
   },
 ];
 
 export const EXPERIENCE = [
   {
-    date: "February 2022",
-    title: "Application UI code in Tailwind CSS",
+    date: "January 2024 - Present",
+    title: "Full Stack Software Engineer at Sotex",
     description:
-      "Get access to over 20+ pages including a dashboard layout, charts, kanban board, calendar, and pre-order E-commerce & Marketing pages.",
-    more: " Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit facere non vitae soluta illo commodi tempora unde facilis ex odio. Eligendi distinctio blanditiis perferendis officiis harum reprehenderit ratione aspernatur maxime.",
+      "Desarrollo de aplicaciones para la digitalización de procesos de empresas regionales. Responsable de diseñar, desarrollar e implementar soluciones, incluyendo aplicaciones como 'Yo-Leo', 'Geop', y 'GelyRel'. Utilizando tecnologías modernas de desarrollo web como React, Node.js, y MongoDB.",
   },
   {
-    date: "March 2022",
-    title: "Marketing UI design in Figma",
+    date: "October 2022",
+    title: "Desarrollo de PWA para Claro Chile",
     description:
-      "All of the pages and components are first designed in Figma and we keep a parity between the two versions even as we update the project.",
-    more: " Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit facere non vitae soluta illo commodi tempora unde facilis ex odio. Eligendi distinctio blanditiis perferendis officiis harum reprehenderit ratione aspernatur maxime. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit facere non vitae soluta illo commodi tempora unde facilis ex odio. Eligendi distinctio blanditiis perferendis officiis harum reprehenderit ratione aspernatur maxime.",
+      "Desarrollo de una Progressive Web Application (PWA) con el stack MERN para el control de llaves de acceso y registros de sitios móviles en la zona de Los Lagos de Claro Chile.",
   },
   {
-    date: "April 2022",
-    title: "E-Commerce UI code in Tailwind CSS",
+    date: "January 2023 - May 2023",
+    title: "Desarrollo de Plataforma de Big Data para Proyecto de Máster",
     description:
-      "Get started with dozens of web components and interactive elements built on top of Tailwind CSS.",
-    link: "https://prgm-weather-app.netlify.app/",
+      "Desarrollo e implementación de una plataforma de análisis de Big Data en un clúster Hadoop, integrando una aplicación Node-React-HBase para la carga de archivos y el despliegue de JupyterHub, permitiendo la ejecución de notebooks en Python para múltiples usuarios.",
+  },
+  {
+    date: "February 2009 - January 2023",
+    title: "Field Engineer at Claro Chile S.A.",
+    description:
+      "Realización de tareas operativas y de mantenimiento en la Red Central y Red de Acceso de Claro Chile, incluyendo la resolución de incidentes relacionados con infraestructura de switches, gestión de energía y fibra óptica.",
   },
 ];
