@@ -3,33 +3,24 @@ import Badge from "@/components/Badge.astro";
 import Button from "@/components/SocialPill.astro";
 import Layout from "@/layouts/Layout.astro";
 
-
-
-
-
-
 import SectionContainer from "@/components/SectionContainer.astro";
-
 ---
 
 <Layout title="Design System Portafolio" description="">
-
-    <SectionContainer class="flex flex-col items-center gap-y-10">
-        <h1 
-        class="text-3xl font-bold   text-gray-900 mx-auto text-center py-10"
-        >Design System Portafolio</h1>
-        <p>Here you can find some of the design systems I've worked on.</p>
-        <div >
-
-        <article class="gap-y-5">
-
-            <h1>&lt;Badge /&gt;</h1>
-            <Badge color="red" >Badge</Badge>
-        </article>
-        <article class="gap-y-5">
-
-            <h1>&lt;Button /&gt;</h1>
-            <Button color="red" >Button</Button>
-        
-        </div>
-</Layout>
+  <SectionContainer class="flex flex-col items-center gap-y-10">
+    <h1 class="text-3xl font-bold text-gray-900 mx-auto text-center py-10">
+      Design System Portafolio
+    </h1>
+    <p>Here you can find some of the design systems I've worked on.</p>
+    <div>
+      <article class="gap-y-5">
+        <h1>&lt;Badge /&gt;</h1>
+        <Badge color="red">Badge</Badge>
+      </article>
+      <article class="gap-y-5">
+        <h1>&lt;Button /&gt;</h1>
+        <Button color="red">Button</Button>
+      </article>
+    </div></SectionContainer
+  ></Layout
+>

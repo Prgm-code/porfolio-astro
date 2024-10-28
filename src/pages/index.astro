@@ -20,7 +20,7 @@ import Projects from "../components/Projects.astro";
   <main class="px-4">
     <SectionContainer class="py-16 animate" id="top">
       <img
-        class="rounded-full w-28 h-28 mb-4 " 
+        class="rounded-full w-28 h-28 mb-4"
         src="https://lh3.googleusercontent.com/a/ACg8ocIf0myyzMZRN1n-QDW78FORANENdNp9Ck9TdAKOWsECzw=s96-c"
         alt="profile photo"
       />
@@ -33,70 +33,72 @@ import Projects from "../components/Projects.astro";
           rel="noopener"
           class="flex justify-center items-center"
         >
-        <!-- <div
+          <!-- <div
         class="flex gap-2 items-center"
         >          <Badge>Trabajando en </Badge>
           <p class="text-xl lg:text-2xl border rounded-lg border-blue   bg-blue-600 text-wrap  px-2 max-w-[700px]">Sotex</p>
           </p> -->
-        </div>
         </a>
       </h1>
-      <h2 class="text-xl lg:text-2xl text-wrap max-w-[700px]">
-        <span>Ingeniero Electrónico y Desarrollador Web Full Stack.</span>
-        <span class="text-yellow-200/90">
-          Desde <a href="https://maps.app.goo.gl/Tbsc23jTLYHAPhwt5" target="_blank" rel="noopener" title="Link to Map">Puerto Montt, Chile 🇨🇱</a>, diseño y desarrollo soluciones web
-          innovadoras.</span
-        >
-        <span class="opacity-75">
-          Me enfoco en Frameworks de JavaScript para la creación de aplicaciones
-          dinámicas y escalables.</span
-        >
-      </h2>
+    </SectionContainer>
+    <h2 class="text-xl lg:text-2xl text-wrap max-w-[700px]">
+      <span>Ingeniero Electrónico y Desarrollador Web Full Stack.</span>
+      <span class="text-yellow-200/90">
+        Desde <a
+          href="https://maps.app.goo.gl/Tbsc23jTLYHAPhwt5"
+          target="_blank"
+          rel="noopener"
+          title="Link to Map">Puerto Montt, Chile 🇨🇱</a
+        >, diseño y desarrollo soluciones web innovadoras.</span
+      >
+      <span class="opacity-75">
+        Me enfoco en Frameworks de JavaScript para la creación de aplicaciones
+        dinámicas y escalables.</span
+      >
+    </h2>
 
-      <nav class="flex gap-4 mt-4 flex-wrap">
-        <SocialPill href="https://www.linkedin.com/in/prgm/">
-          <LinkedInIcon class="size-4 lg:size-5" />
-          LinkedIn
-        </SocialPill>
-        <SocialPill href="https://www.github.com/prgm-code">
-          <GitHubIcon class="size-4 lg:size-6" />
-          GitHub
-        </SocialPill>
-        <SocialPill href="mailto:patricio@prgmdev.com">
-          <MailIcon class="size-4 lg:size-6" />
-          Patricio@prgmdev.com
-        </SocialPill>
-        <SocialPill
-          href="https://wa.me/56978146577?text=Hola%20Patricio,%20quisiera%20contactarte"
-        >
-          <WhatsAppIcon class="size-4 lg:size-6" />
-          WhatsApp
-        </SocialPill>
-      </nav>
-    </SectionContainer>
-    <SectionContainer id="experiencia" class="animate">
-      <h2 class="text-3xl font-semibold mb-6 flex gap-x-3 items-center">
-        <Brifcase class="size-6" />
-        Experiencia Laboral
-      </h2>
-      <Experience />
-    </SectionContainer>
-    <SectionContainer id="proyects" class="animate">
-      <h2 class="text-3xl font-semibold mb-6 pt-20 flex gap-x-3 items-center">
-        <CodeIcon class="size-10" />
-        Proyectos
-      </h2>
-      <Projects />
-    </SectionContainer>
+    <nav class="flex gap-4 mt-4 flex-wrap">
+      <SocialPill href="https://www.linkedin.com/in/prgm/">
+        <LinkedInIcon class="size-4 lg:size-5" />
+        LinkedIn
+      </SocialPill>
+      <SocialPill href="https://www.github.com/prgm-code">
+        <GitHubIcon class="size-4 lg:size-6" />
+        GitHub
+      </SocialPill>
+      <SocialPill href="mailto:patricio@prgmdev.com">
+        <MailIcon class="size-4 lg:size-6" />
+        Patricio@prgmdev.com
+      </SocialPill>
+      <SocialPill
+        href="https://wa.me/56978146577?text=Hola%20Patricio,%20quisiera%20contactarte"
+      >
+        <WhatsAppIcon class="size-4 lg:size-6" />
+        WhatsApp
+      </SocialPill>
+    </nav>
   </main>
-  <script>
-
-    // JavaScript para agregar la clase 'show' después de que la página se haya cargado
-    document.addEventListener("DOMContentLoaded", () => {
-      const elements = document.querySelectorAll(".animate");
-      elements.forEach((el) => {
-        el.classList.add("show");
-      });
-    });
-  </script>
+  <SectionContainer id="experiencia" class="animate">
+    <h2 class="text-3xl font-semibold mb-6 flex gap-x-3 items-center">
+      <Brifcase class="size-6" />
+      Experiencia Laboral
+    </h2>
+    <Experience />
+  </SectionContainer>
+  <SectionContainer id="proyects" class="animate">
+    <h2 class="text-3xl font-semibold mb-6 pt-20 flex gap-x-3 items-center">
+      <CodeIcon class="size-10" />
+      Proyectos
+    </h2>
+    <Projects />
+  </SectionContainer>
 </Layout>
+<script>
+  // JavaScript para agregar la clase 'show' después de que la página se haya cargado
+  document.addEventListener("DOMContentLoaded", () => {
+    const elements = document.querySelectorAll(".animate");
+    elements.forEach((el) => {
+      el.classList.add("show");
+    });
+  });
+</script>
