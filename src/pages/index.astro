@@ -17,57 +17,35 @@ import Projects from "../components/Projects.astro";
   title="Portafolio de Patricio Gómez Meneses - Desarrollador y Programador Web"
   description="Ingeniero Electrónico y Desarrollador Web Full Stack. Desde Puerto Montt, Chile 🇨🇱, diseño y desarrollo soluciones web innovadoras. Me enfoco en Frameworks de JavaScript para la creación de aplicaciones dinámicas y escalables."
 >
-  <main class="px-4">
+  <main class="px-4 gap-y-16">
     <SectionContainer class="py-16 animate" id="top">
       <img
         class="rounded-full w-28 h-28 mb-4"
         src="https://lh3.googleusercontent.com/a/ACg8ocIf0myyzMZRN1n-QDW78FORANENdNp9Ck9TdAKOWsECzw=s96-c"
-        alt="profile photo"
+        alt="Foto de perfil de Patricio"
       />
 
-      <header
-        class="text-white text-3xl md:text-4xl lg:text-5xl font-bold flex flex-row gap-x-4 pb-6 lg:pb-10"
-      >
-        Hola, soy Patricio
-        <a
-          href="https://www.linkedin.com/in/prgm/"
-          target="_blank"
-          rel="noopener"
-          class="flex justify-center items-center"
+      <header>
+        <h1
+          class="text-white text-3xl md:text-4xl lg:text-5xl font-bold flex flex-row gap-x-4 pb-6 lg:pb-10"
         >
-          <!--
-            <div class="flex gap-2 items-center">
-              <Badge>Trabajando en</Badge>
-              <p class="text-xl lg:text-2xl border rounded-lg border-blue bg-blue-600 text-wrap px-2 max-w-[700px]">
-                Sotex
-              </p>
-            </div>
-          -->
-        </a>
-      </header>
-
-      <section class="text-xl lg:text-2xl text-pretty max-w-[900px]">
-        <span>Ingeniero Electrónico y Máster en Desarrollo Web Full Stack,</span
-        >
-        <span class="text-blue-300/90">
+          Hola, soy Patricio
+        </h1>
+        <p class="text-xl lg:text-2xl text-pretty max-w-[900px]">
+          Ingeniero Electrónico y Máster en Desarrollo Web Full Stack,
           <a
             href="https://maps.app.goo.gl/Tbsc23jTLYHAPhwt5"
             target="_blank"
             rel="noopener"
             title="Link to Map"
+            class="text-blue-300/90"
           >
             desde Puerto Montt, Chile 🇨🇱
-          </a>,
-        </span>
-        <span class="text-yellow-200/90">
-          con más de 15 años en telecomunicaciones y más de 2 años en desarrollo
-          web,
-        </span>
-        <span class="opacity-75">
-          Me enfoco en Frameworks de JavaScript para la creación de aplicaciones
-          dinámicas y escalables.
-        </span>
-      </section>
+          </a>, con más de 15 años en telecomunicaciones y más de 2 años en
+          desarrollo web, me enfoco en Frameworks de JavaScript para la creación
+          de aplicaciones dinámicas y escalables.
+        </p>
+      </header>
 
       <nav class="flex gap-4 mt-4 flex-wrap">
         <SocialPill href="https://www.linkedin.com/in/prgm/">
@@ -91,20 +69,19 @@ import Projects from "../components/Projects.astro";
       </nav>
     </SectionContainer>
 
-    <!-- Secciones de experiencia y proyectos dentro del <main> -->
     <SectionContainer id="experiencia" class="animate">
-      <h2 class="text-3xl font-semibold mb-6 flex gap-x-3 items-center">
+      <div class="flex flex-row gap-x-3 items-center">
         <Brifcase class="size-6" />
-        Experiencia Laboral
-      </h2>
+        <h2 class="text-3xl font-semibold">Experiencia Laboral</h2>
+      </div>
       <Experience />
     </SectionContainer>
 
     <SectionContainer id="proyects" class="animate">
-      <h2 class="text-3xl font-semibold mb-6 pt-20 flex gap-x-3 items-center">
+      <div class="flex flex-row gap-x-3 items-center">
         <CodeIcon class="size-10" />
-        Proyectos
-      </h2>
+        <h2 class="text-3xl font-semibold">Proyectos</h2>
+      </div>
       <Projects />
     </SectionContainer>
   </main>
