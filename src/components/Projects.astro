@@ -6,44 +6,42 @@ import { Image } from "astro:assets";
 
 {
   PROJECTS.map(({ title, description, tags, image, link }) => (
-    <article class="mx-4 my-10">
-      <div class="flex items-center align-middle flex-wrap text-pretty">
-        <h3 class="text-2xl font-semibold text-yellow-200 mb-2">{title}</h3>
+    <article class="mb-16 last:mb-0">
+      <div class="flex items-center align-middle flex-wrap gap-x-2 mb-4">
+        <h3 class="text-2xl font-semibold text-yellow-200">{title}</h3>
         {link && (
           <a
-            class="transition
-  hover:scale-125"
+            class="transition hover:scale-125"
             href={link}
             target="_blank"
             rel="noopener noreferrer"
             title="Link to project"
           >
-            <LinkIcon class=" text-yellow-200 mx-2 size-8 pb-1" />
+            <LinkIcon class="text-yellow-200 size-8" />
           </a>
         )}
       </div>
-      <p class="text-lg mb-4 text-pretty">{description}</p>
-      <ul class="flex gap-x-4 flex-row mb-4">
+      <p class="text-lg mb-6 text-pretty">{description}</p>
+      <ul class="flex gap-3 flex-wrap mb-6">
         {tags.map((tag) => (
           <li>
-            <span
-              class=" flex items-center justify-center gap-x-2 rounded-full text-xs text-pretty py-1 px-2 bg-blue-200/20 transition
-  hover:scale-110 "
-            >
-              <tag.icon class={`${tag.class} align-middle`} />
+            <span class="flex items-center gap-x-2 rounded-full text-xs py-1 px-3 bg-blue-200/20 transition hover:scale-110">
+              <tag.icon class={`${tag.class}`} />
               {tag.name}
             </span>
           </li>
         ))}
       </ul>
       {image && (
-        <Image
-          class="rounded shadow-2xl shadow-white/10"
-          src={image ?? ""}
-          alt={`Captura de pantalla del proyecto ${title}`}
-          width={800}
-          height={400}
-        />
+        <div class="rounded-xl overflow-hidden">
+          <Image
+            class="w-full h-auto hover:scale-105 transition duration-500"
+            src={image ?? ""}
+            alt={`Captura de pantalla del proyecto ${title}`}
+            width={1280}
+            height={720}
+          />
+        </div>
       )}
     </article>
   ))

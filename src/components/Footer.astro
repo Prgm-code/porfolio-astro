@@ -3,44 +3,48 @@ import GithubIcon from "../icons/GitHub.astro";
 import AstroIcon from "../icons/AstroIcon.astro";
 ---
 
-<footer class="rounded-lg m-4 w-full xl:w-[1120px] mx-auto mb-10 mt-10">
+<footer
+  class="w-full max-w-[1120px] mx-auto px-4 sm:px-8 md:px-12 lg:px-16 py-8"
+>
   <div
-    class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between opacity-80"
+    class="w-full flex flex-col md:flex-row md:items-center md:justify-between opacity-80 gap-y-4"
   >
-    <span class="text-sm sm:text-center text-yellow-200/80"
-      >© 2024 <a
+    <span class="text-sm text-yellow-200/80">
+      © 2024 <a
         href="https://github.com/Prgm-code/"
         target="_blank"
         class="hover:underline">PRGM-Code™</a
       >. MIT Licensed
-      <span class="text-indigo-200/50 hidden xl:inline"
-        >Based on original work by <a
+      <span class="text-indigo-200/50 hidden lg:inline">
+        Based on original work by <a
           href="https://github.com/midudev"
           target="_blank"
           rel="noopener noreferrer">@midudev</a
-        >.</span
-      >
+        >.
+      </span>
     </span>
     <ul
-      class="flex flex-wrap items-center mt-3 text-sm font-medium text-white/90 sm:mt-0"
+      class="flex flex-wrap items-center gap-4 text-sm font-medium text-white/90"
     >
       <li>
         <a
           href="https://astro.build/"
           target="_blank"
-          class="hover:underline me-4 md:me-6 flex flex-row items-center gap-x-1"
-          >Build with <span class="flex flex-row items-center"
-            ><AstroIcon class="size-5 text-white" />astro
-          </span></a
+          class="hover:underline flex items-center gap-x-1"
         >
+          Build with <span class="flex items-center"
+            ><AstroIcon class="size-5 text-white" />astro</span
+          >
+        </a>
       </li>
       <li>
         <a
           href="https://github.com/Prgm-code/porfolio-astro"
           target="_blank"
-          class="hover:underline me-4 md:me-6 flex flex-row items-center gap-x-1"
-          ><GithubIcon class="size-5" />View Code</a
+          class="hover:underline flex items-center gap-x-1"
         >
+          <GithubIcon class="size-5" />View Code
+        </a>
       </li>
     </ul>
   </div>
