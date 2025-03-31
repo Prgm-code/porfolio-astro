@@ -11,6 +11,7 @@ import TursoIcon from "../icons/TursoIcon.astro";
 import MongoDBIcon from "../icons/MongoDBIcon.astro";
 import HadoopIcon from "../icons/HadoopIcon.astro";
 import JupyterIcon from "../icons/JupyterIcon.astro";
+import NestJSIcon from "../icons/NestJS.astro";
 
 const TAGS = {
   NEXTJS: {
@@ -78,15 +79,22 @@ const TAGS = {
     icon: JupyterIcon,
     class: "size-4",
   },
+  NESTJS: {
+    name: "NestJS",
+    icon: NestJSIcon,
+    class: "size-4",
+  },
 };
 
 export const PROJECTS = [
   {
-    title: "Yo-Leo",
-    description:
-      "Aplicación para la digitalización de procesos educativos desarrollada para la empresa Gelymar. Esta aplicación está diseñada para mejorar la lectura en niños a través de actividades interactivas y seguimiento personalizado, actualmente en producción y en uso por distintas instituciones regionales.",
+    title: "Aplicación REL",
+    description: `Aplicación para la digitalización de procesos del laboratorio de la empresa Gelymar.
+Esta aplicación permite la gestión de análisis de laboratorio, contemplando el uso de fórmulas especiales para cada tipo de análisis, además del control de los instrumentos utilizados, las técnicas de análisis y la validación de resultados según el cumplimiento de estándares predefinidos.
+La aplicación funciona junto con el sistema legacy de la empresa y utiliza una base de datos MS SQL.
+Fue desarrollada con Next.js y NestJS.`,
     // image: "https://via.placeholder.com/150",
-    tags: [TAGS.REACT, TAGS.NODEJS, TAGS.JAVASCRIPT],
+    tags: [TAGS.REACT, TAGS.NODEJS, TAGS.JAVASCRIPT, TAGS.NESTJS],
   },
   {
     title: "Geop",
@@ -94,6 +102,13 @@ export const PROJECTS = [
       "Sistema de gestión geográfica desarrollado para Naviera La Península. Utiliza tecnologías modernas para la localización y control de operaciones logísticas, ayudando a mejorar la eficiencia en la gestión de rutas y recursos.",
     // image: "https://via.placeholder.com/150",
     tags: [TAGS.NEXTJS, TAGS.TYPESCRIPT, TAGS.MONGODB],
+  },
+  {
+    title: "Yo-Leo",
+    description:
+      "Aplicación para la gestion y control de prestamos de libros de la empresa La Península.",
+    // image: "https://via.placeholder.com/150",
+    tags: [TAGS.REACT, TAGS.NODEJS, TAGS.JAVASCRIPT],
   },
   {
     title: "Honorarios.Plus",
@@ -114,27 +129,25 @@ export const PROJECTS = [
 
 export const EXPERIENCE = [
   {
-    date: "January 2024 - Present",
+    date: "Enero 2025 - Presente",
+    title: "Full Stack Software Engineer Freelance",
+    description: `Como desarrollador freelance, he creado aplicaciones web enfocadas en la automatización de procesos, la optimización del flujo de información y la gestión segura de datos operativos. He trabajado en soluciones que, automatizan tareas repetitivas en plataformas digitales y centralizan la administración de credenciales, utilizando tecnologías como Next.js, NestJS, React, PostgreSQL, MongoDB, Docker, GCP, AWS y Cloudflare.
+
+`,
+  },
+
+  {
+    date: "Enero 2024 - Diciembre 2024",
     title: "Full Stack Software Engineer at Sotex",
-    description:
-      "Desarrollo de aplicaciones para la digitalización de procesos de empresas regionales. Responsable de diseñar, desarrollar e implementar soluciones, incluyendo aplicaciones como 'Yo-Leo', 'Geop', y 'GelyRel'. Utilizando tecnologías modernas de desarrollo web como React, Node.js, y MongoDB.",
+    description: `Desarrollé diversas soluciones web orientadas a la automatización de procesos, gestión de datos, trazabilidad y visualización en tiempo real. Implementé funcionalidades avanzadas como cálculos automáticos, clasificación con inteligencia artificial, notificaciones y mapas interactivos, utilizando tecnologías modernas como Next.js, NestJS, SQL Server, PostgreSQL, TursoDB, y servicios en la nube como AWS y Vercel.`,
   },
+
   {
-    date: "October 2022",
-    title: "Desarrollo de PWA para Claro Chile",
-    description:
-      "Desarrollo de una Progressive Web Application (PWA) con el stack MERN para el control de llaves de acceso y registros de sitios móviles en la zona de Los Lagos de Claro Chile.",
-  },
-  {
-    date: "January 2023 - May 2023",
-    title: "Desarrollo de Plataforma de Big Data para Proyecto de Máster",
-    description:
-      "Desarrollo e implementación de una plataforma de análisis de Big Data en un clúster Hadoop, integrando una aplicación Node-React-HBase para la carga de archivos y el despliegue de JupyterHub, permitiendo la ejecución de notebooks en Python para múltiples usuarios.",
-  },
-  {
-    date: "February 2009 - January 2023",
+    date: "Febrero 2009 - Enero 2023",
     title: "Field Engineer at Claro Chile S.A.",
-    description:
-      "Realización de tareas operativas y de mantenimiento en la Red Central y Red de Acceso de Claro Chile, incluyendo la resolución de incidentes relacionados con infraestructura de switches, gestión de energía y fibra óptica.",
+    description: `Desempeñé labores relacionadas con la operación y mantenimiento de telecomunicaciones en infraestructuras de data center,
+fibra óptica, enlaces microondas y redes de comunicación.
+Lideré proyectos operativos de infraestructura y servicios de telefonía y datos en zonas remotas y de difícil acceso durante más
+de 6 años, garantizando altos niveles de cumplimiento normativo y tasas de SLA satisfactorias.`,
   },
 ];
