@@ -1,6 +1,7 @@
 ---
 import { PROJECTS } from "../utils/data.ts";
 import LinkIcon from "../icons/Link.astro";
+import { Image } from "astro:assets";
 ---
 
 {
@@ -35,11 +36,15 @@ import LinkIcon from "../icons/Link.astro";
           </li>
         ))}
       </ul>
-      <img
-        class="rounded shadow-2xl shadow-white/10"
-        src={image}
-        alt={`Captura de pantalla del proyecto ${image}`}
-      />
+      {image && (
+        <Image
+          class="rounded shadow-2xl shadow-white/10"
+          src={image ?? ""}
+          alt={`Captura de pantalla del proyecto ${title}`}
+          width={800}
+          height={400}
+        />
+      )}
     </article>
   ))
 }

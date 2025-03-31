@@ -85,14 +85,14 @@ export const PROJECTS = [
     title: "Yo-Leo",
     description:
       "Aplicación para la digitalización de procesos educativos desarrollada para la empresa Gelymar. Esta aplicación está diseñada para mejorar la lectura en niños a través de actividades interactivas y seguimiento personalizado, actualmente en producción y en uso por distintas instituciones regionales.",
-    image: "https://via.placeholder.com/150",
+    // image: "https://via.placeholder.com/150",
     tags: [TAGS.REACT, TAGS.NODEJS, TAGS.JAVASCRIPT],
   },
   {
     title: "Geop",
     description:
       "Sistema de gestión geográfica desarrollado para Naviera La Península. Utiliza tecnologías modernas para la localización y control de operaciones logísticas, ayudando a mejorar la eficiencia en la gestión de rutas y recursos.",
-    image: "https://via.placeholder.com/150",
+    // image: "https://via.placeholder.com/150",
     tags: [TAGS.NEXTJS, TAGS.TYPESCRIPT, TAGS.MONGODB],
   },
   {
