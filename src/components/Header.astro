@@ -1,11 +1,18 @@
-<header class="fixed top-0 left-0 right-0 py-5 z-50 px-4 sm:px-6 lg:px-8">
-  <div class="w-full bg-transparent backdrop-blur-md rounded-md opacity-90 p-2">
+<header
+  <header
+  id="main-header"
+  class="fixed top-0 left-0 right-0 py-5 z-50 px-4 sm:px-6 lg:px-8 transition-all duration-300"
+>
+  <div
+    class="w-full bg-transparent rounded-md opacity-90 p-2 transition-all duration-300 border-b-0 border-white/0 header-scrolled:border-b header-scrolled:border-white/10 header-scrolled:backdrop-blur-2xl header-scrolled:opacity-95"
+  >
     <nav class="flex flex-row gap-x-10 opacity-80 flex-wrap justify-center">
       <a href="#top">Inicio</a>
       <a href="#experiencia">Experiencia</a>
       <a href="#proyects">Proyectos</a>
-      <a href="#education">Educación</a>
-      <a href="#tecnologies">Tecnologías</a>
+      <a href="#habilidades">Habilidades</a>
+      <a href="#educacion">Educación</a>
+      <a href="#contacto">Contacto</a>
     </nav>
   </div>
 </header>
@@ -14,3 +21,43 @@
 <div class="pt-[80px]">
   <!-- Aquí comienza el contenido principal de la página -->
 </div>
+
+<script>
+  // Función para manejar el scroll del header
+  function handleScroll() {
+    const header = document.getElementById("main-header");
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    // Si se ha hecho scroll más de 20px, agregar la clase 'header-scrolled'
+    if (scrollTop > 20) {
+      header?.classList.add("header-scrolled");
+    } else {
+      header?.classList.remove("header-scrolled");
+    }
+  }
+
+  // Agregar el event listener cuando se carga la página
+  document.addEventListener("DOMContentLoaded", () => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    // Ejecutar una vez al cargar para verificar el estado inicial
+    handleScroll();
+  });
+
+  // Limpiar el event listener cuando se desmonte el componente (por si acaso)
+  document.addEventListener("astro:before-swap", () => {
+    window.removeEventListener("scroll", handleScroll);
+  });
+</script>
+
+<style>
+  /* Estilos adicionales para el header con scroll */
+  .header-scrolled {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Suavizar la transición del nav cuando se hace scroll */
+  .header-scrolled nav {
+    opacity: 0.9;
+  }
+</style>

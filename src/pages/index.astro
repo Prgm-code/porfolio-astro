@@ -13,6 +13,7 @@ import Projects from "../components/Projects.astro";
 import Skills from "../components/Skills.astro";
 import Education from "../components/Education.astro";
 import Certifications from "../components/Certifications.astro";
+import Contact from "../components/Contact.astro";
 ---
 
 <Layout
@@ -70,27 +71,6 @@ import Certifications from "../components/Certifications.astro";
             industriales.
           </p>
         </div>
-
-        <nav class="flex gap-4 mt-8 flex-wrap justify-center lg:justify-center">
-          <SocialPill href="https://www.linkedin.com/in/prgm/">
-            <LinkedInIcon class="size-4 lg:size-5" />
-            LinkedIn
-          </SocialPill>
-          <SocialPill href="https://www.github.com/prgm-code">
-            <GitHubIcon class="size-4 lg:size-6" />
-            GitHub
-          </SocialPill>
-          <SocialPill href="mailto:pgomez.meneses@gmail.com">
-            <MailIcon class="size-4 lg:size-6" />
-            pgomez.meneses@gmail.com
-          </SocialPill>
-          <!-- <SocialPill
-            href="https://wa.me/56976990163?text=Hola%20Patricio,%20quisiera%20contactarte"
-          >
-            <WhatsAppIcon class="size-4 lg:size-6" />
-            WhatsApp
-          </SocialPill> -->
-        </nav>
       </div>
     </SectionContainer>
   </main>
@@ -110,6 +90,20 @@ import Certifications from "../components/Certifications.astro";
     </SectionContainer>
   </div>
 
+  <!-- Sección Proyectos - Limitado -->
+  <div class="px-4 sm:px-6 lg:px-8">
+    <SectionContainer id="proyects" class="animate">
+      <div class="max-w-6xl mx-auto">
+        <h2
+          class="text-3xl font-semibold mb-8 pt-20 flex gap-x-3 items-center justify-center lg:justify-start"
+        >
+          <CodeIcon class="size-8" />
+          Proyectos
+        </h2>
+        <Projects />
+      </div>
+    </SectionContainer>
+  </div>
   <!-- Sección Habilidades - Limitado -->
   <div class="px-4 sm:px-6 lg:px-8">
     <SectionContainer id="habilidades" class="animate">
@@ -147,18 +141,10 @@ import Certifications from "../components/Certifications.astro";
     </SectionContainer>
   </div>
 
-  <!-- Sección Proyectos - Limitado -->
+  <!-- Sección Contacto -->
   <div class="px-4 sm:px-6 lg:px-8">
-    <SectionContainer id="proyects" class="animate">
-      <div class="max-w-6xl mx-auto">
-        <h2
-          class="text-3xl font-semibold mb-8 pt-20 flex gap-x-3 items-center justify-center lg:justify-start"
-        >
-          <CodeIcon class="size-8" />
-          Proyectos
-        </h2>
-        <Projects />
-      </div>
+    <SectionContainer id="contacto" class="animate">
+      <Contact />
     </SectionContainer>
   </div>
 </Layout>

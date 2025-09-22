@@ -14,6 +14,24 @@ import JupyterIcon from "../icons/JupyterIcon.astro";
 import CodeIcon from "../icons/Code.astro";
 import NestJSIcon from "../icons/NestJS.astro";
 import PostgreSQLIcon from "../icons/PostgreSQL.astro";
+import PrismaIcon from "../icons/PrismaIcon.astro";
+import DockerIcon from "../icons/DockerIcon.astro";
+import GitIcon from "../icons/GitIcon.astro";
+import AWSIcon from "../icons/AWSIcon.astro";
+import GoogleCloudIcon from "../icons/GoogleCloudIcon.astro";
+import VercelIcon from "../icons/VercelIcon.astro";
+import CloudflareIcon from "../icons/CloudflareIcon.astro";
+import PlaywrightIcon from "../icons/PlaywrightIcon.astro";
+import ClerkIcon from "../icons/ClerkIcon.astro";
+import PythonIcon from "../icons/PythonIcon.astro";
+import OpenAIIcon from "../icons/OpenAIIcon.astro";
+import DigitalOceanIcon from "../icons/DigitalOceanIcon.astro";
+import ReactNativeIcon from "../icons/ReactNativeIcon.astro";
+import ExpoIcon from "../icons/ExpoIcon.astro";
+import DatabaseIcon from "../icons/PostgreSQL.astro"; // Icono genérico para bases de datos
+import CloudIcon from "../icons/GoogleCloudIcon.astro"; // Icono genérico para cloud
+import ToolIcon from "../icons/DockerIcon.astro"; // Icono genérico para herramientas
+import MobileIcon from "../icons/ReactNativeIcon.astro"; // Icono genérico para móvil
 
 const TAGS = {
   NEXTJS: {
@@ -93,37 +111,77 @@ const TAGS = {
   },
   PRISMA: {
     name: "Prisma",
-    icon: TypeScriptIcon, // Usaremos el icono de TypeScript temporalmente
+    icon: PrismaIcon,
     class: "size-4",
   },
   CLERK: {
     name: "Clerk",
-    icon: ReactIcon, // Usaremos el icono de React temporalmente
+    icon: ClerkIcon,
     class: "size-4",
   },
   PLAYWRIGHT: {
     name: "Playwright",
-    icon: JavaScriptIcon, // Usaremos el icono de JavaScript temporalmente
+    icon: PlaywrightIcon,
     class: "size-4",
   },
   CLOUDFLARE: {
     name: "Cloudflare",
-    icon: JavaScriptIcon, // Usaremos el icono de JavaScript temporalmente
+    icon: CloudflareIcon,
     class: "size-4",
   },
   GCP: {
     name: "Google Cloud",
-    icon: JavaScriptIcon, // Usaremos el icono de JavaScript temporalmente
+    icon: GoogleCloudIcon,
     class: "size-4",
   },
   VERCEL: {
     name: "Vercel",
-    icon: NextJSIcon, // Usaremos el icono de Next.js temporalmente
+    icon: VercelIcon,
     class: "size-4",
   },
   PWA: {
     name: "PWA",
-    icon: ReactIcon, // Usaremos el icono de React temporalmente
+    icon: ReactIcon,
+    class: "size-4",
+  },
+  DOCKER: {
+    name: "Docker",
+    icon: DockerIcon,
+    class: "size-4",
+  },
+  GIT: {
+    name: "Git",
+    icon: GitIcon,
+    class: "size-4",
+  },
+  AWS: {
+    name: "AWS",
+    icon: AWSIcon,
+    class: "size-4",
+  },
+  PYTHON: {
+    name: "Python",
+    icon: PythonIcon,
+    class: "size-4",
+  },
+  OPENAI: {
+    name: "OpenAI",
+    icon: OpenAIIcon,
+    class: "size-4",
+  },
+  DIGITALOCEAN: {
+    name: "DigitalOcean",
+    icon: DigitalOceanIcon,
+    class: "size-4",
+  },
+  REACTNATIVE: {
+    name: "React Native",
+    icon: ReactNativeIcon,
+    class: "size-4",
+  },
+  EXPO: {
+    name: "Expo",
+    icon: ExpoIcon,
     class: "size-4",
   },
 };
@@ -221,7 +279,7 @@ export const SKILLS = [
   },
   {
     title: "Frontend y UI",
-    icon: CSSIcon,
+    icon: HTMLIcon,
     skills: [
       { name: "Tailwind CSS", icon: TailwindIcon },
       { name: "HTML", icon: HTMLIcon },
@@ -231,45 +289,44 @@ export const SKILLS = [
   },
   {
     title: "Backend y Bases de Datos",
-    icon: NodeJSIcon,
+    icon: DatabaseIcon,
     skills: [
       { name: "PostgreSQL", icon: PostgreSQLIcon },
       { name: "MongoDB", icon: MongoDBIcon },
-      { name: "MS SQL Server", icon: MongoDBIcon },
-      { name: "Prisma", icon: TypeScriptIcon },
+      { name: "Prisma", icon: PrismaIcon },
       { name: "TursoDB", icon: TursoIcon },
     ],
   },
   {
     title: "Cloud e Infraestructura",
-    icon: JavaScriptIcon,
+    icon: CloudIcon,
     skills: [
-      { name: "Google Cloud", icon: JavaScriptIcon },
-      { name: "AWS", icon: JavaScriptIcon },
-      { name: "Cloudflare", icon: JavaScriptIcon },
-      { name: "Vercel", icon: NextJSIcon },
-      { name: "DigitalOcean", icon: JavaScriptIcon },
+      { name: "Google Cloud", icon: GoogleCloudIcon },
+      { name: "AWS", icon: AWSIcon },
+      { name: "Cloudflare", icon: CloudflareIcon },
+      { name: "Vercel", icon: VercelIcon },
+      { name: "DigitalOcean", icon: DigitalOceanIcon },
     ],
   },
   {
     title: "Herramientas y Tecnologías",
-    icon: ReactIcon,
+    icon: ToolIcon,
     skills: [
-      { name: "Clerk", icon: ReactIcon },
-      { name: "Playwright", icon: JavaScriptIcon },
+      { name: "Clerk", icon: ClerkIcon },
+      { name: "Playwright", icon: PlaywrightIcon },
       { name: "PWA", icon: ReactIcon },
-      { name: "Docker", icon: JavaScriptIcon },
-      { name: "Git", icon: JavaScriptIcon },
+      { name: "Docker", icon: DockerIcon },
+      { name: "Git", icon: GitIcon },
     ],
   },
   {
     title: "Móvil y Otros",
-    icon: ReactIcon,
+    icon: MobileIcon,
     skills: [
-      { name: "React Native", icon: ReactIcon },
-      { name: "Expo", icon: ReactIcon },
-      { name: "Python", icon: JavaScriptIcon },
-      { name: "OpenAI", icon: JavaScriptIcon },
+      { name: "React Native", icon: ReactNativeIcon },
+      { name: "Expo", icon: ExpoIcon },
+      { name: "Python", icon: PythonIcon },
+      { name: "OpenAI", icon: OpenAIIcon },
     ],
   },
 ];
