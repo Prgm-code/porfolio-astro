@@ -1,6 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Badge from "../components/Badge.astro";
 import GitHubIcon from "../icons/GitHub.astro";
 import LinkedInIcon from "../icons/LinkedIn.astro";
 import SocialPill from "../components/SocialPill.astro";
@@ -11,92 +10,164 @@ import SectionContainer from "../components/SectionContainer.astro";
 import Brifcase from "../icons/Brifcase.astro";
 import CodeIcon from "../icons/Code.astro";
 import Projects from "../components/Projects.astro";
+import Skills from "../components/Skills.astro";
+import Education from "../components/Education.astro";
+import Certifications from "../components/Certifications.astro";
 ---
 
 <Layout
-  title="Portafolio de Patricio Gómez Meneses - Desarrollador y Programador Web"
-  description="Ingeniero Electrónico y Desarrollador Web Full Stack. Desde Puerto Montt, Chile 🇨🇱, diseño y desarrollo soluciones web innovadoras. Me enfoco en Frameworks de JavaScript para la creación de aplicaciones dinámicas y escalables."
+  title="Portafolio de Patricio Gómez Meneses - Desarrollador Full Stack JavaScript"
+  description="Desarrollador Full Stack JavaScript especializado en React, Next.js y Nest.js con TypeScript. Desde Puerto Montt, Chile 🇨🇱, desarrollo aplicaciones web escalables y de alto rendimiento para la digitalización de procesos empresariales."
 >
-  <main class="px-4">
+  <main class="px-4 sm:px-6 lg:px-8">
     <SectionContainer class="py-16 animate" id="top">
-      <img
-        class="rounded-full w-28 h-28 mb-4 " 
-        src="https://lh3.googleusercontent.com/a/ACg8ocIf0myyzMZRN1n-QDW78FORANENdNp9Ck9TdAKOWsECzw=s96-c"
-        alt="profile photo"
-      />
-      <h1
-        class="text-white text-3xl md:text-4xl lg:text-5xl font-bold flex flex-row gap-x-4 pb-6 lg:pb-10"
-      >
-        Hola, soy Patricio<a
-          href="https://www.linkedin.com/in/prgm/"
-          target="_blank"
-          rel="noopener"
-          class="flex justify-center items-center"
-        >
-        <!-- <div
-        class="flex gap-2 items-center"
-        >          <Badge>Trabajando en </Badge>
-          <p class="text-xl lg:text-2xl border rounded-lg border-blue   bg-blue-600 text-wrap  px-2 max-w-[700px]">Sotex</p>
-          </p> -->
+      <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-8">
+          <img
+            class="rounded-full w-32 h-32 mb-6 mx-auto shadow-lg object-cover"
+            src="https://lh3.googleusercontent.com/a/ACg8ocIf0myyzMZRN1n-QDW78FORANENdNp9Ck9TdAKOWsECzw=s256-c"
+            alt="Foto de perfil de Patricio Gómez"
+            loading="eager"
+          />
+          <h1
+            class="text-white text-3xl md:text-4xl lg:text-5xl font-bold mb-8"
+          >
+            Hola, soy Patricio
+          </h1>
         </div>
-        </a>
-      </h1>
-      <h2 class="text-xl lg:text-2xl text-pretty max-w-[900px]">
-        <span>Ingeniero Electrónico y Desarrollador Web Full Stack.</span>
-        <span class="text-blue-300/90">
-          <a href="https://maps.app.goo.gl/Tbsc23jTLYHAPhwt5" target="_blank" rel="noopener" title="Link to Map">Desde Puerto Montt, Chile 🇨🇱</a>, <span class="text-yellow-200/90">diseño y desarrollo soluciones web
-            innovadoras.</span></span
-        >
-        <span class="opacity-75">
-          Me enfoco en Frameworks de JavaScript para la creación de aplicaciones
-          dinámicas y escalables.</span
-        >
-      </h2>
 
-      <nav class="flex gap-4 mt-4 flex-wrap">
-        <SocialPill href="https://www.linkedin.com/in/prgm/">
-          <LinkedInIcon class="size-4 lg:size-5" />
-          LinkedIn
-        </SocialPill>
-        <SocialPill href="https://www.github.com/prgm-code">
-          <GitHubIcon class="size-4 lg:size-6" />
-          GitHub
-        </SocialPill>
-        <SocialPill href="mailto:patricio@prgmdev.com">
-          <MailIcon class="size-4 lg:size-6" />
-          Patricio@prgmdev.com
-        </SocialPill>
-        <SocialPill
-          href="https://wa.me/56978146577?text=Hola%20Patricio,%20quisiera%20contactarte"
-        >
-          <WhatsAppIcon class="size-4 lg:size-6" />
-          WhatsApp
-        </SocialPill>
-      </nav>
-    </SectionContainer>
-    <SectionContainer id="experiencia" class="animate">
-      <h2 class="text-3xl font-semibold mb-6 flex gap-x-3 items-center">
-        <Brifcase class="size-6" />
-        Experiencia Laboral
-      </h2>
-      <Experience />
-    </SectionContainer>
-    <SectionContainer id="proyects" class="animate">
-      <h2 class="text-3xl font-semibold mb-6 pt-20 flex gap-x-3 items-center">
-        <CodeIcon class="size-10" />
-        Proyectos
-      </h2>
-      <Projects />
+        <div class="space-y-6 text-center lg:text-left">
+          <p class="text-xl lg:text-2xl text-pretty leading-relaxed">
+            <span class="text-white font-medium">
+              Desarrollador Full Stack JavaScript especializado en la creación
+              de aplicaciones web escalables y de alto rendimiento con React,
+              Next.js y Nest.js utilizando TypeScript.
+            </span>
+          </p>
+
+          <p class="text-lg lg:text-xl text-pretty leading-relaxed">
+            <span class="text-blue-300/90">
+              <a
+                href="https://maps.app.goo.gl/Tbsc23jTLYHAPhwt5"
+                target="_blank"
+                rel="noopener"
+                title="Link to Map"
+                class="hover:text-blue-200 transition-colors underline decoration-blue-300/50"
+                >Desde Puerto Montt, Chile 🇨🇱</a
+              >,
+            </span>
+            <span class="text-yellow-200/90">
+              con un enfoque autodidacta, me mantengo constantemente actualizado
+              sobre las últimas tecnologías y su implementación.
+            </span>
+          </p>
+
+          <p
+            class="text-lg lg:text-xl text-pretty leading-relaxed opacity-90 text-gray-200"
+          >
+            Con experiencia en digitalización de procesos empresariales y
+            desarrollo de soluciones innovadoras para diversos sectores
+            industriales.
+          </p>
+        </div>
+
+        <nav class="flex gap-4 mt-8 flex-wrap justify-center lg:justify-center">
+          <SocialPill href="https://www.linkedin.com/in/prgm/">
+            <LinkedInIcon class="size-4 lg:size-5" />
+            LinkedIn
+          </SocialPill>
+          <SocialPill href="https://www.github.com/prgm-code">
+            <GitHubIcon class="size-4 lg:size-6" />
+            GitHub
+          </SocialPill>
+          <SocialPill href="mailto:pgomez.meneses@gmail.com">
+            <MailIcon class="size-4 lg:size-6" />
+            pgomez.meneses@gmail.com
+          </SocialPill>
+          <!-- <SocialPill
+            href="https://wa.me/56976990163?text=Hola%20Patricio,%20quisiera%20contactarte"
+          >
+            <WhatsAppIcon class="size-4 lg:size-6" />
+            WhatsApp
+          </SocialPill> -->
+        </nav>
+      </div>
     </SectionContainer>
   </main>
-  <script>
 
-    // JavaScript para agregar la clase 'show' después de que la página se haya cargado
-    document.addEventListener("DOMContentLoaded", () => {
-      const elements = document.querySelectorAll(".animate");
-      elements.forEach((el) => {
-        el.classList.add("show");
-      });
-    });
-  </script>
+  <!-- Sección Experiencia - Texto limitado -->
+  <div class="px-4 sm:px-6 lg:px-8">
+    <SectionContainer id="experiencia" class="animate">
+      <div class="max-w-4xl mx-auto">
+        <h2
+          class="text-3xl font-semibold mb-8 flex gap-x-3 items-center justify-center lg:justify-start"
+        >
+          <Brifcase class="size-8" />
+          Experiencia Laboral
+        </h2>
+        <Experience />
+      </div>
+    </SectionContainer>
+  </div>
+
+  <!-- Sección Habilidades - Limitado -->
+  <div class="px-4 sm:px-6 lg:px-8">
+    <SectionContainer id="habilidades" class="animate">
+      <div class="max-w-6xl mx-auto">
+        <h2
+          class="text-3xl font-semibold mb-8 pt-20 flex gap-x-3 items-center justify-center lg:justify-start"
+        >
+          <CodeIcon class="size-8" />
+          Habilidades Técnicas
+        </h2>
+        <Skills />
+      </div>
+    </SectionContainer>
+  </div>
+
+  <!-- Sección Educación - Texto limitado -->
+  <div class="px-4 sm:px-6 lg:px-8">
+    <SectionContainer id="educacion" class="animate">
+      <div class="max-w-4xl mx-auto">
+        <h2
+          class="text-3xl font-semibold mb-8 pt-20 flex gap-x-3 items-center justify-center lg:justify-start"
+        >
+          <Brifcase class="size-8" />
+          Educación
+        </h2>
+        <Education />
+
+        <h3
+          class="text-2xl font-semibold mb-6 mt-16 text-yellow-200 text-center lg:text-left"
+        >
+          Certificaciones y Cursos
+        </h3>
+        <Certifications />
+      </div>
+    </SectionContainer>
+  </div>
+
+  <!-- Sección Proyectos - Limitado -->
+  <div class="px-4 sm:px-6 lg:px-8">
+    <SectionContainer id="proyects" class="animate">
+      <div class="max-w-6xl mx-auto">
+        <h2
+          class="text-3xl font-semibold mb-8 pt-20 flex gap-x-3 items-center justify-center lg:justify-start"
+        >
+          <CodeIcon class="size-8" />
+          Proyectos
+        </h2>
+        <Projects />
+      </div>
+    </SectionContainer>
+  </div>
 </Layout>
+<script>
+  // JavaScript para agregar la clase 'show' después de que la página se haya cargado
+  document.addEventListener("DOMContentLoaded", () => {
+    const elements = document.querySelectorAll(".animate");
+    elements.forEach((el) => {
+      el.classList.add("show");
+    });
+  });
+</script>

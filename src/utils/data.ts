@@ -11,6 +11,9 @@ import TursoIcon from "../icons/TursoIcon.astro";
 import MongoDBIcon from "../icons/MongoDBIcon.astro";
 import HadoopIcon from "../icons/HadoopIcon.astro";
 import JupyterIcon from "../icons/JupyterIcon.astro";
+import CodeIcon from "../icons/Code.astro";
+import NestJSIcon from "../icons/NestJS.astro";
+import PostgreSQLIcon from "../icons/PostgreSQL.astro";
 
 const TAGS = {
   NEXTJS: {
@@ -78,30 +81,97 @@ const TAGS = {
     icon: JupyterIcon,
     class: "size-4",
   },
+  NESTJS: {
+    name: "NestJS",
+    icon: NestJSIcon,
+    class: "size-4",
+  },
+  POSTGRESQL: {
+    name: "PostgreSQL",
+    icon: PostgreSQLIcon,
+    class: "size-4",
+  },
+  PRISMA: {
+    name: "Prisma",
+    icon: TypeScriptIcon, // Usaremos el icono de TypeScript temporalmente
+    class: "size-4",
+  },
+  CLERK: {
+    name: "Clerk",
+    icon: ReactIcon, // Usaremos el icono de React temporalmente
+    class: "size-4",
+  },
+  PLAYWRIGHT: {
+    name: "Playwright",
+    icon: JavaScriptIcon, // Usaremos el icono de JavaScript temporalmente
+    class: "size-4",
+  },
+  CLOUDFLARE: {
+    name: "Cloudflare",
+    icon: JavaScriptIcon, // Usaremos el icono de JavaScript temporalmente
+    class: "size-4",
+  },
+  GCP: {
+    name: "Google Cloud",
+    icon: JavaScriptIcon, // Usaremos el icono de JavaScript temporalmente
+    class: "size-4",
+  },
+  VERCEL: {
+    name: "Vercel",
+    icon: NextJSIcon, // Usaremos el icono de Next.js temporalmente
+    class: "size-4",
+  },
+  PWA: {
+    name: "PWA",
+    icon: ReactIcon, // Usaremos el icono de React temporalmente
+    class: "size-4",
+  },
 };
 
 export const PROJECTS = [
   {
-    title: "Yo-Leo",
+    title: "Vlm360.com",
     description:
-      "Aplicación para la digitalización de procesos educativos desarrollada para la empresa Gelymar. Esta aplicación está diseñada para mejorar la lectura en niños a través de actividades interactivas y seguimiento personalizado, actualmente en producción y en uso por distintas instituciones regionales.",
-    image: "https://via.placeholder.com/150",
-    tags: [TAGS.REACT, TAGS.NODEJS, TAGS.JAVASCRIPT],
+      "Plataforma completa para el reporte de inspecciones submarinas mediante sónar. Centraliza el manejo de información detallada de trabajos, permite diseño de reportes personalizados y gestiona almacenamiento de imágenes y archivos con control de roles de usuario.",
+    link: "https://vlm360.com",
+    image: "/projects/TFM.webp", // Placeholder temporal
+    tags: [TAGS.NEXTJS, TAGS.POSTGRESQL, TAGS.GCP, TAGS.CLOUDFLARE],
   },
   {
-    title: "Geop",
+    title: "Index0.cc - Hackathon Clerk",
     description:
-      "Sistema de gestión geográfica desarrollado para Naviera La Península. Utiliza tecnologías modernas para la localización y control de operaciones logísticas, ayudando a mejorar la eficiencia en la gestión de rutas y recursos.",
-    image: "https://via.placeholder.com/150",
-    tags: [TAGS.NEXTJS, TAGS.TYPESCRIPT, TAGS.MONGODB],
+      "Plataforma para gestión inteligente de documentos desarrollada en la Hackathon de Clerk. Permite almacenamiento de textos e imágenes con servicio de 'autorag' para crear embeddings, habilitando consultas y búsquedas semánticas a través de chat.",
+    link: "https://index0.cc",
+    image: "/projects/TFM2.webp", // Placeholder temporal
+    tags: [TAGS.NEXTJS, TAGS.CLERK, TAGS.CLOUDFLARE, TAGS.VERCEL],
   },
   {
-    title: "Honorarios.Plus",
+    title: "Plataforma de Automatización de Gestión",
     description:
-      "Aplicación en desarrollo para la gestión de citas profesionales en los ámbitos de educación y psicología. Permite la programación de citas y la emisión de recibos de honorarios, usando tecnologías como Next.js, NestJS, y TursoDB.",
-    link: "https://honorarios.plus",
-    image: "/projects/honorariosPlus.webp",
-    tags: [TAGS.NEXTJS, TAGS.TURSO],
+      "Solución completa para optimizar tareas repetitivas incluyendo administración de documentos, citas y costos. Utiliza Playwright para automatización, backend en NestJS y frontend en Next.js con validaciones de usuario mediante Clerk.",
+    image: "/projects/sotex-logo.webp", // Placeholder temporal
+    tags: [TAGS.NEXTJS, TAGS.NESTJS, TAGS.PLAYWRIGHT, TAGS.CLERK],
+  },
+  {
+    title: "Laboratorio Químico Digital - Sotex",
+    description:
+      "Digitalización y automatización de laboratorio de análisis químico con más de 3.000 ingresos mensuales. Garantiza trazabilidad completa de parámetros, instrumentos, usuarios y métodos, con cálculos automáticos integrados.",
+    image: "/projects/sotex-logo.webp", // Placeholder temporal
+    tags: [TAGS.NEXTJS, TAGS.NESTJS, TAGS.TYPESCRIPT],
+  },
+  {
+    title: "PWA Mantenimiento Naval",
+    description:
+      "Aplicación PWA para control de mantenimiento de equipamiento naval. Permite trazabilidad de reportes de fallas y solicitudes, con gestión de roles, validación por personal de control y sistema de notificaciones por área.",
+    image: "/projects/sotex-logo.webp", // Placeholder temporal
+    tags: [TAGS.NEXTJS, TAGS.PWA, TAGS.POSTGRESQL],
+  },
+  {
+    title: "Sistema GPS Embarcaciones",
+    description:
+      "Plataforma PWA para seguimiento GPS de embarcaciones en tiempo real utilizando API de servicios de localización. Muestra datos en vivo sobre mapas interactivos con capas de información adicional mediante archivos KMZ.",
+    image: "/projects/sotex-logo.webp", // Placeholder temporal
+    tags: [TAGS.NEXTJS, TAGS.PWA, TAGS.TURSO],
   },
   {
     title: "Big Data Analytics Platform",
@@ -114,27 +184,174 @@ export const PROJECTS = [
 
 export const EXPERIENCE = [
   {
-    date: "January 2024 - Present",
-    title: "Full Stack Software Engineer at Sotex",
+    date: "2024 - Actualidad",
+    title: "Desarrollador de Aplicaciones Web | Independiente",
     description:
-      "Desarrollo de aplicaciones para la digitalización de procesos de empresas regionales. Responsable de diseñar, desarrollar e implementar soluciones, incluyendo aplicaciones como 'Yo-Leo', 'Geop', y 'GelyRel'. Utilizando tecnologías modernas de desarrollo web como React, Node.js, y MongoDB.",
+      "Diseño y despliegue completo de aplicaciones web escalables para diversos clientes. Desarrollo de soluciones innovadoras incluyendo plataformas de automatización, gestión inteligente de documentos y sistemas de inspección submarina.",
+    more: "Proyectos destacados:\n• Vlm360.com - Plataforma para reporte de inspecciones submarinas mediante sónar con gestión de roles y reportes personalizados (Next.js, PostgreSQL, GCP, Cloudflare)\n• Plataforma de automatización de gestión con Playwright para optimizar tareas repetitivas (Next.js, NestJS, Playwright, Clerk, GCP)\n• Index0.cc - Aplicación para gestión inteligente de documentos con búsquedas semánticas mediante AutoRAG (Next.js, Clerk, Cloudflare, Vercel)\n• Actualización de aplicación REL para Gelymar con nuevas funcionalidades de gestión de equipamiento (Next.js, NestJS, MS SQL Server)",
   },
   {
-    date: "October 2022",
-    title: "Desarrollo de PWA para Claro Chile",
+    date: "Enero 2024 - Diciembre 2024",
+    title: "Desarrollador Full Stack | Sotex",
     description:
-      "Desarrollo de una Progressive Web Application (PWA) con el stack MERN para el control de llaves de acceso y registros de sitios móviles en la zona de Los Lagos de Claro Chile.",
+      "Digitalización y automatización de procesos empresariales, desarrollando soluciones de alta recurrencia para laboratorios, mantenimiento naval y gestión bibliotecaria. Manejo de más de 3.000 ingresos mensuales en sistemas críticos.",
+    more: "Proyectos desarrollados:\n• Digitalización de laboratorio de análisis químico con trazabilidad completa de parámetros, instrumentos y métodos (Next.js, NestJS, SQL Server, Math.js)\n• PWA para control de mantenimiento de equipamiento naval con gestión de roles y notificaciones (Next.js, PWA, PostgreSQL, Resend)\n• PWA para gestión de préstamos de libros con alertas automáticas y clasificación de imágenes mediante IA (Next.js, TursoDB, Cloudinary, OpenAI, AWS EC2)\n• Plataforma PWA para seguimiento GPS de embarcaciones en tiempo real con mapas interactivos y capas KMZ (Next.js, TursoDB, Leaflet, AWS)",
   },
   {
-    date: "January 2023 - May 2023",
-    title: "Desarrollo de Plataforma de Big Data para Proyecto de Máster",
+    date: "Febrero 2009 - Enero 2023",
+    title: "Ingeniero de Campo | Claro Chile SA",
     description:
-      "Desarrollo e implementación de una plataforma de análisis de Big Data en un clúster Hadoop, integrando una aplicación Node-React-HBase para la carga de archivos y el despliegue de JupyterHub, permitiendo la ejecución de notebooks en Python para múltiples usuarios.",
+      "Gestión de operación y mantenimiento de infraestructura de telecomunicaciones incluyendo data centers, fibra óptica, enlaces microondas y redes celulares. Liderazgo de proyectos operativos en zonas remotas garantizando altos niveles de SLA.",
+    more: "Responsabilidades principales:\n• Mantenimiento de infraestructura crítica de telecomunicaciones\n• Gestión de proyectos operativos en zonas remotas\n• Cumplimiento de normativas y estándares de calidad\n• Resolución de incidentes técnicos complejos\n• Coordinación con equipos multidisciplinarios",
+  },
+];
+
+export const SKILLS = [
+  {
+    title: "Lenguajes y Frameworks",
+    icon: CodeIcon,
+    skills: [
+      { name: "JavaScript", icon: JavaScriptIcon },
+      { name: "TypeScript", icon: TypeScriptIcon },
+      { name: "Next.js", icon: NextJSIcon },
+      { name: "React", icon: ReactIcon },
+      { name: "NestJS", icon: NestJSIcon },
+      { name: "Node.js", icon: NodeJSIcon },
+    ],
   },
   {
-    date: "February 2009 - January 2023",
-    title: "Field Engineer at Claro Chile S.A.",
+    title: "Frontend y UI",
+    icon: CSSIcon,
+    skills: [
+      { name: "Tailwind CSS", icon: TailwindIcon },
+      { name: "HTML", icon: HTMLIcon },
+      { name: "CSS", icon: CSSIcon },
+      { name: "React", icon: ReactIcon },
+    ],
+  },
+  {
+    title: "Backend y Bases de Datos",
+    icon: NodeJSIcon,
+    skills: [
+      { name: "PostgreSQL", icon: PostgreSQLIcon },
+      { name: "MongoDB", icon: MongoDBIcon },
+      { name: "MS SQL Server", icon: MongoDBIcon },
+      { name: "Prisma", icon: TypeScriptIcon },
+      { name: "TursoDB", icon: TursoIcon },
+    ],
+  },
+  {
+    title: "Cloud e Infraestructura",
+    icon: JavaScriptIcon,
+    skills: [
+      { name: "Google Cloud", icon: JavaScriptIcon },
+      { name: "AWS", icon: JavaScriptIcon },
+      { name: "Cloudflare", icon: JavaScriptIcon },
+      { name: "Vercel", icon: NextJSIcon },
+      { name: "DigitalOcean", icon: JavaScriptIcon },
+    ],
+  },
+  {
+    title: "Herramientas y Tecnologías",
+    icon: ReactIcon,
+    skills: [
+      { name: "Clerk", icon: ReactIcon },
+      { name: "Playwright", icon: JavaScriptIcon },
+      { name: "PWA", icon: ReactIcon },
+      { name: "Docker", icon: JavaScriptIcon },
+      { name: "Git", icon: JavaScriptIcon },
+    ],
+  },
+  {
+    title: "Móvil y Otros",
+    icon: ReactIcon,
+    skills: [
+      { name: "React Native", icon: ReactIcon },
+      { name: "Expo", icon: ReactIcon },
+      { name: "Python", icon: JavaScriptIcon },
+      { name: "OpenAI", icon: JavaScriptIcon },
+    ],
+  },
+];
+
+export const EDUCATION = [
+  {
+    title: "Máster en Desarrollo Web Full Stack",
+    institution: "Three Points (Inesdi)",
+    location: "Barcelona, España",
+    year: "2022 – 2023",
     description:
-      "Realización de tareas operativas y de mantenimiento en la Red Central y Red de Acceso de Claro Chile, incluyendo la resolución de incidentes relacionados con infraestructura de switches, gestión de energía y fibra óptica.",
+      "Formación especializada en desarrollo web con enfoque en tecnologías modernas y metodologías ágiles.",
+    achievements: [
+      "Desarrollo de plataforma de Big Data con Hadoop",
+      "Integración de Node.js, React y JupyterHub",
+      "Gestión de análisis de datos a gran escala",
+    ],
+  },
+  {
+    title: "Ingeniería Electrónica",
+    institution: "Universidad de la Frontera",
+    location: "Temuco, Chile",
+    year: "2001 - 2007",
+    description:
+      "Formación en ingeniería electrónica con énfasis en sistemas de telecomunicaciones y control.",
+    achievements: [
+      "Fundamentos sólidos en electrónica digital y analógica",
+      "Conocimientos en protocolos industriales",
+      "Base técnica para transición al desarrollo de software",
+    ],
+  },
+];
+
+export const CERTIFICATIONS = [
+  {
+    title: "Google Cloud Computing Foundations",
+    issuer: "Google Cloud",
+    year: "2023",
+  },
+  {
+    title: "Kubernetes",
+    issuer: "Platzi",
+    year: "2023",
+  },
+  {
+    title: "React Unit Testing with Jest",
+    issuer: "Platzi",
+    year: "2023",
+  },
+  {
+    title: "Linux Server Administration",
+    issuer: "Platzi",
+    year: "2022",
+  },
+  {
+    title: "Cloud Security Technician",
+    issuer: "Certificación Profesional",
+    year: "2022",
+  },
+  {
+    title: "BackEnd con Node.js: Autenticación con Passport.js y JWT",
+    issuer: "Platzi",
+    year: "2022",
+  },
+  {
+    title: "NestJs: Microservicios con NestJs, AWS, Docker",
+    issuer: "Platzi",
+    year: "2022",
+  },
+  {
+    title: "Introduction to Information Security",
+    issuer: "Certificación Profesional",
+    year: "2021",
+  },
+  {
+    title: "Fundamentals of Cloud Computing",
+    issuer: "Certificación Profesional",
+    year: "2019",
+  },
+  {
+    title: "Fundamentals of Virtualization",
+    issuer: "Certificación Profesional",
+    year: "2019",
   },
 ];

@@ -1,0 +1,5 @@
+onlyBuiltDependencies:
+  - esbuild
+  - sharp
+  - tsparticles-engine
+minimumReleaseAge: 2880
