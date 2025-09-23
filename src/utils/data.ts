@@ -12,13 +12,14 @@ import MongoDBIcon from "../icons/MongoDBIcon.astro";
 import HadoopIcon from "../icons/HadoopIcon.astro";
 import JupyterIcon from "../icons/JupyterIcon.astro";
 import CodeIcon from "../icons/Code.astro";
+import DatabaseIcon from "../icons/DatabaseIcon.astro";
 import NestJSIcon from "../icons/NestJS.svg";
-import PostgreSQLIcon from "../icons/PostgreSQL.astro";
+import PostgreSQLIcon from "../icons/PostgreSQL.svg";
 import PrismaIcon from "../icons/PrismaIcon.astro";
 import DockerIcon from "../icons/DockerIcon.astro";
 import GitIcon from "../icons/GitIcon.astro";
-import AWSIcon from "../icons/AWSIcon.astro";
-import GoogleCloudIcon from "../icons/GoogleCloudIcon.astro";
+import AWSIcon from "../icons/AWSIcon.svg";
+import GoogleCloudIcon from "../icons/GoogleCloudIcon.svg";
 import VercelIcon from "../icons/VercelIcon.astro";
 import CloudflareIcon from "../icons/CloudflareIcon.astro";
 import PlaywrightIcon from "../icons/PlaywrightIcon.astro";
@@ -28,8 +29,7 @@ import OpenAIIcon from "../icons/OpenAIIcon.astro";
 import DigitalOceanIcon from "../icons/DigitalOceanIcon.astro";
 import ReactNativeIcon from "../icons/ReactNativeIcon.astro";
 import ExpoIcon from "../icons/ExpoIcon.astro";
-import DatabaseIcon from "../icons/PostgreSQL.astro"; // Icono genérico para bases de datos
-import CloudIcon from "../icons/GoogleCloudIcon.astro"; // Icono genérico para cloud
+import CloudIcon from "../icons/CloudIcon.svg"; // Icono genérico para cloud
 import ToolIcon from "../icons/DockerIcon.astro"; // Icono genérico para herramientas
 import MobileIcon from "../icons/ReactNativeIcon.astro"; // Icono genérico para móvil
 
