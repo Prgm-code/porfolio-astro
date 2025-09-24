@@ -47,7 +47,7 @@ const TAGS = {
     name: "Tailwind CSS",
     icon: TailwindIcon,
     class: "size-4",
-  },
+  // },
   TYPESCRIPT: {
     name: "TypeScript",
     icon: TypeScriptIcon,
@@ -269,6 +269,7 @@ export const EXPERIENCE = [
       "Digitalización y automatización de procesos empresariales, desarrollando soluciones de alta recurrencia para laboratorios, mantenimiento naval y gestión bibliotecaria. Manejo de más de 3.000 ingresos mensuales en sistemas críticos.",
     more: "Proyectos desarrollados:\n• Digitalización de laboratorio de análisis químico con trazabilidad completa de parámetros, instrumentos y métodos (Next.js, NestJS, SQL Server, Math.js)\n• PWA para control de mantenimiento de equipamiento naval con gestión de roles y notificaciones (Next.js, PWA, PostgreSQL, Resend)\n• PWA para gestión de préstamos de libros con alertas automáticas y clasificación de imágenes mediante IA (Next.js, TursoDB, Cloudinary, OpenAI, AWS EC2)\n• Plataforma PWA para seguimiento GPS de embarcaciones en tiempo real con mapas interactivos y capas KMZ (Next.js, TursoDB, Leaflet, AWS)",
   },
+
   {
     date: "Febrero 2009 - Enero 2023",
     title: "Ingeniero de Campo | Claro Chile SA",
@@ -359,6 +360,7 @@ export const EDUCATION = [
       "Gestión de análisis de datos a gran escala",
     ],
   },
+
   {
     title: "Ingeniería Electrónica",
     institution: "Universidad de la Frontera",

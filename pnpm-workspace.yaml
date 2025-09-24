@@ -1,7 +1,2 @@
-minimumReleaseAge: 2880
-
-onlyBuiltDependencies:
-  - '@tailwindcss/oxide'
-  - esbuild
-  - sharp
-  - tsparticles-engine
+packages:
+  - "."
