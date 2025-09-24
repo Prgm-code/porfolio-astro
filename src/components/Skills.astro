@@ -1,5 +1,18 @@
 ---
-import { SKILLS } from "../utils/data.ts";
+import { SKILLS } from "../utils/data";
+
+// Función para asignar colores a las categorías
+const getCategoryColor = (title: string) => {
+  const colorMap: Record<string, string> = {
+    "Lenguajes y Frameworks": "text-blue-300",
+    "Frontend y UI": "text-green-300",
+    "Backend y Bases de Datos": "text-purple-300",
+    "Cloud e Infraestructura": "text-cyan-300",
+    "Herramientas y Tecnologías": "text-pink-300",
+    "Móvil y Otros": "text-indigo-300",
+  };
+  return colorMap[title] || "text-yellow-200";
+};
 ---
 
 <div
@@ -8,7 +21,9 @@ import { SKILLS } from "../utils/data.ts";
   {
     SKILLS.map((category) => (
       <div class="bg-gray-800/50 rounded-xl p-6 border border-gray-700/50 hover:border-gray-600/60 transition-all duration-300 hover:shadow-lg hover:shadow-gray-900/20">
-        <h3 class="text-lg lg:text-xl font-semibold text-yellow-200 mb-4 flex items-center gap-3">
+        <h3
+          class={`text-lg lg:text-xl font-semibold mb-4 flex items-center gap-3 ${getCategoryColor(category.title)}`}
+        >
           <category.icon class="size-6 lg:size-7" />
           {category.title}
         </h3>

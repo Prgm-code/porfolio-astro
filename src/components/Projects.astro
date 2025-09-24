@@ -1,14 +1,14 @@
 ---
-import { PROJECTS } from "../utils/data.ts";
-import LinkIcon from "../icons/Link.astro";
+import { PROJECTS } from "../utils/data";
+import LinkIcon from "../icons/Link.svg";
 ---
 
 <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
   {
-    PROJECTS.map(({ title, description, tags, image, link }) => (
+    PROJECTS.map(({ title, description, tags, image, images, link }) => (
       <article class="bg-gray-800/30 rounded-xl p-6 border border-gray-700/30 hover:border-gray-600/40 transition-all duration-300">
         <div class="flex items-center align-middle flex-wrap text-pretty mb-4">
-          <h3 class="text-xl lg:text-2xl font-semibold text-yellow-200 mb-2 flex-1">
+          <h3 class="text-xl lg:text-2xl font-semibold text-green-300 mb-2 flex-1">
             {title}
           </h3>
           {link && (
@@ -19,7 +19,7 @@ import LinkIcon from "../icons/Link.astro";
               rel="noopener noreferrer"
               title="Link to project"
             >
-              <LinkIcon class="text-yellow-200 size-6" />
+              <LinkIcon class="text-green-300 size-6" />
             </a>
           )}
         </div>
@@ -34,12 +34,175 @@ import LinkIcon from "../icons/Link.astro";
             </span>
           ))}
         </div>
-        <img
-          class="rounded-lg shadow-xl shadow-black/20 w-full h-48 object-cover"
-          src={image}
-          alt={`Captura de pantalla del proyecto ${title}`}
-        />
+        <div class="relative group">
+          {images && images.length > 1 ? (
+            <!-- Carrusel con autoplay al hover - VERSIÓN DE PRUEBA -->
+            <div
+              id={`carousel-${title.replace(/\s+/g, '-').toLowerCase()}`}
+              class="relative w-full overflow-hidden rounded-lg shadow-xl shadow-black/20 group cursor-pointer"
+            >
+              <!-- Imágenes del carrusel -->
+              <div class="relative h-48 overflow-hidden rounded-lg bg-gray-200">
+                {images.map((img, index) => (
+                  <div
+                    class={`absolute inset-0 transition-opacity duration-500 ${
+                      index === 0 ? 'opacity-100' : 'opacity-0'
+                    }`}
+                    style={`z-index: ${10 - index};`}
+                  >
+                    <img
+                      src={img}
+                      class="w-full h-full object-cover"
+                      alt={`${title} - Imagen ${index + 1}`}
+                      loading="eager"
+                    />
+                      </div>
+                    ))}
+
+                </div>
+
+              <!-- Indicadores discretos -->
+              <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                {images.map((_, index) => (
+                  <div
+                    class={`w-2 h-2 rounded-full transition-colors duration-300 ${
+                      index === 0 ? 'bg-white' : 'bg-white/50'
+                    }`}
+                    data-slide-index={index}
+                  />
+                ))}
+              </div>
+
+              <!-- Barra de progreso -->
+              <div class="absolute bottom-0 z-10 left-0 w-full h-1 bg-gray-200/50 rounded-full overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div class="progress-bar h-full bg-gray-600 rounded-full transition-all duration-75 ease-linear" style="width: 0%;"></div>
+              </div>
+
+   
+            </div>
+          ) : (
+            <img
+              class="shadow-xl shadow-black/20 w-full h-48 object-cover rounded-lg"
+              src={image}
+              alt={`Captura de pantalla del proyecto ${title}`}
+            />
+          )}
+          </div>
+
       </article>
     ))
   }
 </div>
+
+<script>
+  // Inicializar carruseles con autoplay al hover
+  document.addEventListener('DOMContentLoaded', function () {
+    // Obtener todos los carruseles
+    const carousels = document.querySelectorAll('[id^="carousel-"]');
+
+    carousels.forEach(carousel => {
+      const imageContainers = carousel.querySelectorAll('div[class*="absolute inset-0"]');
+      const indicators = carousel.querySelectorAll('[data-slide-index]');
+
+      if (imageContainers.length <= 1) return;
+
+      let currentIndex = 0;
+
+      // Función para mostrar el slide
+      function showSlide(index: number) {
+        // Cambiar opacidad de los contenedores de imagen
+        imageContainers.forEach((container, i) => {
+          if (i === index) {
+            container.classList.remove('opacity-0');
+            container.classList.add('opacity-100');
+          } else {
+            container.classList.remove('opacity-100');
+            container.classList.add('opacity-0');
+          }
+        });
+
+        // Actualizar indicadores
+        indicators.forEach((indicator, i) => {
+          if (i === index) {
+            indicator.className = indicator.className.replace('bg-white/50', 'bg-white');
+          } else {
+            indicator.className = indicator.className.replace('bg-white', 'bg-white/50');
+          }
+        });
+      }
+
+      // Función para ir al siguiente slide
+      function nextSlide() {
+        currentIndex = (currentIndex + 1) % imageContainers.length;
+        showSlide(currentIndex);
+        // Esperar a que termine la transición antes de reiniciar la barra de progreso
+        setTimeout(() => {
+          startProgressBar(carousel);
+        }, 500); // Duración de la transición
+      }
+
+      // Función para animar la barra de progreso
+      function startProgressBar(carouselElement: Element) {
+        const progressBar = carouselElement.querySelector('.progress-bar') as HTMLElement;
+        if (!progressBar) return;
+
+        let startTime = Date.now();
+        const duration = 1200; // Duración del intervalo
+
+        function animate() {
+          const elapsed = Date.now() - startTime;
+          const progress = Math.min((elapsed / duration) * 100, 100);
+
+          progressBar.style.width = `${progress}%`;
+
+          if (progress < 100) {
+            requestAnimationFrame(animate);
+          }
+        }
+
+        // Reiniciar la animación
+        progressBar.style.width = '0%';
+        startTime = Date.now();
+        animate();
+      }
+
+      // Iniciar autoplay al hacer hover
+      carousel.addEventListener('mouseenter', () => {
+        // Empezar autoplay cada 1.2 segundos
+        const interval = setInterval(nextSlide, 1800);
+
+        // Guardar referencia para poder limpiarla después
+        (carousel as any)['carouselInterval'] = interval;
+
+        // Iniciar animación de la barra de progreso después de la transición inicial
+        setTimeout(() => {
+          startProgressBar(carousel);
+        }, 500); // Esperar a que termine la transición inicial
+      });
+
+      // Detener autoplay al salir del hover
+      carousel.addEventListener('mouseleave', () => {
+        // Limpiar el intervalo
+        if ((carousel as any)['carouselInterval']) {
+          clearInterval((carousel as any)['carouselInterval']);
+          delete (carousel as any)['carouselInterval'];
+        }
+
+        // Resetear la barra de progreso
+        const progressBar = carousel.querySelector('.progress-bar') as HTMLElement;
+        if (progressBar) {
+          progressBar.style.width = '0%';
+        }
+
+        // Volver a la primera imagen después de la transición
+        setTimeout(() => {
+          currentIndex = 0;
+          showSlide(currentIndex);
+        }, 500); // Esperar a que termine la transición
+      });
+
+      // Mostrar primera imagen inicialmente
+      showSlide(0);
+    });
+  });
+</script>

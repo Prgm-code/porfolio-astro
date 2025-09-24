@@ -1,37 +1,36 @@
-import TypeScriptIcon from "../icons/TypeScript.astro";
-import WebpackIcon from "../icons/WebPack.astro";
-import NextJSIcon from "../icons/NextJS.astro";
-import ReactIcon from "../icons/React.astro";
+import TypeScriptIcon from "../icons/TypeScript.svg";
+import WebpackIcon from "../icons/WebPack.svg";
+import NextJSIcon from "../icons/NextJS.svg";
+import ReactIcon from "../icons/React.svg";
 import TailwindIcon from "../icons/Tailwind.svg";
-import HTMLIcon from "../icons/HTML.astro";
-import CSSIcon from "../icons/CSS.astro";
+import HTMLIcon from "../icons/HTML.svg";
+import CSSIcon from "../icons/CSS.svg";
 import JavaScriptIcon from "../icons/JavaScript.svg";
-import NodeJSIcon from "../icons/NodeJS.astro";
-import TursoIcon from "../icons/TursoIcon.astro";
-import MongoDBIcon from "../icons/MongoDBIcon.astro";
-import HadoopIcon from "../icons/HadoopIcon.astro";
-import JupyterIcon from "../icons/JupyterIcon.astro";
-import CodeIcon from "../icons/Code.astro";
-import DatabaseIcon from "../icons/DatabaseIcon.astro";
+import NodeJSIcon from "../icons/NodeJS.svg";
+import TursoIcon from "../icons/TursoIcon.svg";
+import MongoDBIcon from "../icons/MongoDBIcon.svg";
+import HadoopIcon from "../icons/HadoopIcon.svg";
+import JupyterIcon from "../icons/JupyterIcon.svg";
+import CodeIcon from "../icons/Code.svg";
+import DatabaseIcon from "../icons/DatabaseIcon.svg";
 import NestJSIcon from "../icons/NestJS.svg";
+import ExpoIcon from "../icons/ExpoIcon.svg";
 import PostgreSQLIcon from "../icons/PostgreSQL.svg";
-import PrismaIcon from "../icons/PrismaIcon.astro";
-import DockerIcon from "../icons/DockerIcon.astro";
-import GitIcon from "../icons/GitIcon.astro";
+import PrismaIcon from "../icons/PrismaIcon.svg";
+import GitIcon from "../icons/GitIcon.svg";
 import AWSIcon from "../icons/AWSIcon.svg";
 import GoogleCloudIcon from "../icons/GoogleCloudIcon.svg";
-import VercelIcon from "../icons/VercelIcon.astro";
-import CloudflareIcon from "../icons/CloudflareIcon.astro";
-import PlaywrightIcon from "../icons/PlaywrightIcon.astro";
-import ClerkIcon from "../icons/ClerkIcon.astro";
-import PythonIcon from "../icons/PythonIcon.astro";
-import OpenAIIcon from "../icons/OpenAIIcon.astro";
-import DigitalOceanIcon from "../icons/DigitalOceanIcon.astro";
-import ReactNativeIcon from "../icons/ReactNativeIcon.astro";
-import ExpoIcon from "../icons/ExpoIcon.astro";
+import VercelIcon from "../icons/VercelIcon.svg";
+import CloudflareIcon from "../icons/CloudflareIcon.svg";
+import PlaywrightIcon from "../icons/PlaywrightIcon.svg";
+import ClerkIcon from "../icons/ClerkIcon.svg";
+import PythonIcon from "../icons/PythonIcon.svg";
+import OpenAIIcon from "../icons/OpenAIIcon.svg";
+import DigitalOceanIcon from "../icons/DigitalOceanIcon.svg";
+import ReactNativeIcon from "../icons/ReactNativeIcon.svg";
 import CloudIcon from "../icons/CloudIcon.svg"; // Icono genérico para cloud
-import ToolIcon from "../icons/DockerIcon.astro"; // Icono genérico para herramientas
-import MobileIcon from "../icons/ReactNativeIcon.astro"; // Icono genérico para móvil
+import ToolIcon from "../icons/ToolIcon.svg"; // Icono genérico para herramientas
+import MobileIcon from "../icons/MobileIcon.svg"; // Icono genérico para móvil
 
 const TAGS = {
   NEXTJS: {
@@ -146,7 +145,7 @@ const TAGS = {
   },
   DOCKER: {
     name: "Docker",
-    icon: DockerIcon,
+    icon: ToolIcon,
     class: "size-4",
   },
   GIT: {
@@ -192,7 +191,11 @@ export const PROJECTS = [
     description:
       "Plataforma completa para el reporte de inspecciones submarinas mediante sónar. Centraliza el manejo de información detallada de trabajos, permite diseño de reportes personalizados y gestiona almacenamiento de imágenes y archivos con control de roles de usuario.",
     link: "https://vlm360.com",
-    image: "/projects/TFM.webp", // Placeholder temporal
+    image: "/src/assets/images/vlm360/vlm360-portada.png",
+    images: [
+      "/src/assets/images/vlm360/vlm360-portada.png",
+      "/src/assets/images/vlm360/vlm360-Contenido.png",
+    ],
     tags: [TAGS.NEXTJS, TAGS.POSTGRESQL, TAGS.GCP, TAGS.CLOUDFLARE],
   },
   {
@@ -200,7 +203,13 @@ export const PROJECTS = [
     description:
       "Plataforma para gestión inteligente de documentos desarrollada en la Hackathon de Clerk. Permite almacenamiento de textos e imágenes con servicio de 'autorag' para crear embeddings, habilitando consultas y búsquedas semánticas a través de chat.",
     link: "https://index0.cc",
-    image: "/projects/TFM2.webp", // Placeholder temporal
+    image: "/src/assets/images/index0/index0-portada.png",
+    images: [
+      "/src/assets/images/index0/index0-portada.png",
+      "/src/assets/images/index0/index0-contenido.png",
+      "/src/assets/images/index0/index0-contenido2.png",
+      "/src/assets/images/index0/index0-contenido3.png",
+    ],
     tags: [TAGS.NEXTJS, TAGS.CLERK, TAGS.CLOUDFLARE, TAGS.VERCEL],
   },
   {
@@ -208,6 +217,7 @@ export const PROJECTS = [
     description:
       "Solución completa para optimizar tareas repetitivas incluyendo administración de documentos, citas y costos. Utiliza Playwright para automatización, backend en NestJS y frontend en Next.js con validaciones de usuario mediante Clerk.",
     image: "/projects/sotex-logo.webp", // Placeholder temporal
+    images: ["/projects/sotex-logo.webp"],
     tags: [TAGS.NEXTJS, TAGS.NESTJS, TAGS.PLAYWRIGHT, TAGS.CLERK],
   },
   {
@@ -215,6 +225,7 @@ export const PROJECTS = [
     description:
       "Digitalización y automatización de laboratorio de análisis químico con más de 3.000 ingresos mensuales. Garantiza trazabilidad completa de parámetros, instrumentos, usuarios y métodos, con cálculos automáticos integrados.",
     image: "/projects/sotex-logo.webp", // Placeholder temporal
+    images: ["/projects/sotex-logo.webp"],
     tags: [TAGS.NEXTJS, TAGS.NESTJS, TAGS.TYPESCRIPT],
   },
   {
@@ -222,6 +233,7 @@ export const PROJECTS = [
     description:
       "Aplicación PWA para control de mantenimiento de equipamiento naval. Permite trazabilidad de reportes de fallas y solicitudes, con gestión de roles, validación por personal de control y sistema de notificaciones por área.",
     image: "/projects/sotex-logo.webp", // Placeholder temporal
+    images: ["/projects/sotex-logo.webp"],
     tags: [TAGS.NEXTJS, TAGS.PWA, TAGS.POSTGRESQL],
   },
   {
@@ -229,6 +241,7 @@ export const PROJECTS = [
     description:
       "Plataforma PWA para seguimiento GPS de embarcaciones en tiempo real utilizando API de servicios de localización. Muestra datos en vivo sobre mapas interactivos con capas de información adicional mediante archivos KMZ.",
     image: "/projects/sotex-logo.webp", // Placeholder temporal
+    images: ["/projects/sotex-logo.webp"],
     tags: [TAGS.NEXTJS, TAGS.PWA, TAGS.TURSO],
   },
   {
@@ -236,6 +249,7 @@ export const PROJECTS = [
     description:
       "Plataforma de análisis de Big Data desarrollada como proyecto final de máster, utilizando un clúster Hadoop. Integra Node.js, React, y JupyterHub para la gestión y análisis de datos a gran escala, permitiendo el procesamiento colaborativo de datos.",
     image: "/projects/TFM.webp",
+    images: ["/projects/TFM.webp"],
     tags: [TAGS.NODEJS, TAGS.REACT, TAGS.HADOOP, TAGS.JUPYTER],
   },
 ];
@@ -315,7 +329,7 @@ export const SKILLS = [
       { name: "Clerk", icon: ClerkIcon },
       { name: "Playwright", icon: PlaywrightIcon },
       { name: "PWA", icon: ReactIcon },
-      { name: "Docker", icon: DockerIcon },
+      { name: "Docker", icon: ToolIcon },
       { name: "Git", icon: GitIcon },
     ],
   },

@@ -1,0 +1,43 @@
+<svg
+  
+  xmlns="http://www.w3.org/2000/svg"
+  width="256"
+  height="256"
+  viewBox="0 0 230 230"
+  preserveAspectRatio="xMidYMid"
+>
+  <polygon
+    fill="#eceff1"
+    points="128,21.333 37.333,74.666 37.333,181.333 128,234.666 218.666,181.333 218.666,74.666"
+  ></polygon>
+  <polygon
+    fill="#0277bd"
+    points="125.333,130.666 125.333,178.666 80,154.666 80,104"></polygon>
+  <polygon
+    fill="#0277bd"
+    points="130.666,130.666 130.666,178.666 176,154.666 176,104"></polygon>
+  <polygon
+    fill="#0277bd"
+    points="128,125.333 82.666,98.666 128,74.666 173.333,98.666"></polygon>
+  <g>
+    <polygon
+      fill="#81d4fa"
+      points="125.333,37.333 125.333,69.333 77.333,96 50.666,80"></polygon>
+    <polygon
+      fill="#81d4fa"
+      points="125.333,218.666 125.333,186.666 77.333,160 50.666,176"></polygon>
+    <polygon
+      fill="#81d4fa"
+      points="74.666,101.333 48,85.333 48,170.666 74.666,154.666"></polygon>
+    <polygon
+      fill="#81d4fa"
+      points="130.666,37.333 130.666,69.333 178.666,96 205.333,80"></polygon>
+    <polygon
+      fill="#81d4fa"
+      points="130.666,218.666 130.666,186.666 178.666,160 205.333,176"
+    ></polygon>
+    <polygon
+      fill="#81d4fa"
+      points="181.333,101.333 208,85.333 208,170.666 181.333,154.666"></polygon>
+  </g>
+</svg>

@@ -1,5 +1,5 @@
 ---
-import { EDUCATION } from "../utils/data.ts";
+import { EDUCATION } from "../utils/data";
 ---
 
 <div class="space-y-6 lg:space-y-8">
@@ -8,7 +8,7 @@ import { EDUCATION } from "../utils/data.ts";
       <div class="bg-gray-800/30 rounded-xl p-6 lg:p-8 border border-gray-700/30 hover:border-gray-600/40 transition-all duration-300">
         <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-6">
           <div class="flex-1">
-            <h3 class="text-xl lg:text-2xl font-semibold text-yellow-200 mb-3">
+            <h3 class="text-xl lg:text-2xl font-semibold text-blue-300 mb-3">
               {item.title}
             </h3>
             <p class="text-blue-300 font-medium text-lg mb-2">
@@ -19,7 +19,7 @@ import { EDUCATION } from "../utils/data.ts";
               <p class="text-gray-300 leading-relaxed">{item.description}</p>
             )}
           </div>
-          <div class="mt-4 lg:mt-0 lg:ml-8 flex-shrink-0">
+          <div class="mt-4 lg:mt-0 lg:ml-8 shrink-0">
             <span class="bg-blue-600/20 text-blue-300 px-4 py-2 rounded-full text-sm font-medium">
               {item.year}
             </span>
