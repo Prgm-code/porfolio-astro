@@ -32,6 +32,14 @@ import CloudIcon from "../icons/CloudIcon.svg"; // Icono genérico para cloud
 import ToolIcon from "../icons/ToolIcon.svg"; // Icono genérico para herramientas
 import MobileIcon from "../icons/MobileIcon.svg"; // Icono genérico para móvil
 
+// Importar imágenes de proyectos
+import Vlm360Portada from "../assets/images/vlm360/vlm360-portada.png";
+import Vlm360Contenido from "../assets/images/vlm360/vlm360-Contenido.png";
+import Index0Portada from "../assets/images/index0/index0-portada.png";
+import Index0Contenido from "../assets/images/index0/index0-contenido.png";
+import Index0Contenido2 from "../assets/images/index0/index0-contenido2.png";
+import Index0Contenido3 from "../assets/images/index0/index0-contenido3.png";
+
 const TAGS = {
   NEXTJS: {
     name: "Next.js",
@@ -191,10 +199,10 @@ export const PROJECTS = [
     description:
       "Plataforma completa para el reporte de inspecciones submarinas mediante sónar. Centraliza el manejo de información detallada de trabajos, permite diseño de reportes personalizados y gestiona almacenamiento de imágenes y archivos con control de roles de usuario.",
     link: "https://vlm360.com",
-    image: "/src/assets/images/vlm360/vlm360-portada.png",
+    image: Vlm360Portada,
     images: [
-      "/src/assets/images/vlm360/vlm360-portada.png",
-      "/src/assets/images/vlm360/vlm360-Contenido.png",
+      Vlm360Portada,
+      Vlm360Contenido,
     ],
     tags: [TAGS.NEXTJS, TAGS.POSTGRESQL, TAGS.GCP, TAGS.CLOUDFLARE],
   },
@@ -203,12 +211,12 @@ export const PROJECTS = [
     description:
       "Plataforma para gestión inteligente de documentos desarrollada en la Hackathon de Clerk. Permite almacenamiento de textos e imágenes con servicio de 'autorag' para crear embeddings, habilitando consultas y búsquedas semánticas a través de chat.",
     link: "https://index0.cc",
-    image: "/src/assets/images/index0/index0-portada.png",
+    image: Index0Portada,
     images: [
-      "/src/assets/images/index0/index0-portada.png",
-      "/src/assets/images/index0/index0-contenido.png",
-      "/src/assets/images/index0/index0-contenido2.png",
-      "/src/assets/images/index0/index0-contenido3.png",
+      Index0Portada,
+      Index0Contenido,
+      Index0Contenido2,
+      Index0Contenido3,
     ],
     tags: [TAGS.NEXTJS, TAGS.CLERK, TAGS.CLOUDFLARE, TAGS.VERCEL],
   },

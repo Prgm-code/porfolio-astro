@@ -3,12 +3,10 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@icons/*": ["./src/icons/*"]
     }
   },
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/*.astro"
-  ]
+  "exclude": ["node_modules", "dist", "**/*.astro"]
 }
