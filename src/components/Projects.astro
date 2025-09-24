@@ -51,12 +51,10 @@ import { Image } from "astro:assets";
                     }`}
                     style={`z-index: ${10 - index};`}
                   >
-                    <Image
+                    <img
                       src={typeof img === 'object' ? img.src : img}
-                    class="w-full h-full object-cover"
+                      class="w-full h-full object-cover"
                       alt={`${title} - Imagen ${index + 1}`}
-                      width={800}
-                      height={600}
                       loading="eager"
                     />
                       </div>
