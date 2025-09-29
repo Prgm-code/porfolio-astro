@@ -46,6 +46,28 @@ import geopMapaMovil from "../assets/images/geop/mapa-telefono.webp";
 import geopMapaDrawer from "../assets/images/geop/mapa-telefono-drawer.webp";
 import geopMapa from "../assets/images/geop/vista-mapa.webp";
 
+import reactiveSpaContacto from "../assets/images/reactivespa/reactive-contacto.webp";
+import reactiveSpaHome from "../assets/images/reactivespa/reactive-home.webp";
+import reactiveSpaServicios from "../assets/images/reactivespa/reactive-servicios.webp";
+import reactiveSpaTecnologias from "../assets/images/reactivespa/reactive-tecnologias.webp";
+
+import rosemarieLandingContacto from "../assets/images/rosemarie-landing/contacto.webp";
+import rosemarieLandingHero from "../assets/images/rosemarie-landing/hero.webp";
+import rosemarieLandingPreguntas from "../assets/images/rosemarie-landing/preguntas.webp";
+import rosemarieLandingServicios from "../assets/images/rosemarie-landing/servicios.webp";
+import rosemarieLandingSobreMi from "../assets/images/rosemarie-landing/sobre-mi.webp";
+
+import chronusCrearBoleta from "../assets/images/chronus/crear-boleta.webp";
+import chronusCrearCliente from "../assets/images/chronus/crear-cliente.webp";
+import chronusInicio from "../assets/images/chronus/inicio.webp";
+
+import relCalculo from "../assets/images/rel/calculo.webp";
+import relControlFormulas from "../assets/images/rel/control-formulas.webp";
+import relListadoAnalisis from "../assets/images/rel/listado-analisis-claro.webp";
+import relListadoClaro from "../assets/images/rel/listado-claro.webp";
+import relListadoAnalisisOscuro from "../assets/images/rel/listado-analisis-oscuro.webp";
+import relPestañas from "../assets/images/rel/pestañas.webp";
+
 const TAGS = {
   NEXTJS: {
     name: "Next.js",
@@ -85,6 +107,11 @@ const TAGS = {
   JAVASCRIPT: {
     name: "JavaScript",
     icon: JavaScriptIcon,
+    class: "size-4",
+  },
+  ASTRO: {
+    name: "Astro",
+    icon: CodeIcon,
     class: "size-4",
   },
   NODEJS: {
@@ -224,27 +251,56 @@ export const PROJECTS = [
     tags: [TAGS.NEXTJS, TAGS.CLERK, TAGS.CLOUDFLARE, TAGS.VERCEL],
   },
   {
-    title: "Plataforma de Automatización de Gestión",
+    title: "Plataforma de Automatización de Gestión Chronus",
     description:
       "Solución completa para optimizar tareas repetitivas incluyendo administración de documentos, citas y costos. Utiliza Playwright para automatización, backend en NestJS y frontend en Next.js con validaciones de usuario mediante Clerk.",
-    image: "/projects/sotex-logo.webp", // Placeholder temporal
-    images: ["/projects/sotex-logo.webp"],
+    image: chronusInicio,
+    images: [chronusInicio, chronusCrearCliente, chronusCrearBoleta],
     tags: [TAGS.NEXTJS, TAGS.NESTJS, TAGS.PLAYWRIGHT, TAGS.CLERK],
   },
-  // {
-  //   title: "Landig Page ReactiveSpa.cl",
-  //   description:
-  //     "Landing page para la empresa ReactiveSpa.cl. Diseño responsive y funcional con tecnologías modernas como Astro y Tailwind CSS.",
-  //   image: "#", // Placeholder temporal
-  //   images: ["/projects/sotex-logo.webp"],
-  //   tags: [TAGS.NEXTJS, TAGS.TAILWIND],
-  // },
+  {
+    title: "Landing Page ReactiveSpa.cl",
+    description:
+      "Landing page moderna para la empresa ReactiveSpa.cl. Diseño responsive y funcional con efectos visuales interactivos utilizando particles.js y Three.js para crear una experiencia inmersiva y atractiva.",
+    link: "https://reactivespa.cl",
+    image: reactiveSpaHome,
+    images: [
+      reactiveSpaHome,
+      reactiveSpaServicios,
+      reactiveSpaTecnologias,
+      reactiveSpaContacto,
+    ],
+    tags: [TAGS.ASTRO, TAGS.TAILWIND, TAGS.JAVASCRIPT],
+  },
+  {
+    title: "Landing Page RosemarieJara.cl",
+    description:
+      "Sitio web profesional para servicios de psicología y terapia. Diseño elegante y accesible que transmite confianza y profesionalismo, optimizado para conversión y experiencia de usuario.",
+    link: "https://rosemariejara.cl",
+    image: rosemarieLandingHero,
+    images: [
+      rosemarieLandingHero,
+      rosemarieLandingSobreMi,
+      rosemarieLandingServicios,
+      rosemarieLandingPreguntas,
+      rosemarieLandingContacto,
+    ],
+    tags: [TAGS.ASTRO, TAGS.TAILWIND],
+  },
   {
     title: "Registro Electronico de Laboratorios (REL) - Gelymar",
     description:
       "Digitalización y automatización de laboratorio de análisis químico con más de 3.000 ingresos mensuales. Garantiza trazabilidad completa de parámetros, instrumentos, usuarios y métodos, con cálculos automáticos integrados.",
-    image: "/projects/sotex-logo.webp", // Placeholder temporal
-    images: ["/projects/sotex-logo.webp"],
+    image: relListadoAnalisis,
+    images: [
+      relListadoAnalisis,
+      relListadoClaro,
+      relListadoAnalisisOscuro,
+      relPestañas,
+      relControlFormulas,
+      relCalculo,
+      relListadoAnalisisOscuro,
+    ],
     tags: [TAGS.NEXTJS, TAGS.NESTJS, TAGS.TYPESCRIPT],
   },
   {
