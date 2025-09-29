@@ -33,12 +33,18 @@ import ToolIcon from "../icons/ToolIcon.svg"; // Icono genérico para herramient
 import MobileIcon from "../icons/MobileIcon.svg"; // Icono genérico para móvil
 
 // Importar imágenes de proyectos
-import Vlm360Portada from "../assets/images/vlm360/vlm360-portada.png";
-import Vlm360Contenido from "../assets/images/vlm360/vlm360-Contenido.png";
-import Index0Portada from "../assets/images/index0/index0-portada.png";
-import Index0Contenido from "../assets/images/index0/index0-contenido.png";
-import Index0Contenido2 from "../assets/images/index0/index0-contenido2.png";
-import Index0Contenido3 from "../assets/images/index0/index0-contenido3.png";
+import Vlm360Portada from "../assets/images/vlm360/vlm360-portada.webp";
+import Vlm360Contenido from "../assets/images/vlm360/vlm360-Contenido.webp";
+
+import Index0Portada from "../assets/images/index0/index0-portada.webp";
+import Index0Contenido from "../assets/images/index0/index0-contenido.webp";
+import Index0Contenido2 from "../assets/images/index0/index0-contenido2.webp";
+import Index0Contenido3 from "../assets/images/index0/index0-contenido3.webp";
+
+import geopMapaEscritorio from "../assets/images/geop/mapa-escritorio.webp";
+import geopMapaMovil from "../assets/images/geop/mapa-telefono.webp";
+import geopMapaDrawer from "../assets/images/geop/mapa-telefono-drawer.webp";
+import geopMapa from "../assets/images/geop/vista-mapa.webp";
 
 const TAGS = {
   NEXTJS: {
@@ -200,10 +206,7 @@ export const PROJECTS = [
       "Plataforma completa para el reporte de inspecciones submarinas mediante sónar. Centraliza el manejo de información detallada de trabajos, permite diseño de reportes personalizados y gestiona almacenamiento de imágenes y archivos con control de roles de usuario.",
     link: "https://vlm360.com",
     image: Vlm360Portada,
-    images: [
-      Vlm360Portada,
-      Vlm360Contenido,
-    ],
+    images: [Vlm360Portada, Vlm360Contenido],
     tags: [TAGS.NEXTJS, TAGS.POSTGRESQL, TAGS.GCP, TAGS.CLOUDFLARE],
   },
   {
@@ -228,8 +231,16 @@ export const PROJECTS = [
     images: ["/projects/sotex-logo.webp"],
     tags: [TAGS.NEXTJS, TAGS.NESTJS, TAGS.PLAYWRIGHT, TAGS.CLERK],
   },
+  // {
+  //   title: "Landig Page ReactiveSpa.cl",
+  //   description:
+  //     "Landing page para la empresa ReactiveSpa.cl. Diseño responsive y funcional con tecnologías modernas como Astro y Tailwind CSS.",
+  //   image: "#", // Placeholder temporal
+  //   images: ["/projects/sotex-logo.webp"],
+  //   tags: [TAGS.NEXTJS, TAGS.TAILWIND],
+  // },
   {
-    title: "Laboratorio Químico Digital - Sotex",
+    title: "Registro Electronico de Laboratorios (REL) - Gelymar",
     description:
       "Digitalización y automatización de laboratorio de análisis químico con más de 3.000 ingresos mensuales. Garantiza trazabilidad completa de parámetros, instrumentos, usuarios y métodos, con cálculos automáticos integrados.",
     image: "/projects/sotex-logo.webp", // Placeholder temporal
@@ -237,7 +248,7 @@ export const PROJECTS = [
     tags: [TAGS.NEXTJS, TAGS.NESTJS, TAGS.TYPESCRIPT],
   },
   {
-    title: "PWA Mantenimiento Naval",
+    title: "PWA Mantenimiento Naval ",
     description:
       "Aplicación PWA para control de mantenimiento de equipamiento naval. Permite trazabilidad de reportes de fallas y solicitudes, con gestión de roles, validación por personal de control y sistema de notificaciones por área.",
     image: "/projects/sotex-logo.webp", // Placeholder temporal
@@ -249,7 +260,7 @@ export const PROJECTS = [
     description:
       "Plataforma PWA para seguimiento GPS de embarcaciones en tiempo real utilizando API de servicios de localización. Muestra datos en vivo sobre mapas interactivos con capas de información adicional mediante archivos KMZ.",
     image: "/projects/sotex-logo.webp", // Placeholder temporal
-    images: ["/projects/sotex-logo.webp"],
+    images: [geopMapaEscritorio, geopMapaMovil, geopMapaDrawer, geopMapa],
     tags: [TAGS.NEXTJS, TAGS.PWA, TAGS.TURSO],
   },
   {
