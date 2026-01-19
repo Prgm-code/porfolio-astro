@@ -6,8 +6,23 @@ import WhatsAppIcon from "../icons/WhatsApp.svg?raw";
 import { HERO_DATA } from "../utils/data";
 ---
 
-<section id="hero" class="min-h-screen flex items-center px-4 sm:px-6 lg:px-8 py-24 lg:py-0">
-  <div class="max-w-6xl mx-auto w-full">
+<section id="hero" class="relative min-h-screen flex items-center px-4 sm:px-6 lg:px-8 py-24 lg:py-0 overflow-hidden">
+  <!-- Simple CSS Particles Background (Performance optimized) -->
+  <div class="particles-container absolute inset-0 z-0">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <!-- Gradient overlay -->
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(0,60,80,0.25),rgba(0,0,0,0))] z-0"></div>
+
+  <div class="max-w-6xl mx-auto w-full relative z-10">
     <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
       <!-- Text Column -->
       <div class="order-2 lg:order-1 text-center lg:text-left">
@@ -84,12 +99,9 @@ import { HERO_DATA } from "../utils/data";
         <div class="animate animate-delay-500">
           <a
             href="#about"
-            class="btn-primary inline-flex items-center gap-2 text-sm md:text-base"
+            class="btn-primary inline-flex items-center text-sm md:text-base"
           >
             Leer Más
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
           </a>
         </div>
       </div>
@@ -114,6 +126,57 @@ import { HERO_DATA } from "../utils/data";
     </div>
   </div>
 </section>
+
+<style>
+  /* Simple CSS-based particles - no JS, very lightweight */
+  .particles-container {
+    pointer-events: none;
+  }
+  
+  .particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: rgba(0, 212, 255, 0.6);
+    border-radius: 50%;
+    animation: float 20s infinite;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.5), 0 0 20px rgba(0, 212, 255, 0.3);
+  }
+  
+  .particle:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; animation-duration: 25s; width: 4px; height: 4px; }
+  .particle:nth-child(2) { left: 20%; top: 60%; animation-delay: -3s; animation-duration: 22s; width: 8px; height: 8px; }
+  .particle:nth-child(3) { left: 35%; top: 30%; animation-delay: -5s; animation-duration: 28s; width: 5px; height: 5px; }
+  .particle:nth-child(4) { left: 50%; top: 70%; animation-delay: -2s; animation-duration: 24s; width: 7px; height: 7px; }
+  .particle:nth-child(5) { left: 65%; top: 25%; animation-delay: -7s; animation-duration: 26s; width: 4px; height: 4px; }
+  .particle:nth-child(6) { left: 75%; top: 55%; animation-delay: -4s; animation-duration: 23s; width: 6px; height: 6px; }
+  .particle:nth-child(7) { left: 85%; top: 40%; animation-delay: -1s; animation-duration: 27s; width: 5px; height: 5px; }
+  .particle:nth-child(8) { left: 90%; top: 80%; animation-delay: -6s; animation-duration: 21s; width: 8px; height: 8px; }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0) translateX(0);
+      opacity: 0.6;
+    }
+    25% {
+      transform: translateY(-50px) translateX(20px);
+      opacity: 0.9;
+    }
+    50% {
+      transform: translateY(-25px) translateX(-25px);
+      opacity: 0.5;
+    }
+    75% {
+      transform: translateY(-60px) translateX(15px);
+      opacity: 0.8;
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .particle {
+      animation: none;
+    }
+  }
+</style>
 
 <script>
   const observerOptions = {

@@ -1,5 +1,6 @@
 ---
 import GithubIcon from "../icons/GitHub.svg?raw";
+import AstroIcon from "../icons/AstroIcon.svg?raw";
 ---
 
 <footer
@@ -12,7 +13,7 @@ import GithubIcon from "../icons/GitHub.svg?raw";
     <p
       class="text-sm text-[var(--color-text-secondary)] text-center md:text-left"
     >
-      © 2025 <span class="text-[var(--color-primary)]">Patricio Gómez</span>.
+      © {new Date().getFullYear()} <span class="text-[var(--color-primary)]">Patricio Gómez</span>.
       Todos los derechos reservados.
     </p>
 
@@ -26,15 +27,23 @@ import GithubIcon from "../icons/GitHub.svg?raw";
     <!-- Links -->
     <div class="flex items-center gap-4">
       <a
+        href="https://astro.build/"
+        target="_blank"
+        class="flex items-center gap-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
+      >
+        <span class="flex items-center gap-1">
+          Built with
+          <span class="w-4 h-4 flex items-center justify-center [&>svg]:w-full [&>svg]:h-full" set:html={AstroIcon} />
+          Astro
+        </span>
+      </a>
+      <a
         href="https://github.com/Prgm-code/porfolio-astro"
         target="_blank"
         rel="noopener noreferrer"
         class="flex items-center gap-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
       >
-        <span
-          class="w-4 h-4 flex items-center justify-center [&>svg]:w-full [&>svg]:h-full"
-          set:html={GithubIcon}
-        />
+        <span class="w-4 h-4 flex items-center justify-center [&>svg]:w-full [&>svg]:h-full" set:html={GithubIcon} />
         View Code
       </a>
     </div>

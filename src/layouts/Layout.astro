@@ -3,7 +3,6 @@ import "@/styles/global.css";
 import "@fontsource-variable/onest";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import ParticleComponentAstro from "../components/ParticlesComponent.astro";
 import Analytics from "@vercel/analytics/astro";
 
 interface Props {
@@ -57,24 +56,16 @@ const { title, description } = Astro.props;
     <meta name="theme-color" content="#0a0a0a" />
     <meta name="msapplication-TileColor" content="#0a0a0a" />
   </head>
-  <body class="overflow-x-hidden">
-    <div
-      class="fixed top-0 left-0 z-[-2] h-screen w-full bg-[#0a0a0a] bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(0,60,80,0.25),rgba(0,0,0,0))]"
-    >
-      <ParticleComponentAstro
-        class="bg-transparent w-full h-full"
-        id="particles"
-      />
-    </div>
-    <div id="content" class="relative z-10 min-h-screen">
-      <Header />
+  <body class="overflow-x-hidden bg-[#0a0a0a]">
+    <Header />
+    <main>
       <slot />
-      <Footer />
-    </div>
+    </main>
+    <Footer />
   </body>
 </html>
+
 <style is:global>
-  /* Evitar overflow horizontal */
   * {
     box-sizing: border-box;
   }
@@ -85,21 +76,6 @@ const { title, description } = Astro.props;
     margin: 0;
     padding: 0;
   }
-
-  /* Estilo para las partículas */
-  #particles {
-    z-index: -1000 !important;
-  }
-
-  /* Contenido principal */
-  #content {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    min-height: 100vh;
-  }
-
-  /* Color scheme y fuentes */
   :root {
     color-scheme: light dark;
   }
@@ -108,27 +84,14 @@ const { title, description } = Astro.props;
     scroll-behavior: smooth;
   }
   body {
-    background: #050505;
+    background: #0a0a0a;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
   }
-
-  /* Reducir el movimiento para quienes lo prefieren */
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
-    }
-  }
-
-  /* Ajustes para pantallas menores a 500px */
-  @media (max-width: 500px) {
-    .bg-custom-gradient {
-      background-image: radial-gradient(
-        ellipse 100% 200% at 50% 0%,
-        rgba(120, 119, 198, 0.3),
-        rgba(255, 255, 255, 0)
-      );
     }
   }
 </style>

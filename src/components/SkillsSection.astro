@@ -1,0 +1,54 @@
+---
+import { SKILLS } from "../utils/data";
+---
+
+<section id="skills" class="py-20 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="section-title animate">Habilidades</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {SKILLS.map((category, index) => (
+        <div 
+          class={`glass-card p-6 animate animate-delay-${(index % 3 + 1) * 100}`}
+        >
+          <!-- Category Header -->
+          <div class="flex items-center gap-3 mb-4">
+            <span class="w-8 h-8 text-[var(--color-primary)] flex items-center justify-center [&>svg]:w-full [&>svg]:h-full" set:html={category.icon} />
+            <h3 class="text-lg font-semibold text-white">
+              {category.title}
+            </h3>
+          </div>
+
+          <!-- Skills -->
+          <div class="flex flex-wrap gap-2">
+            {category.skills.map((skill) => (
+              <span class="flex items-center gap-1.5 text-xs py-1.5 px-3 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] border border-[var(--color-primary)]/20 hover:bg-[var(--color-primary)]/20 transition-colors">
+                <span class="w-3.5 h-3.5 flex items-center justify-center [&>svg]:w-full [&>svg]:h-full" set:html={skill.icon} />
+                {skill.name}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('#skills .animate').forEach(el => {
+    observer.observe(el);
+  });
+</script>

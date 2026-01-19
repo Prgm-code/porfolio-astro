@@ -12,7 +12,7 @@
       </a>
 
       <!-- Desktop Navigation -->
-      <ul class="hidden md:flex items-center gap-8">
+      <ul class="hidden lg:flex items-center gap-6">
         <li>
           <a href="#hero" class="nav-link text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors">
             Inicio
@@ -24,13 +24,18 @@
           </a>
         </li>
         <li>
-          <a href="#servicios" class="nav-link text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors">
-            Servicios
+          <a href="#proyects" class="nav-link text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors">
+            Portfolio
           </a>
         </li>
         <li>
-          <a href="#proyects" class="nav-link text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors">
-            Portfolio
+          <a href="#skills" class="nav-link text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors">
+            Habilidades
+          </a>
+        </li>
+        <li>
+          <a href="#educacion" class="nav-link text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors">
+            Educación
           </a>
         </li>
         <li>
@@ -43,7 +48,7 @@
       <!-- Mobile Menu Button -->
       <button 
         id="mobile-menu-btn"
-        class="md:hidden flex flex-col gap-1.5 p-2"
+        class="lg:hidden flex flex-col gap-1.5 p-2"
         aria-label="Toggle menu"
       >
         <span class="w-6 h-0.5 bg-white transition-all duration-300 origin-center" id="bar1"></span>
@@ -56,20 +61,23 @@
   <!-- Mobile Menu -->
   <div 
     id="mobile-menu"
-    class="md:hidden fixed inset-0 top-20 bg-[var(--color-bg)]/95 backdrop-blur-xl z-40 opacity-0 pointer-events-none transition-opacity duration-300"
+    class="lg:hidden fixed inset-0 top-20 bg-[var(--color-bg)]/95 backdrop-blur-xl z-40 opacity-0 pointer-events-none transition-opacity duration-300"
   >
-    <nav class="flex flex-col items-center justify-center h-full gap-8">
+    <nav class="flex flex-col items-center justify-center h-full gap-6">
       <a href="#hero" class="mobile-nav-link text-2xl font-medium text-white hover:text-[var(--color-primary)] transition-colors">
         Inicio
       </a>
       <a href="#about" class="mobile-nav-link text-2xl font-medium text-white hover:text-[var(--color-primary)] transition-colors">
         Sobre Mí
       </a>
-      <a href="#servicios" class="mobile-nav-link text-2xl font-medium text-white hover:text-[var(--color-primary)] transition-colors">
-        Servicios
-      </a>
       <a href="#proyects" class="mobile-nav-link text-2xl font-medium text-white hover:text-[var(--color-primary)] transition-colors">
         Portfolio
+      </a>
+      <a href="#skills" class="mobile-nav-link text-2xl font-medium text-white hover:text-[var(--color-primary)] transition-colors">
+        Habilidades
+      </a>
+      <a href="#educacion" class="mobile-nav-link text-2xl font-medium text-white hover:text-[var(--color-primary)] transition-colors">
+        Educación
       </a>
       <a href="#contacto" class="mobile-nav-link text-2xl font-medium text-white hover:text-[var(--color-primary)] transition-colors">
         Contacto

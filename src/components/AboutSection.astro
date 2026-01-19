@@ -1,5 +1,5 @@
 ---
-import { ABOUT_DATA } from "../utils/data";
+import { ABOUT_DATA, EXPERIENCE } from "../utils/data";
 ---
 
 <section id="about" class="py-20 px-4 sm:px-6 lg:px-8">
@@ -20,13 +20,13 @@ import { ABOUT_DATA } from "../utils/data";
               loading="lazy"
             />
             
-            <!-- Read More Badge -->
-            <a 
-              href="#experiencia" 
-              class="absolute -bottom-4 left-1/2 -translate-x-1/2 btn-primary text-sm whitespace-nowrap"
+            <!-- Button to open modal -->
+            <button 
+              id="open-experience-modal"
+              class="absolute -bottom-4 left-1/2 -translate-x-1/2 btn-primary text-sm whitespace-nowrap cursor-pointer"
             >
               Ver experiencia
-            </a>
+            </button>
           </div>
         </div>
       </div>
@@ -63,10 +63,135 @@ import { ABOUT_DATA } from "../utils/data";
   </div>
 </section>
 
+<!-- Experience Modal -->
+<div id="experience-modal" class="modal-overlay">
+  <div class="modal-content glass-card">
+    <button id="close-experience-modal" class="modal-close">&times;</button>
+    <h2 class="text-2xl font-bold text-white mb-6">Experiencia Laboral</h2>
+    
+    <div class="experience-list">
+      {EXPERIENCE.map((exp) => (
+        <div class="experience-item">
+          <div class="experience-date">{exp.date}</div>
+          <h3 class="experience-title">{exp.title}</h3>
+          <p class="experience-description">{exp.description}</p>
+          <div class="experience-details">
+            {exp.more.split('\n').map((line) => (
+              <p class="experience-detail-line">{line}</p>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
 <style>
   .section-title::after {
     left: 0;
     transform: none;
+  }
+
+  /* Modal Styles */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    padding: 1rem;
+  }
+
+  .modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .modal-content {
+    position: relative;
+    max-width: 800px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 2rem;
+    border-radius: 1rem;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+  }
+
+  .modal-overlay.active .modal-content {
+    transform: scale(1);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--color-text-secondary);
+    font-size: 2rem;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s ease;
+  }
+
+  .modal-close:hover {
+    color: var(--color-primary);
+  }
+
+  .experience-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .experience-item {
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .experience-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .experience-date {
+    color: var(--color-primary);
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .experience-title {
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+
+  .experience-description {
+    color: var(--color-text-secondary);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+
+  .experience-details {
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+  }
+
+  .experience-detail-line {
+    margin-bottom: 0.25rem;
   }
 </style>
 
@@ -86,5 +211,34 @@ import { ABOUT_DATA } from "../utils/data";
 
   document.querySelectorAll('#about .animate-left, #about .animate-right').forEach(el => {
     observer.observe(el);
+  });
+
+  // Modal functionality
+  const modal = document.getElementById('experience-modal');
+  const openBtn = document.getElementById('open-experience-modal');
+  const closeBtn = document.getElementById('close-experience-modal');
+
+  openBtn?.addEventListener('click', () => {
+    modal?.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  });
+
+  closeBtn?.addEventListener('click', () => {
+    modal?.classList.remove('active');
+    document.body.style.overflow = '';
+  });
+
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal?.classList.contains('active')) {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
   });
 </script>
