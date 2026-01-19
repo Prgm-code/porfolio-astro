@@ -7,7 +7,7 @@ import { ABOUT_DATA, EXPERIENCE } from "../utils/data";
     <div class="grid lg:grid-cols-2 gap-12 items-center">
       <!-- Image Column -->
       <div class="animate-left relative order-2 lg:order-1">
-        <div class="relative">
+        <div class="relative max-w-xs sm:max-w-sm mx-auto lg:max-w-none">
           <!-- Decorative gradient background -->
           <div class="absolute -inset-4 bg-gradient-to-br from-cyan-500/20 to-blue-600/10 rounded-2xl blur-xl"></div>
           
@@ -33,15 +33,11 @@ import { ABOUT_DATA, EXPERIENCE } from "../utils/data";
 
       <!-- Content Column -->
       <div class="order-1 lg:order-2">
-        <h2 class="section-title text-left !mb-6 animate-right">
+        <h2 class="section-title !mb-6 animate-right lg:text-left">
           Sobre Mí
         </h2>
 
-        <h3 class="animate-right animate-delay-100 text-xl md:text-2xl font-semibold text-white mb-4">
-          {ABOUT_DATA.title}
-        </h3>
-
-        <p class="animate-right animate-delay-200 text-[var(--color-text-secondary)] text-base md:text-lg leading-relaxed mb-8">
+        <p class="animate-right animate-delay-100 text-[var(--color-text-secondary)] text-base md:text-lg leading-relaxed mb-8">
           {ABOUT_DATA.description}
         </p>
 
@@ -87,9 +83,11 @@ import { ABOUT_DATA, EXPERIENCE } from "../utils/data";
 </div>
 
 <style>
-  .section-title::after {
-    left: 0;
-    transform: none;
+  @media (min-width: 1024px) {
+    .section-title.lg\\:text-left::after {
+      left: 0;
+      transform: none;
+    }
   }
 
   /* Modal Styles */

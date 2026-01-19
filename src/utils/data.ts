@@ -32,6 +32,8 @@ import ReactNativeIcon from "../icons/ReactNativeIcon.svg?raw";
 import CloudIcon from "../icons/CloudIcon.svg?raw"; // Icono genérico para cloud
 import ToolIcon from "../icons/ToolIcon.svg?raw"; // Icono genérico para herramientas
 import MobileIcon from "../icons/MobileIcon.svg?raw"; // Icono genérico para móvil
+import ConvexIcon from "../icons/ConvexIcon.svg?raw"; // Icono genérico para convex
+import DockerIcon from "../icons/DockerIcon.svg?raw";
 
 // Importar imágenes de proyectos
 import Vlm360Portada from "../assets/images/vlm360/vlm360-portada.webp";
@@ -91,7 +93,7 @@ export const HERO_DATA = {
 // ABOUT SECTION DATA
 // ============================================
 export const ABOUT_DATA = {
-  title: "Sobre Mí",
+  title: "Desarrollador Full Stack",
   description:
     "Soy Ingeniero Electrónico de la Universidad de la Frontera y cuento con un Máster en Desarrollo Web Full Stack de Three Points en Barcelona. Trabajé más de 14 años en telecomunicaciones antes de dedicarme al desarrollo web. Actualmente construyo aplicaciones fullstack, desde el diseño hasta el desarrollo y despliegue.",
   image: "https://avatars.githubusercontent.com/u/107218376?v=4",
@@ -295,7 +297,7 @@ const TAGS = {
   },
   REACTNATIVE: {
     name: "React Native",
-    icon: ReactNativeIcon,
+    icon: ReactIcon,
     class: "size-4",
   },
   EXPO: {
@@ -459,6 +461,7 @@ export const SKILLS = [
     title: "Backend y Bases de Datos",
     icon: DatabaseIcon,
     skills: [
+      { name: "Convex", icon: ConvexIcon },
       { name: "PostgreSQL", icon: PostgreSQLIcon },
       { name: "MongoDB", icon: MongoDBIcon },
       { name: "Prisma", icon: PrismaIcon },
@@ -483,7 +486,7 @@ export const SKILLS = [
       { name: "Clerk", icon: ClerkIcon },
       { name: "Playwright", icon: PlaywrightIcon },
       { name: "PWA", icon: ReactIcon },
-      { name: "Docker", icon: ToolIcon },
+      { name: "Docker", icon: DockerIcon },
       { name: "Git", icon: GitIcon },
     ],
   },
@@ -491,7 +494,7 @@ export const SKILLS = [
     title: "Móvil y Otros",
     icon: MobileIcon,
     skills: [
-      { name: "React Native", icon: ReactNativeIcon },
+      { name: "React Native", icon: ReactIcon },
       { name: "Expo", icon: ExpoIcon },
       { name: "Python", icon: PythonIcon },
       { name: "OpenAI", icon: OpenAIIcon },

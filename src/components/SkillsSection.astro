@@ -5,27 +5,36 @@ import { SKILLS } from "../utils/data";
 <section id="skills" class="py-20 px-4 sm:px-6 lg:px-8">
   <div class="max-w-6xl mx-auto">
     <h2 class="section-title animate">Habilidades</h2>
+    
+    <p class="animate animate-delay-100 text-center text-[var(--color-text-secondary)] text-lg mb-12 max-w-2xl mx-auto">
+      Tecnologías y herramientas que utilizo para construir soluciones digitales de alto rendimiento.
+    </p>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {SKILLS.map((category, index) => (
-        <div 
-          class={`glass-card p-6 animate animate-delay-${(index % 3 + 1) * 100}`}
-        >
+    <div class="space-y-12">
+      {SKILLS.map((category, categoryIndex) => (
+        <div class={`animate animate-delay-${(categoryIndex % 3 + 1) * 100}`}>
           <!-- Category Header -->
-          <div class="flex items-center gap-3 mb-4">
-            <span class="w-8 h-8 text-[var(--color-primary)] flex items-center justify-center [&>svg]:w-full [&>svg]:h-full" set:html={category.icon} />
-            <h3 class="text-lg font-semibold text-white">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="w-10 h-10 text-[var(--color-primary)] flex items-center justify-center [&>svg]:w-full [&>svg]:h-full" set:html={category.icon} />
+            <h3 class="text-xl font-semibold text-white">
               {category.title}
             </h3>
           </div>
 
-          <!-- Skills -->
-          <div class="flex flex-wrap gap-2">
-            {category.skills.map((skill) => (
-              <span class="flex items-center gap-1.5 text-xs py-1.5 px-3 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] border border-[var(--color-primary)]/20 hover:bg-[var(--color-primary)]/20 transition-colors">
-                <span class="w-3.5 h-3.5 flex items-center justify-center [&>svg]:w-full [&>svg]:h-full" set:html={skill.icon} />
-                {skill.name}
-              </span>
+          <!-- Skills Grid -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {category.skills.map((skill, skillIndex) => (
+              <div 
+                class="glass-card p-4 flex flex-col items-center justify-center gap-3 group hover:border-[var(--color-primary)]/40 transition-all duration-300 hover:scale-105"
+              >
+                <span 
+                  class="w-10 h-10 flex items-center justify-center [&>svg]:w-full [&>svg]:h-full text-white group-hover:text-[var(--color-primary)] transition-colors" 
+                  set:html={skill.icon} 
+                />
+                <span class="text-sm text-center text-[var(--color-text-secondary)] group-hover:text-white transition-colors font-medium">
+                  {skill.name}
+                </span>
+              </div>
             ))}
           </div>
         </div>
