@@ -1,45 +1,42 @@
 ---
-import GithubIcon from "../icons/GitHub.svg";
-import AstroIcon from "../icons/AstroIcon.svg";
+import GithubIcon from "../icons/GitHub.svg?raw";
 ---
 
-<footer class="rounded-lg mx-4 sm:mx-6 lg:mx-8 my-10">
-  <div class="w-full p-4 md:flex md:items-center md:justify-between opacity-80">
-    <span class="text-sm sm:text-center text-yellow-200/80">
-      2025 <a
-        href="https://github.com/Prgm-code/"
-        target="_blank"
-        class="hover:underline">PRGM-Code</a
-      >. MIT Licensed
-      <span class="text-indigo-200/50 hidden sm:inline"
-        >Based on original work by <a
-          href="https://github.com/midudev"
-          target="_blank"
-          rel="noopener noreferrer">@midudev</a
-        >.</span
-      >
-    </span>
-    <ul
-      class="flex flex-wrap items-center mt-3 text-sm font-medium text-white/90 sm:mt-0"
+<footer
+  class="py-8 px-4 sm:px-6 lg:px-8 border-t border-[var(--color-card-border)]"
+>
+  <div
+    class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4"
+  >
+    <!-- Copyright -->
+    <p
+      class="text-sm text-[var(--color-text-secondary)] text-center md:text-left"
     >
-      <li>
-        <a
-          href="https://astro.build/"
-          target="_blank"
-          class="hover:underline me-4 md:me-6 flex flex-row items-center gap-x-1"
-          >Build with <span class="flex flex-row items-center"
-            ><AstroIcon class="size-5 text-white" />astro
-          </span></a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/Prgm-code/porfolio-astro"
-          target="_blank"
-          class="hover:underline me-4 md:me-6 flex flex-row items-center gap-x-1"
-          ><GithubIcon class="size-5" />View Code</a
-        >
-      </li>
-    </ul>
+      © 2025 <span class="text-[var(--color-primary)]">Patricio Gómez</span>.
+      Todos los derechos reservados.
+    </p>
+
+    <!-- Made with love -->
+    <p class="text-sm text-[var(--color-text-muted)] flex items-center gap-1">
+      Made with
+      <span class="text-red-500 animate-pulse">❤</span>
+      for amazing clients
+    </p>
+
+    <!-- Links -->
+    <div class="flex items-center gap-4">
+      <a
+        href="https://github.com/Prgm-code/porfolio-astro"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex items-center gap-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
+      >
+        <span
+          class="w-4 h-4 flex items-center justify-center [&>svg]:w-full [&>svg]:h-full"
+          set:html={GithubIcon}
+        />
+        View Code
+      </a>
+    </div>
   </div>
 </footer>

@@ -1,107 +1,160 @@
 ---
 import { PROJECTS } from "../utils/data";
-import LinkIcon from "../icons/Link.svg";
+import LinkIcon from "../icons/Link.svg?raw";
 import { Image } from "astro:assets";
 ---
 
-<div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-  {
-    PROJECTS.map(({ title, description, tags, image, images, link }) => (
-      <article class="flex flex-col justify-between bg-gray-800/30 rounded-xl p-6 border border-gray-700/30 hover:border-gray-600/40 transition-all duration-300">
-        <div class="flex items-center align-middle flex-wrap text-pretty mb-4">
-          <h3 class="text-xl lg:text-2xl font-semibold text-green-300 mb-2 flex-1">
-            {title}
-          </h3>
-          {link && (
-            <a
-              class="transition hover:scale-125 ml-2"
-              href={link}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Link to project"
-            >
-              <LinkIcon class="text-green-300 size-6" />
-            </a>
-          )}
-        </div>
-        <p class="text-base lg:text-lg mb-4 text-pretty text-gray-300 leading-relaxed">
-          {description}
-        </p>
-        <div class="flex flex-wrap gap-2 mb-4">
-          {tags.map((tag) => (
-            <span class="flex items-center gap-2 rounded-full text-xs py-2 px-3 bg-blue-200/20 text-blue-200 transition hover:scale-105">
-              <tag.icon class={`${tag.class} align-middle`} />
-              {tag.name}
-            </span>
-          ))}
-        </div>
-        <div class="relative group">
-          {images && images.length > 1 ? (
-            <!-- Carrusel con autoplay al hover - VERSIÓN DE PRUEBA -->
-            <div
-              id={`carousel-${title.replace(/\s+/g, '-').toLowerCase()}`}
-              class="relative w-full overflow-hidden rounded-lg shadow-xl shadow-black/20 group cursor-pointer"
-            >
-              <!-- Imágenes del carrusel -->
-              <div class="relative h-48 overflow-hidden rounded-lg bg-gray-200">
-                {images.map((img, index) => (
-                  <div
-                    class={`absolute inset-0 transition-opacity duration-500 ${
-                      index === 0 ? 'opacity-100' : 'opacity-0'
-                    }`}
-                    style={`z-index: ${10 - index};`}
-                  >
-                    <img
-                      src={typeof img === 'object' ? img.src : img}
-                      class="w-full h-full object-cover"
-                      alt={`${title} - Imagen ${index + 1}`}
-                      loading="eager"
-                    />
-                      </div>
+<section id="proyects" class="py-20 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="section-title animate">Mi Portafolio</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {
+        PROJECTS.slice(0, 6).map(({ title, description, tags, image, images, link }, index) => (
+          <article 
+            class={`glass-card overflow-hidden group animate animate-delay-${(index % 3 + 1) * 100}`}
+          >
+            <!-- Image Container -->
+            <div class="relative h-48 overflow-hidden">
+              {images && images.length > 1 ? (
+                <div
+                  id={`carousel-${title.replace(/\s+/g, '-').toLowerCase()}`}
+                  class="relative w-full h-full cursor-pointer"
+                >
+                  {images.map((img, imgIndex) => (
+                    <div
+                      class={`absolute inset-0 transition-opacity duration-500 ${
+                        imgIndex === 0 ? 'opacity-100' : 'opacity-0'
+                      }`}
+                      style={`z-index: ${10 - imgIndex};`}
+                    >
+                      <img
+                        src={typeof img === 'object' ? img.src : img}
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        alt={`${title} - Imagen ${imgIndex + 1}`}
+                        loading="lazy"
+                      />
+                    </div>
+                  ))}
+
+                  <!-- Indicators -->
+                  <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-20 opacity-0 group-hover:opacity-100 transition-opacity">
+                    {images.map((_, idx) => (
+                      <div
+                        class={`w-1.5 h-1.5 rounded-full transition-colors ${
+                          idx === 0 ? 'bg-[var(--color-primary)]' : 'bg-white/50'
+                        }`}
+                        data-slide-index={idx}
+                      />
                     ))}
+                  </div>
 
+                  <!-- Progress bar -->
+                  <div class="absolute bottom-0 left-0 w-full h-0.5 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity z-20">
+                    <div class="progress-bar h-full bg-[var(--color-primary)] w-0 transition-all" />
+                  </div>
                 </div>
+              ) : (
+                <img 
+                  src={typeof image === 'object' ? image.src : image}
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  alt={`Captura de proyecto ${title}`}
+                  loading="lazy"
+                />
+              )}
 
-              <!-- Indicadores discretos -->
-              <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                {images.map((_, index) => (
-                  <div
-                    class={`w-2 h-2 rounded-full transition-colors duration-300 ${
-                      index === 0 ? 'bg-white' : 'bg-white/50'
-                    }`}
-                    data-slide-index={index}
-                  />
+              <!-- Gradient Overlay -->
+              <div class="absolute inset-0 bg-gradient-to-t from-[var(--color-bg)] via-transparent to-transparent opacity-60" />
+              
+              <!-- Icon overlay on hover -->
+              <div class="absolute inset-0 bg-[var(--color-primary)]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                {link && (
+                  <a
+                    href={link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="w-12 h-12 rounded-full bg-[var(--color-primary)] flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300"
+                  >
+                    <span class="w-5 h-5 text-[var(--color-bg)] flex items-center justify-center [&>svg]:w-full [&>svg]:h-full" set:html={LinkIcon} />
+                  </a>
+                )}
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="p-5">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="text-lg font-semibold text-white line-clamp-1">
+                  {title}
+                </h3>
+                {link && (
+                  <a
+                    href={link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-[var(--color-primary)] hover:text-[var(--color-primary-light)] transition-colors"
+                    title="Ver proyecto"
+                  >
+                    <span class="w-4 h-4 flex items-center justify-center [&>svg]:w-full [&>svg]:h-full" set:html={LinkIcon} />
+                  </a>
+                )}
+              </div>
+
+              <p class="text-[var(--color-text-secondary)] text-sm mb-4 line-clamp-2">
+                {description}
+              </p>
+
+              <!-- Tags -->
+              <div class="flex flex-wrap gap-2">
+                {tags.slice(0, 3).map((tag) => (
+                  <span class="flex items-center gap-1.5 text-xs py-1 px-2.5 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] border border-[var(--color-primary)]/20">
+                    <span class="w-3 h-3 flex items-center justify-center [&>svg]:w-full [&>svg]:h-full" set:html={tag.icon} />
+                    {tag.name}
+                  </span>
                 ))}
               </div>
 
-              <!-- Barra de progreso -->
-              <div class="absolute bottom-0 z-10 left-0 w-full h-1 bg-gray-200/50 rounded-full overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div class="progress-bar h-full bg-gray-600 rounded-full transition-all duration-75 ease-linear" style="width: 0%;"></div>
-              </div>
-
-   
+              {link && (
+                <a
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="mt-4 inline-flex items-center gap-2 text-sm font-medium text-[var(--color-primary)] hover:text-[var(--color-primary-light)] transition-colors"
+                >
+                  Ver Proyecto
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </a>
+              )}
             </div>
-          ) : (
-            <Image 
-              class="shadow-xl shadow-black/20 w-full h-48 object-contain bg-gray-900/50 rounded-lg"
-              src={typeof image === 'object' ? image.src : image}
-              alt={`Captura de pantalla del proyecto ${title}`} 
-              loading="eager"
-              height={192}
-              width={400}
-            />
-          )}
-          </div>
-
-      </article>
-    ))
-  }
-</div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
 
 <script>
-  // Inicializar carruseles con autoplay al hover
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('#proyects .animate').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Carousel functionality
   document.addEventListener('DOMContentLoaded', function () {
-    // Obtener todos los carruseles
     const carousels = document.querySelectorAll('[id^="carousel-"]');
 
     carousels.forEach(carousel => {
@@ -112,9 +165,7 @@ import { Image } from "astro:assets";
 
       let currentIndex = 0;
 
-      // Función para mostrar el slide
       function showSlide(index: number) {
-        // Cambiar opacidad de los contenedores de imagen
         imageContainers.forEach((container, i) => {
           if (i === index) {
             container.classList.remove('opacity-0');
@@ -125,87 +176,61 @@ import { Image } from "astro:assets";
           }
         });
 
-        // Actualizar indicadores
         indicators.forEach((indicator, i) => {
           if (i === index) {
-            indicator.className = indicator.className.replace('bg-white/50', 'bg-white');
+            indicator.classList.remove('bg-white/50');
+            indicator.classList.add('bg-[var(--color-primary)]');
           } else {
-            indicator.className = indicator.className.replace('bg-white', 'bg-white/50');
+            indicator.classList.remove('bg-[var(--color-primary)]');
+            indicator.classList.add('bg-white/50');
           }
         });
       }
 
-      // Función para ir al siguiente slide
       function nextSlide() {
         currentIndex = (currentIndex + 1) % imageContainers.length;
         showSlide(currentIndex);
-        // Esperar a que termine la transición antes de reiniciar la barra de progreso
-        setTimeout(() => {
-          startProgressBar(carousel);
-        }, 500); // Duración de la transición
+        setTimeout(() => startProgressBar(carousel), 500);
       }
 
-      // Función para animar la barra de progreso
       function startProgressBar(carouselElement: Element) {
         const progressBar = carouselElement.querySelector('.progress-bar') as HTMLElement;
         if (!progressBar) return;
 
         let startTime = Date.now();
-        const duration = 1200; // Duración del intervalo
+        const duration = 1500;
 
         function animate() {
           const elapsed = Date.now() - startTime;
           const progress = Math.min((elapsed / duration) * 100, 100);
-
           progressBar.style.width = `${progress}%`;
-
-          if (progress < 100) {
-            requestAnimationFrame(animate);
-          }
+          if (progress < 100) requestAnimationFrame(animate);
         }
 
-        // Reiniciar la animación
         progressBar.style.width = '0%';
         startTime = Date.now();
         animate();
       }
 
-      // Iniciar autoplay al hacer hover
       carousel.addEventListener('mouseenter', () => {
-        // Empezar autoplay cada 1.2 segundos
-        const interval = setInterval(nextSlide, 1800);
-
-        // Guardar referencia para poder limpiarla después
+        const interval = setInterval(nextSlide, 2000);
         (carousel as any)['carouselInterval'] = interval;
-
-        // Iniciar animación de la barra de progreso después de la transición inicial
-        setTimeout(() => {
-          startProgressBar(carousel);
-        }, 500); // Esperar a que termine la transición inicial
+        setTimeout(() => startProgressBar(carousel), 500);
       });
 
-      // Detener autoplay al salir del hover
       carousel.addEventListener('mouseleave', () => {
-        // Limpiar el intervalo
         if ((carousel as any)['carouselInterval']) {
           clearInterval((carousel as any)['carouselInterval']);
           delete (carousel as any)['carouselInterval'];
         }
-
-        // Resetear la barra de progreso
         const progressBar = carousel.querySelector('.progress-bar') as HTMLElement;
-        if (progressBar) {
-          progressBar.style.width = '0%';
-        }
-
-        // Volver a la primera imagen después de la transición
+        if (progressBar) progressBar.style.width = '0%';
         setTimeout(() => {
           currentIndex = 0;
           showSlide(currentIndex);
-        }, 500); // Esperar a que termine la transición
+        }, 500);
       });
 
-      // Mostrar primera imagen inicialmente
       showSlide(0);
     });
   });

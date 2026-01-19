@@ -1,63 +1,163 @@
 <header
-  <header
   id="main-header"
-  class="fixed top-0 left-0 right-0 py-5 z-50 px-4 sm:px-6 lg:px-8 transition-all duration-300"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
 >
   <div
-    class="w-full bg-transparent rounded-md opacity-90 p-2 transition-all duration-300 border-b-0 border-white/0 header-scrolled:border-b header-scrolled:border-white/10 header-scrolled:backdrop-blur-2xl header-scrolled:opacity-95"
+    class="mx-4 sm:mx-6 lg:mx-8 mt-4 rounded-full px-6 py-3 transition-all duration-300 bg-transparent header-scrolled:bg-[var(--glass-bg)] header-scrolled:backdrop-blur-xl header-scrolled:border header-scrolled:border-[var(--color-card-border)]"
   >
-    <nav class="flex flex-row gap-x-10 opacity-80 flex-wrap justify-center">
-      <a href="#top">Inicio</a>
-      <a href="#experiencia">Experiencia</a>
-      <a href="#proyects">Proyectos</a>
-      <a href="#habilidades">Habilidades</a>
-      <a href="#educacion">Educación</a>
-      <a href="#contacto">Contacto</a>
+    <nav class="flex items-center justify-between max-w-6xl mx-auto">
+      <!-- Logo -->
+      <a href="#hero" class="text-[var(--color-primary)] font-bold text-xl tracking-tight hover:opacity-80 transition-opacity">
+        Prgm<span class="text-white">.cl</span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <ul class="hidden md:flex items-center gap-8">
+        <li>
+          <a href="#hero" class="nav-link text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors">
+            Inicio
+          </a>
+        </li>
+        <li>
+          <a href="#about" class="nav-link text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors">
+            Sobre Mí
+          </a>
+        </li>
+        <li>
+          <a href="#servicios" class="nav-link text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors">
+            Servicios
+          </a>
+        </li>
+        <li>
+          <a href="#proyects" class="nav-link text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors">
+            Portfolio
+          </a>
+        </li>
+        <li>
+          <a href="#contacto" class="nav-link text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors">
+            Contacto
+          </a>
+        </li>
+      </ul>
+
+      <!-- Mobile Menu Button -->
+      <button 
+        id="mobile-menu-btn"
+        class="md:hidden flex flex-col gap-1.5 p-2"
+        aria-label="Toggle menu"
+      >
+        <span class="w-6 h-0.5 bg-white transition-all duration-300 origin-center" id="bar1"></span>
+        <span class="w-6 h-0.5 bg-white transition-all duration-300" id="bar2"></span>
+        <span class="w-6 h-0.5 bg-white transition-all duration-300 origin-center" id="bar3"></span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div 
+    id="mobile-menu"
+    class="md:hidden fixed inset-0 top-20 bg-[var(--color-bg)]/95 backdrop-blur-xl z-40 opacity-0 pointer-events-none transition-opacity duration-300"
+  >
+    <nav class="flex flex-col items-center justify-center h-full gap-8">
+      <a href="#hero" class="mobile-nav-link text-2xl font-medium text-white hover:text-[var(--color-primary)] transition-colors">
+        Inicio
+      </a>
+      <a href="#about" class="mobile-nav-link text-2xl font-medium text-white hover:text-[var(--color-primary)] transition-colors">
+        Sobre Mí
+      </a>
+      <a href="#servicios" class="mobile-nav-link text-2xl font-medium text-white hover:text-[var(--color-primary)] transition-colors">
+        Servicios
+      </a>
+      <a href="#proyects" class="mobile-nav-link text-2xl font-medium text-white hover:text-[var(--color-primary)] transition-colors">
+        Portfolio
+      </a>
+      <a href="#contacto" class="mobile-nav-link text-2xl font-medium text-white hover:text-[var(--color-primary)] transition-colors">
+        Contacto
+      </a>
     </nav>
   </div>
 </header>
 
-<!-- Asegurar que el contenido no esté detrás del header -->
-<div class="pt-[80px]">
-  <!-- Aquí comienza el contenido principal de la página -->
-</div>
-
 <script>
-  // Función para manejar el scroll del header
   function handleScroll() {
     const header = document.getElementById("main-header");
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-    // Si se ha hecho scroll más de 20px, agregar la clase 'header-scrolled'
-    if (scrollTop > 20) {
-      header?.classList.add("header-scrolled");
+    if (scrollTop > 50) {
+      header?.querySelector('div')?.classList.add("header-scrolled");
     } else {
-      header?.classList.remove("header-scrolled");
+      header?.querySelector('div')?.classList.remove("header-scrolled");
     }
   }
 
-  // Agregar el event listener cuando se carga la página
+  function toggleMobileMenu() {
+    const menu = document.getElementById("mobile-menu");
+    const btn = document.getElementById("mobile-menu-btn");
+    const bar1 = document.getElementById("bar1");
+    const bar2 = document.getElementById("bar2");
+    const bar3 = document.getElementById("bar3");
+    const isOpen = menu?.classList.contains("menu-open");
+
+    if (isOpen) {
+      menu?.classList.remove("menu-open", "opacity-100", "pointer-events-auto");
+      menu?.classList.add("opacity-0", "pointer-events-none");
+      bar1?.classList.remove("rotate-45", "translate-y-2");
+      bar2?.classList.remove("opacity-0");
+      bar3?.classList.remove("-rotate-45", "-translate-y-2");
+      document.body.style.overflow = "";
+    } else {
+      menu?.classList.add("menu-open", "opacity-100", "pointer-events-auto");
+      menu?.classList.remove("opacity-0", "pointer-events-none");
+      bar1?.classList.add("rotate-45", "translate-y-2");
+      bar2?.classList.add("opacity-0");
+      bar3?.classList.add("-rotate-45", "-translate-y-2");
+      document.body.style.overflow = "hidden";
+    }
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("scroll", handleScroll, { passive: true });
-
-    // Ejecutar una vez al cargar para verificar el estado inicial
     handleScroll();
+
+    document.getElementById("mobile-menu-btn")?.addEventListener("click", toggleMobileMenu);
+
+    // Close mobile menu when clicking a link
+    document.querySelectorAll(".mobile-nav-link").forEach(link => {
+      link.addEventListener("click", () => {
+        const menu = document.getElementById("mobile-menu");
+        if (menu?.classList.contains("menu-open")) {
+          toggleMobileMenu();
+        }
+      });
+    });
   });
 
-  // Limpiar el event listener cuando se desmonte el componente (por si acaso)
   document.addEventListener("astro:before-swap", () => {
     window.removeEventListener("scroll", handleScroll);
   });
 </script>
 
 <style>
-  /* Estilos adicionales para el header con scroll */
   .header-scrolled {
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
   }
 
-  /* Suavizar la transición del nav cuando se hace scroll */
-  .header-scrolled nav {
-    opacity: 0.9;
+  .nav-link {
+    position: relative;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--color-primary);
+    transition: width 0.3s ease;
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
   }
 </style>

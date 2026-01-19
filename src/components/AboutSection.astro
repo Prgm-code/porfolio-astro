@@ -1,0 +1,90 @@
+---
+import { ABOUT_DATA } from "../utils/data";
+---
+
+<section id="about" class="py-20 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <!-- Image Column -->
+      <div class="animate-left relative order-2 lg:order-1">
+        <div class="relative">
+          <!-- Decorative gradient background -->
+          <div class="absolute -inset-4 bg-gradient-to-br from-cyan-500/20 to-blue-600/10 rounded-2xl blur-xl"></div>
+          
+          <!-- Image container -->
+          <div class="relative glass-card p-2">
+            <img
+              src={ABOUT_DATA.image}
+              alt="Sobre mí"
+              class="w-full h-auto rounded-xl object-cover aspect-[4/5]"
+              loading="lazy"
+            />
+            
+            <!-- Read More Badge -->
+            <a 
+              href="#experiencia" 
+              class="absolute -bottom-4 left-1/2 -translate-x-1/2 btn-primary text-sm whitespace-nowrap"
+            >
+              Ver experiencia
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content Column -->
+      <div class="order-1 lg:order-2">
+        <h2 class="section-title text-left !mb-6 animate-right">
+          Sobre Mí
+        </h2>
+
+        <h3 class="animate-right animate-delay-100 text-xl md:text-2xl font-semibold text-white mb-4">
+          {ABOUT_DATA.title}
+        </h3>
+
+        <p class="animate-right animate-delay-200 text-[var(--color-text-secondary)] text-base md:text-lg leading-relaxed mb-8">
+          {ABOUT_DATA.description}
+        </p>
+
+        <!-- Details Grid -->
+        <div class="animate-right animate-delay-300 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {ABOUT_DATA.details.map((detail) => (
+            <div class="flex items-start gap-3">
+              <span class="text-[var(--color-primary)] font-semibold min-w-[100px]">
+                {detail.label}:
+              </span>
+              <span class="text-[var(--color-text-secondary)]">
+                {detail.value}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-title::after {
+    left: 0;
+    transform: none;
+  }
+</style>
+
+<script>
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('#about .animate-left, #about .animate-right').forEach(el => {
+    observer.observe(el);
+  });
+</script>

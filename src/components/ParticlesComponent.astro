@@ -4,44 +4,40 @@ import type { ISourceOptions } from "tsparticles-engine";
 
 const options: ISourceOptions = {
   particles: {
-    fpsLimit: 120,
+    fpsLimit: 60,
 
     number: {
-      value: 60,
+      value: 25,
       density: {
         enable: true,
-        area: 800,
+        area: 1000,
       },
     },
     color: {
-      value: "#997788",
+      value: "#0a4050",
     },
     links: {
       enable: true,
-      color: "#997788",
-      distance: 150,
-      opacity: 0.2,
+      color: "#083040",
+      distance: 180,
+      opacity: 0.06,
       width: 1,
     },
     shape: {
       type: "circle",
-      stroke: {
-        width: 3,
-        opacity: 0.3,
-      },
     },
     opacity: {
-      value: 0.2,
-      random: false,
+      value: 0.08,
+      random: true,
       anim: {
         enable: true,
-        speed: 1,
-        opacity_min: 0.1,
+        speed: 0.3,
+        opacity_min: 0.03,
         sync: false,
       },
     },
     size: {
-      value: 3,
+      value: 2,
       random: true,
     },
 
@@ -49,14 +45,14 @@ const options: ISourceOptions = {
       direction: "none",
       enable: true,
       outModes: {
-        default: "bounce",
+        default: "out",
       },
-      random: false,
-      speed: 0.15,
+      random: true,
+      speed: 0.12,
       straight: false,
     },
     collisions: {
-      enable: true,
+      enable: false,
     },
   },
   interactivity: {

@@ -1,159 +1,28 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import GitHubIcon from "../icons/GitHub.svg";
-import LinkedInIcon from "../icons/LinkedIn.svg";
-import SocialPill from "../components/SocialPill.astro";
-import MailIcon from "../icons/Mail.svg";
-import WhatsAppIcon from "../icons/WhatsApp.svg";
-import Experience from "../components/Experience.astro";
-import SectionContainer from "../components/SectionContainer.astro";
-import Brifcase from "../icons/Brifcase.svg";
-import CodeIcon from "../icons/Code.svg";
+import HeroSection from "../components/HeroSection.astro";
+import AboutSection from "../components/AboutSection.astro";
+import ServicesSection from "../components/ServicesSection.astro";
 import Projects from "../components/Projects.astro";
-import Skills from "../components/Skills.astro";
-import Education from "../components/Education.astro";
-import Certifications from "../components/Certifications.astro";
 import Contact from "../components/Contact.astro";
 ---
 
 <Layout
-  title="Portafolio de Patricio Gómez Meneses - Desarrollador Full Stack JavaScript"
-  description="Desarrollador Full Stack JavaScript especializado en React, Next.js y Nest.js con TypeScript. Desde Puerto Montt, Chile 🇨🇱, desarrollo aplicaciones web escalables y de alto rendimiento para la digitalización de procesos empresariales."
+  title="Patricio Gómez | Full Stack Developer - React, Next.js, TypeScript"
+  description="Desarrollador Full Stack JavaScript especializado en React, Next.js y NestJS con TypeScript. Creo aplicaciones web escalables y de alto rendimiento desde Puerto Montt, Chile."
 >
-  <main class="px-4 sm:px-6 lg:px-8">
-    <SectionContainer class="py-16 animate" id="top">
-      <div class="max-w-4xl mx-auto">
-        <div class="text-center mb-8">
-          <img
-            class="rounded-full w-32 h-32 mb-6 mx-auto shadow-lg object-cover"
-            src="https://lh3.googleusercontent.com/a/ACg8ocIf0myyzMZRN1n-QDW78FORANENdNp9Ck9TdAKOWsECzw=s256-c"
-            alt="Foto de perfil de Patricio Gómez Meneses"
-            loading="eager"
-          />
-          <h1
-            class="text-white text-3xl md:text-4xl lg:text-5xl font-bold mb-8"
-          >
-            Hola, soy Patricio
-          </h1>
-        </div>
+  <!-- Hero Section -->
+  <HeroSection />
 
-        <div class="space-y-6 text-center lg:text-left">
-          <p class="text-xl lg:text-2xl text-pretty leading-relaxed">
-            <span class="text-white font-medium">
-              Desarrollador Full Stack JavaScript especializado en la creación
-              de aplicaciones web escalables y de alto rendimiento con React,
-              Next.js y Nest.js utilizando TypeScript.
-            </span>
-          </p>
+  <!-- About Section -->
+  <AboutSection />
 
-          <p class="text-lg lg:text-xl text-pretty leading-relaxed">
-            <span class="text-blue-300/90">
-              <a
-                href="https://maps.app.goo.gl/Tbsc23jTLYHAPhwt5"
-                target="_blank"
-                rel="noopener"
-                title="Link to Map"
-                class="hover:text-blue-200 transition-colors underline decoration-blue-300/50"
-                >Desde Puerto Montt, Chile 🇨🇱</a
-              >,
-            </span>
-            <span class="text-yellow-200/90">
-              con un enfoque autodidacta, me mantengo constantemente actualizado
-              sobre las últimas tecnologías y su implementación.
-            </span>
-          </p>
+  <!-- Services Section -->
+  <ServicesSection />
 
-          <p
-            class="text-lg lg:text-xl text-pretty leading-relaxed opacity-90 text-gray-200"
-          >
-            Con experiencia en digitalización de procesos empresariales y
-            desarrollo de soluciones innovadoras para diversos sectores
-            industriales.
-          </p>
-        </div>
-      </div>
-    </SectionContainer>
-  </main>
+  <!-- Portfolio Section -->
+  <Projects />
 
-  <!-- Sección Experiencia - Texto limitado -->
-  <div class="px-4 sm:px-6 lg:px-8">
-    <SectionContainer id="experiencia" class="animate">
-      <div class="max-w-4xl mx-auto">
-        <h2
-          class="text-3xl font-semibold mb-8 flex gap-x-3 items-center justify-center lg:justify-start"
-        >
-          <Brifcase class="size-8" />
-          Experiencia Laboral
-        </h2>
-        <Experience />
-      </div>
-    </SectionContainer>
-  </div>
-
-  <!-- Sección Proyectos - Limitado -->
-  <div class="px-4 sm:px-6 lg:px-8">
-    <SectionContainer id="proyects" class="animate">
-      <div class="max-w-6xl mx-auto">
-        <h2
-          class="text-3xl font-semibold mb-8 pt-20 flex gap-x-3 items-center justify-center lg:justify-start"
-        >
-          <CodeIcon class="size-8" />
-          Proyectos
-        </h2>
-        <Projects />
-      </div>
-    </SectionContainer>
-  </div>
-  <!-- Sección Habilidades - Limitado -->
-  <div class="px-4 sm:px-6 lg:px-8">
-    <SectionContainer id="habilidades" class="animate">
-      <div class="max-w-6xl mx-auto">
-        <h2
-          class="text-3xl font-semibold mb-8 pt-20 flex gap-x-3 items-center justify-center lg:justify-start"
-        >
-          <CodeIcon class="size-8" />
-          Habilidades Técnicas
-        </h2>
-        <Skills />
-      </div>
-    </SectionContainer>
-  </div>
-
-  <!-- Sección Educación - Texto limitado -->
-  <div class="px-4 sm:px-6 lg:px-8">
-    <SectionContainer id="educacion" class="animate">
-      <div class="max-w-4xl mx-auto">
-        <h2
-          class="text-3xl font-semibold mb-8 pt-20 flex gap-x-3 items-center justify-center lg:justify-start"
-        >
-          <Brifcase class="size-8" />
-          Educación
-        </h2>
-        <Education />
-
-        <h3
-          class="text-2xl font-semibold mb-6 mt-16 text-orange-300 text-center lg:text-left"
-        >
-          Certificaciones y Cursos
-        </h3>
-        <Certifications />
-      </div>
-    </SectionContainer>
-  </div>
-
-  <!-- Sección Contacto -->
-  <div class="px-4 sm:px-6 lg:px-8">
-    <SectionContainer id="contacto" class="animate">
-      <Contact />
-    </SectionContainer>
-  </div>
+  <!-- Contact Section -->
+  <Contact />
 </Layout>
-<script>
-  // JavaScript para agregar la clase 'show' después de que la página se haya cargado
-  document.addEventListener("DOMContentLoaded", () => {
-    const elements = document.querySelectorAll(".animate");
-    elements.forEach((el) => {
-      el.classList.add("show");
-    });
-  });
-</script>

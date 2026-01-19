@@ -1,36 +1,36 @@
-import TypeScriptIcon from "../icons/TypeScript.svg";
-import WebpackIcon from "../icons/WebPack.svg";
-import NextJSIcon from "../icons/NextJS.svg";
-import ReactIcon from "../icons/React.svg";
-import TailwindIcon from "../icons/Tailwind.svg";
-import HTMLIcon from "../icons/HTML.svg";
-import CSSIcon from "../icons/CSS.svg";
-import JavaScriptIcon from "../icons/JavaScript.svg";
-import NodeJSIcon from "../icons/NodeJS.svg";
-import TursoIcon from "../icons/TursoIcon.svg";
-import MongoDBIcon from "../icons/MongoDBIcon.svg";
-import HadoopIcon from "../icons/HadoopIcon.svg";
-import JupyterIcon from "../icons/JupyterIcon.svg";
-import CodeIcon from "../icons/Code.svg";
-import DatabaseIcon from "../icons/DatabaseIcon.svg";
-import NestJSIcon from "../icons/NestJS.svg";
-import ExpoIcon from "../icons/ExpoIcon.svg";
-import PostgreSQLIcon from "../icons/PostgreSQL.svg";
-import PrismaIcon from "../icons/PrismaIcon.svg";
-import GitIcon from "../icons/GitIcon.svg";
-import AWSIcon from "../icons/AWSIcon.svg";
-import GoogleCloudIcon from "../icons/GoogleCloudIcon.svg";
-import VercelIcon from "../icons/VercelIcon.svg";
-import CloudflareIcon from "../icons/CloudflareIcon.svg";
-import PlaywrightIcon from "../icons/PlaywrightIcon.svg";
-import ClerkIcon from "../icons/ClerkIcon.svg";
-import PythonIcon from "../icons/PythonIcon.svg";
-import OpenAIIcon from "../icons/OpenAIIcon.svg";
-import DigitalOceanIcon from "../icons/DigitalOceanIcon.svg";
-import ReactNativeIcon from "../icons/ReactNativeIcon.svg";
-import CloudIcon from "../icons/CloudIcon.svg"; // Icono genérico para cloud
-import ToolIcon from "../icons/ToolIcon.svg"; // Icono genérico para herramientas
-import MobileIcon from "../icons/MobileIcon.svg"; // Icono genérico para móvil
+import TypeScriptIcon from "../icons/TypeScript.svg?raw";
+import WebpackIcon from "../icons/WebPack.svg?raw";
+import NextJSIcon from "../icons/NextJS.svg?raw";
+import ReactIcon from "../icons/React.svg?raw";
+import TailwindIcon from "../icons/Tailwind.svg?raw";
+import HTMLIcon from "../icons/HTML.svg?raw";
+import CSSIcon from "../icons/CSS.svg?raw";
+import JavaScriptIcon from "../icons/JavaScript.svg?raw";
+import NodeJSIcon from "../icons/NodeJS.svg?raw";
+import TursoIcon from "../icons/TursoIcon.svg?raw";
+import MongoDBIcon from "../icons/MongoDBIcon.svg?raw";
+import HadoopIcon from "../icons/HadoopIcon.svg?raw";
+import JupyterIcon from "../icons/JupyterIcon.svg?raw";
+import CodeIcon from "../icons/Code.svg?raw";
+import DatabaseIcon from "../icons/DatabaseIcon.svg?raw";
+import NestJSIcon from "../icons/NestJS.svg?raw";
+import ExpoIcon from "../icons/ExpoIcon.svg?raw";
+import PostgreSQLIcon from "../icons/PostgreSQL.svg?raw";
+import PrismaIcon from "../icons/PrismaIcon.svg?raw";
+import GitIcon from "../icons/GitIcon.svg?raw";
+import AWSIcon from "../icons/AWSIcon.svg?raw";
+import GoogleCloudIcon from "../icons/GoogleCloudIcon.svg?raw";
+import VercelIcon from "../icons/VercelIcon.svg?raw";
+import CloudflareIcon from "../icons/CloudflareIcon.svg?raw";
+import PlaywrightIcon from "../icons/PlaywrightIcon.svg?raw";
+import ClerkIcon from "../icons/ClerkIcon.svg?raw";
+import PythonIcon from "../icons/PythonIcon.svg?raw";
+import OpenAIIcon from "../icons/OpenAIIcon.svg?raw";
+import DigitalOceanIcon from "../icons/DigitalOceanIcon.svg?raw";
+import ReactNativeIcon from "../icons/ReactNativeIcon.svg?raw";
+import CloudIcon from "../icons/CloudIcon.svg?raw"; // Icono genérico para cloud
+import ToolIcon from "../icons/ToolIcon.svg?raw"; // Icono genérico para herramientas
+import MobileIcon from "../icons/MobileIcon.svg?raw"; // Icono genérico para móvil
 
 // Importar imágenes de proyectos
 import Vlm360Portada from "../assets/images/vlm360/vlm360-portada.webp";
@@ -67,6 +67,84 @@ import relListadoAnalisis from "../assets/images/rel/listado-analisis-claro.webp
 import relListadoClaro from "../assets/images/rel/listado-claro.webp";
 import relListadoAnalisisOscuro from "../assets/images/rel/listado-analisis-oscuro.webp";
 import relPestañas from "../assets/images/rel/pestañas.webp";
+
+// ============================================
+// HERO SECTION DATA
+// ============================================
+export const HERO_DATA = {
+  greeting: "Hola, soy",
+  name: "Patricio",
+  title: "Desarrollador Full Stack",
+  description:
+    "Ingeniero con más de 15 años de experiencia en el sector tecnológico. Especializado en el desarrollo de aplicaciones web escalables y de alto rendimiento utilizando React, Next.js, NestJS y TypeScript. Enfocado en la digitalización de procesos empresariales y soluciones a medida.",
+  image: "https://lh3.googleusercontent.com/a/ACg8ocIf0myyzMZRN1n-QDW78FORANENdNp9Ck9TdAKOWsECzw=s256-c",
+  social: {
+    github: "https://github.com/Prgm-code",
+    linkedin: "https://www.linkedin.com/in/prgm/",
+    email: "contacto@prgm.cl",
+    whatsapp: "https://wa.me/56976990163",
+  },
+};
+
+// ============================================
+// ABOUT SECTION DATA
+// ============================================
+export const ABOUT_DATA = {
+  title: "Desarrollador Full Stack & Ingeniero Electrónico",
+  description:
+    "Con una sólida formación en ingeniería electrónica y un Máster en Desarrollo Web Full Stack, combino la rigurosidad técnica con la creatividad para entregar soluciones digitales robustas. Mi experiencia abarca desde la digitalización de laboratorios químicos hasta plataformas de gestión empresarial, siempre priorizando la calidad del código, la escalabilidad y la experiencia del usuario.",
+  image: "https://avatars.githubusercontent.com/u/107218376?v=4",
+  details: [
+    { label: "Nombre", value: "Patricio Gómez" },
+    { label: "Email", value: "contacto@prgm.cl" },
+    { label: "Teléfono", value: "+56 9 7699 0163" },
+    { label: "Ubicación", value: "Puerto Montt, Chile" },
+    { label: "Experiencia", value: "15+ años en tecnología" },
+    { label: "Disponibilidad", value: "Proyectos freelance" },
+  ],
+};
+
+// ============================================
+// SERVICES DATA
+// ============================================
+export const SERVICES = [
+  {
+    icon: CodeIcon,
+    title: "Desarrollo Web",
+    description:
+      "Creación de sitios web rápidos y responsivos utilizando tecnologías modernas como React, Next.js y Astro.",
+  },
+  {
+    icon: ReactIcon,
+    title: "UI/UX Design",
+    description:
+      "Diseño de interfaces intuitivas y experiencias de usuario que enganchan y convierten visitantes en clientes.",
+  },
+  {
+    icon: MobileIcon,
+    title: "Mobile First",
+    description:
+      "Desarrollo de diseños responsivos que funcionan perfectamente en todos los dispositivos y tamaños de pantalla.",
+  },
+  {
+    icon: ToolIcon,
+    title: "SEO & Performance",
+    description:
+      "Implementación de mejores prácticas de SEO para mejorar rankings y optimización para tiempos de carga ultra rápidos.",
+  },
+  {
+    icon: CloudIcon,
+    title: "Cloud & DevOps",
+    description:
+      "Despliegue y gestión de aplicaciones en la nube con AWS, GCP, Vercel y Cloudflare.",
+  },
+  {
+    icon: DatabaseIcon,
+    title: "Soporte & Mantenimiento",
+    description:
+      "Mantenimiento continuo y soporte para asegurar que tus aplicaciones estén siempre actualizadas y funcionando.",
+  },
+];
 
 const TAGS = {
   NEXTJS: {
