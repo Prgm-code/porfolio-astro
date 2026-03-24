@@ -15,7 +15,6 @@
     "@lucide/astro": "^0.544.0",
     "@vercel/analytics": "^1.6.1",
     "astro": "^5.16.11",
-    "astro-particles": "^2.10.0",
     "flowbite": "^3.1.2",
     "sharp": "^0.34.5",
     "tailwindcss": "^4.1.18",
