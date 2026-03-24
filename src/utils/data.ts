@@ -75,36 +75,46 @@ import relPestañas from "../assets/images/rel/pestañas.webp";
 // HERO SECTION DATA
 // ============================================
 export const HERO_DATA = {
-  greeting: "Hola, soy",
-  name: "Patricio",
-  title: "Desarrollador Full Stack JavaScript",
-  description:
-    "Desarrollo aplicaciones web con JavaScript, TypeScript y React. Mi enfoque es crear soluciones digitales que optimicen procesos y generen valor para empresas y usuarios.",
-  image: "https://lh3.googleusercontent.com/a/ACg8ocIf0myyzMZRN1n-QDW78FORANENdNp9Ck9TdAKOWsECzw=s256-c",
-  social: {
-    github: "https://github.com/Prgm-code",
-    linkedin: "https://www.linkedin.com/in/prgm/",
-    email: "contacto@prgm.cl",
-    whatsapp: "https://wa.me/56976990163",
+  brand: "prgm.cl",
+  name: "Patricio Gómez",
+  headline: "Desarrollo productos web claros, rápidos y listos para operar.",
+  supportingText:
+    "Full stack JavaScript/TypeScript desde Puerto Montt. Diseño, construyo y despliego aplicaciones para automatizar procesos, ordenar operaciones y llevar ideas a producción.",
+  primaryCta: {
+    label: "Hablemos por WhatsApp",
+    href: "https://wa.me/56976990163?text=Hola%20Patricio,%20quisiera%20conversar%20sobre%20un%20proyecto",
   },
+  secondaryCta: {
+    label: "Ver proyectos",
+    href: "#proyectos",
+  },
+  heroProjectKey: "index0",
+  heroImage: Index0Portada,
 };
 
 // ============================================
 // ABOUT SECTION DATA
 // ============================================
 export const ABOUT_DATA = {
-  title: "Desarrollador Full Stack",
-  description:
-    "Soy Ingeniero Electrónico de la Universidad de la Frontera y cuento con un Máster en Desarrollo Web Full Stack de Three Points en Barcelona. Trabajé más de 14 años en telecomunicaciones antes de dedicarme al desarrollo web. Actualmente construyo aplicaciones fullstack, desde el diseño hasta el desarrollo y despliegue.",
+  title: "Perfil y credenciales",
+  summary:
+    "Soy Ingeniero Electrónico y Máster en Desarrollo Web Full Stack. Después de más de 14 años operando infraestructura crítica en telecomunicaciones, hoy construyo software con foco en claridad técnica, continuidad operativa y resultados medibles.",
   image: "https://avatars.githubusercontent.com/u/107218376?v=4",
-  details: [
-    { label: "Nombre", value: "Patricio Gómez" },
-    { label: "Email", value: "pgomez.meneses@gmail.com" },
-    { label: "Teléfono", value: "+56 9 7699 0163" },
-    { label: "Ubicación", value: "Puerto Montt, Chile" },
-    { label: "Experiencia", value: "3+ años dev" },
-    { label: "Disponibilidad", value: "Disponible para proyectos" },
+  location: "Puerto Montt, Chile",
+  availability: "Disponible para nuevos proyectos y colaboraciones",
+  highlights: [
+    "Máster en Desarrollo Web Full Stack en Three Points, Barcelona.",
+    "Experiencia construyendo productos con Next.js, NestJS, PostgreSQL, Cloudflare y GCP.",
+    "Base previa en telecomunicaciones e infraestructura crítica, útil para proyectos que requieren operación confiable.",
   ],
+};
+
+export const SOCIAL_LINKS = {
+  github: "https://github.com/Prgm-code",
+  linkedin: "https://www.linkedin.com/in/prgm/",
+  email: "mailto:contacto@prgm.cl",
+  whatsapp:
+    "https://wa.me/56976990163?text=Hola%20Patricio,%20quisiera%20contactarte",
 };
 
 // ============================================
@@ -290,6 +300,11 @@ const TAGS = {
     icon: OpenAIIcon,
     class: "size-4",
   },
+  CONVEX: {
+    name: "Convex",
+    icon: ConvexIcon,
+    class: "size-4",
+  },
   DIGITALOCEAN: {
     name: "DigitalOcean",
     icon: DigitalOceanIcon,
@@ -297,7 +312,7 @@ const TAGS = {
   },
   REACTNATIVE: {
     name: "React Native",
-    icon: ReactIcon,
+    icon: ReactNativeIcon,
     class: "size-4",
   },
   EXPO: {
@@ -307,20 +322,72 @@ const TAGS = {
   },
 };
 
+export const CAPABILITIES = [
+  {
+    title: "Producto web y plataformas internas",
+    description:
+      "Interfaces y flujos full stack para operación diaria, gestión documental, reportes y herramientas internas con foco en velocidad y mantenibilidad.",
+    supportingTech: [TAGS.NEXTJS, TAGS.REACT, TAGS.TYPESCRIPT, TAGS.NESTJS],
+  },
+  {
+    title: "Automatización y procesos",
+    description:
+      "Automatizo tareas repetitivas, validaciones, documentos y procesos sensibles para reducir trabajo manual y aumentar trazabilidad.",
+    supportingTech: [
+      TAGS.PLAYWRIGHT,
+      TAGS.NODEJS,
+      TAGS.OPENAI,
+      TAGS.POSTGRESQL,
+    ],
+  },
+  {
+    title: "Despliegue, datos e infraestructura",
+    description:
+      "Paso de prototipo a producción con servicios cloud, bases de datos y pipelines operables para que el software siga funcionando fuera del demo.",
+    supportingTech: [TAGS.CLOUDFLARE, TAGS.GCP, TAGS.VERCEL, TAGS.CONVEX],
+  },
+];
+
+export const TECH_STACK = [
+  TAGS.NEXTJS,
+  TAGS.TYPESCRIPT,
+  TAGS.REACT,
+  TAGS.NESTJS,
+  TAGS.POSTGRESQL,
+  TAGS.CONVEX,
+  TAGS.CLOUDFLARE,
+  TAGS.GCP,
+  TAGS.PLAYWRIGHT,
+  TAGS.TURSO,
+  TAGS.OPENAI,
+];
+
 export const PROJECTS = [
   {
+    key: "vlm360",
     title: "Vlm360.com",
     description:
       "Plataforma para reporte de inspecciones submarinas mediante sónar. Gestiona trabajos, reportes personalizados y almacenamiento de archivos con control de roles.",
+    shortLabel: "Inspección submarina y reporting técnico",
+    outcome: "Reportes operativos, archivos estructurados y control de roles.",
+    featured: true,
+    favorite: true,
     link: "https://vlm360.com",
     image: Vlm360Portada,
     images: [Vlm360Portada, Vlm360Contenido],
     tags: [TAGS.NEXTJS, TAGS.POSTGRESQL, TAGS.GCP, TAGS.CLOUDFLARE],
   },
   {
+    key: "index0",
     title: "Index0.cc - Hackathon Clerk",
     description:
       "Gestión inteligente de documentos con AutoRAG. Almacena textos e imágenes y permite búsquedas semánticas mediante chat.",
+    shortLabel: "Búsqueda semántica y gestión documental",
+    outcome:
+      "Consulta de contenido y documentos desde una interfaz conversacional.",
+    featured: true,
+    favorite: true,
+    heroCandidate: true,
     link: "https://index0.cc",
     image: Index0Portada,
     images: [
@@ -332,17 +399,27 @@ export const PROJECTS = [
     tags: [TAGS.NEXTJS, TAGS.CLERK, TAGS.CLOUDFLARE, TAGS.VERCEL],
   },
   {
+    key: "chronus",
     title: "Plataforma de Automatización Chronus",
     description:
       "Automatización de tareas repetitivas: documentos, citas y costos. Backend NestJS, frontend Next.js con Playwright para automatización.",
+    shortLabel: "Automatización operativa y flujos internos",
+    outcome: "Menos trabajo manual en documentos, citas y costos.",
+    featured: true,
+    favorite: true,
     image: chronusInicio,
     images: [chronusInicio, chronusCrearCliente, chronusCrearBoleta],
     tags: [TAGS.NEXTJS, TAGS.NESTJS, TAGS.PLAYWRIGHT, TAGS.CLERK],
   },
   {
+    key: "reactivespa",
     title: "Landing Page ReactiveSpa.cl",
     description:
       "Sitio web con diseño responsive y efectos visuales interactivos usando particles.js y Three.js.",
+    shortLabel: "Landing promocional orientada a marca",
+    outcome:
+      "Presencia visual y comunicación clara para un negocio de bienestar.",
+    featured: false,
     link: "https://reactivespa.cl",
     image: reactiveSpaHome,
     images: [
@@ -354,9 +431,13 @@ export const PROJECTS = [
     tags: [TAGS.ASTRO, TAGS.TAILWIND, TAGS.JAVASCRIPT],
   },
   {
+    key: "rosemarie",
     title: "Landing Page RosemarieJara.cl",
     description:
       "Sitio web profesional para servicios de psicología. Diseño accesible optimizado para conversión.",
+    shortLabel: "Sitio profesional de servicios",
+    outcome: "Comunicación más clara y mejor captación de contacto.",
+    featured: false,
     link: "https://rosemariejara.cl",
     image: rosemarieLandingHero,
     images: [
@@ -369,9 +450,14 @@ export const PROJECTS = [
     tags: [TAGS.ASTRO, TAGS.TAILWIND],
   },
   {
+    key: "rel",
     title: "Registro Electrónico de Laboratorios (REL)",
     description:
       "Digitalización de laboratorio químico con +3.000 ingresos mensuales. Trazabilidad de parámetros, instrumentos y cálculos automáticos.",
+    shortLabel: "Digitalización y trazabilidad de laboratorio",
+    outcome:
+      "Más de 3.000 ingresos mensuales con seguimiento y cálculos centralizados.",
+    featured: false,
     image: relListadoAnalisis,
     images: [
       relListadoAnalisis,
@@ -385,25 +471,38 @@ export const PROJECTS = [
     tags: [TAGS.NEXTJS, TAGS.NESTJS, TAGS.TYPESCRIPT],
   },
   {
+    key: "naval-pwa",
     title: "PWA Mantenimiento Naval",
     description:
       "Control de mantenimiento naval. Trazabilidad de fallas, gestión de roles y notificaciones por área.",
+    shortLabel: "Mantenimiento y trazabilidad de flota",
+    outcome: "Seguimiento de fallas y gestión operativa por áreas.",
+    featured: false,
     image: "/projects/sotex-logo.webp",
     images: ["/projects/sotex-logo.webp"],
     tags: [TAGS.NEXTJS, TAGS.PWA, TAGS.POSTGRESQL],
   },
   {
+    key: "gps",
     title: "Sistema GPS Embarcaciones",
     description:
       "Seguimiento GPS de embarcaciones en tiempo real. Mapas interactivos con capas KMZ.",
+    shortLabel: "Monitoreo geográfico en tiempo real",
+    outcome:
+      "Visualización y seguimiento de embarcaciones sobre mapas interactivos.",
+    featured: false,
     image: "/projects/sotex-logo.webp",
     images: [geopMapaEscritorio, geopMapaMovil, geopMapaDrawer, geopMapa],
     tags: [TAGS.NEXTJS, TAGS.PWA, TAGS.TURSO],
   },
   {
+    key: "big-data",
     title: "Big Data Analytics Platform",
     description:
       "Proyecto final de máster. Análisis de Big Data con clúster Hadoop, Node.js, React y JupyterHub.",
+    shortLabel: "Proyecto académico de analítica a escala",
+    outcome: "Orquestación de análisis de datos con stack distribuido.",
+    featured: false,
     image: "/projects/TFM.webp",
     images: ["/projects/TFM.webp"],
     tags: [TAGS.NODEJS, TAGS.REACT, TAGS.HADOOP, TAGS.JUPYTER],
@@ -413,7 +512,7 @@ export const PROJECTS = [
 export const EXPERIENCE = [
   {
     date: "2024 - Actualidad",
-    title: "Desarrollador de Aplicaciones Web | Independiente",
+    title: "Desarrollador de Aplicaciones Web | Freelance",
     description:
       "Desarrollo de aplicaciones web escalables para diversos clientes. Soluciones de automatización, gestión documental y sistemas de inspección submarina.",
     more: "Proyectos destacados:\n• Vlm360.com - Inspecciones submarinas con sónar (Next.js, PostgreSQL, GCP)\n• Chronus - Automatización de gestión con Playwright (Next.js, NestJS)\n• Index0.cc - Gestión documental con búsquedas semánticas (Next.js, Clerk)\n• REL Gelymar - Actualización de gestión de equipamiento (Next.js, NestJS)",
@@ -494,7 +593,7 @@ export const SKILLS = [
     title: "Móvil y Otros",
     icon: MobileIcon,
     skills: [
-      { name: "React Native", icon: ReactIcon },
+      { name: "React Native", icon: ReactNativeIcon },
       { name: "Expo", icon: ExpoIcon },
       { name: "Python", icon: PythonIcon },
       { name: "OpenAI", icon: OpenAIIcon },

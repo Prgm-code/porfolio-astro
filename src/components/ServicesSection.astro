@@ -1,51 +1,301 @@
 ---
-import { SERVICES } from "../utils/data";
+import { CAPABILITIES, TECH_STACK } from "../utils/data";
 ---
 
-<section id="servicios" class="py-20 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-6xl mx-auto">
-    <h2 class="section-title animate">Mis Servicios</h2>
+<section id="capacidades" class="page-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-kicker">Capacidades</span>
+      <h2 class="section-title">
+        Construcción, automatización y operación en la misma conversación.
+      </h2>
+      <p class="section-copy">
+        Trabajo en productos donde la experiencia, la lógica de negocio y el
+        despliegue tienen que convivir sin fricción.
+      </p>
+    </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {SERVICES.map((service, index) => (
-        <div 
-          class={`glass-card p-6 text-center animate animate-delay-${(index % 3 + 1) * 100}`}
-        >
-          <!-- Icon -->
-          <div class="mb-4 inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-600/10 border border-[var(--color-primary)]/30">
-            <span class="w-8 h-8 flex items-center justify-center [&>svg]:w-full [&>svg]:h-full" set:html={service.icon} />
-          </div>
+    <div class="capabilities-grid">
+      {
+        CAPABILITIES.map((capability, index) => (
+          <article
+            class="capability-card reveal"
+            data-delay={String(index + 1)}
+            style={`--card-delay: ${index * 120}ms;`}
+          >
+            <div class="capability-card__glow" aria-hidden="true" />
+            <div class="capability-card__icon-wrap" aria-hidden="true">
+              <div class="capability-card__icon-inner">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  {index === 0 && <><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></>}
+                  {index === 1 && <><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></>}
+                  {index === 2 && <><path d="M18 10h-4V6"/><path d="M14 10l7.7-7.7"/><path d="M6 14h4v6"/><path d="M10 14l7.7-7.7"/><path d="M2 10h4"/><path d="M14 2h4"/><path d="M6 18h4"/><path d="M18 22h-4"/></>}
+                </svg>
+              </div>
+              <div class="capability-card__icon-ring"></div>
+            </div>
 
-          <!-- Title -->
-          <h3 class="text-lg font-semibold text-white mb-3">
-            {service.title}
-          </h3>
+            <h3 class="capability-card__title">{capability.title}</h3>
+            <p class="capability-card__description">{capability.description}</p>
 
-          <!-- Description -->
-          <p class="text-[var(--color-text-secondary)] text-sm leading-relaxed">
-            {service.description}
-          </p>
-        </div>
-      ))}
+            <div class="capability-card__tags">
+              <ul class="stack-list">
+                {capability.supportingTech.map((item) => (
+                  <li class="stack-chip">
+                    <span class="stack-chip__icon" set:html={item.icon} />
+                    <span class="stack-chip__label">{item.name}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="capability-card__corner capability-card__corner--tl" aria-hidden="true"></div>
+            <div class="capability-card__corner capability-card__corner--br" aria-hidden="true"></div>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="tech-band reveal" data-delay="2">
+      <div class="tech-band__header">
+        <span class="tech-band__label">Stack frecuente</span>
+        <div class="tech-band__line" aria-hidden="true"></div>
+      </div>
+      <div class="tech-band__scroll">
+        <ul class="stack-list tech-band__list">
+          {
+            TECH_STACK.map((item) => (
+              <li class="stack-chip">
+                <span class="stack-chip__icon" set:html={item.icon} />
+                <span class="stack-chip__label">{item.name}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
     </div>
   </div>
 </section>
 
+<style>
+  .capabilities-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+
+  .capability-card {
+    position: relative;
+    display: grid;
+    gap: 1rem;
+    padding: 1.8rem 1.5rem 1.6rem;
+    border: 1px solid var(--color-line);
+    border-radius: 1.5rem;
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.04),
+      rgba(255, 255, 255, 0.01)
+    );
+    overflow: hidden;
+    transition:
+      transform var(--transition-slow),
+      border-color var(--transition-base),
+      box-shadow var(--transition-slow);
+  }
+
+  .capability-card__glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(212, 168, 83, 0.5),
+      transparent
+    );
+    opacity: 0;
+    transition: opacity var(--transition-slow);
+  }
+
+  .capability-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(212, 168, 83, 0.25);
+    box-shadow:
+      0 20px 50px rgba(0, 0, 0, 0.25),
+      0 0 30px rgba(212, 168, 83, 0.08);
+  }
+
+  .capability-card:hover .capability-card__glow {
+    opacity: 1;
+  }
+
+  .capability-card__icon-wrap {
+    position: relative;
+    width: 3.5rem;
+    height: 3.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .capability-card__icon-inner {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    background: linear-gradient(
+      145deg,
+      rgba(212, 168, 83, 0.15),
+      rgba(212, 168, 83, 0.05)
+    );
+    border: 1px solid rgba(212, 168, 83, 0.2);
+    color: var(--color-accent);
+    transition: transform var(--transition-bounce);
+  }
+
+  .capability-card:hover .capability-card__icon-inner {
+    transform: scale(1.1) rotate(-5deg);
+  }
+
+  .capability-card__icon-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 1rem;
+    border: 1px solid rgba(212, 168, 83, 0.1);
+    transition:
+      transform var(--transition-slow),
+      border-color var(--transition-base);
+  }
+
+  .capability-card:hover .capability-card__icon-ring {
+    transform: scale(1.3) rotate(15deg);
+    border-color: rgba(212, 168, 83, 0.25);
+  }
+
+  .capability-card__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .capability-card__description {
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+    font-size: 0.9rem;
+  }
+
+  .capability-card__tags {
+    margin-top: 0.5rem;
+  }
+
+  /* Decorative corners */
+  .capability-card__corner {
+    position: absolute;
+    width: 1.5rem;
+    height: 1.5rem;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--transition-slow);
+  }
+
+  .capability-card:hover .capability-card__corner {
+    opacity: 1;
+  }
+
+  .capability-card__corner--tl {
+    top: 0.5rem;
+    left: 0.5rem;
+    border-top: 1px solid var(--color-accent);
+    border-left: 1px solid var(--color-accent);
+    border-top-left-radius: 0.5rem;
+  }
+
+  .capability-card__corner--br {
+    bottom: 0.5rem;
+    right: 0.5rem;
+    border-bottom: 1px solid var(--color-accent);
+    border-right: 1px solid var(--color-accent);
+    border-bottom-right-radius: 0.5rem;
+  }
+
+  /* Tech band */
+  .tech-band {
+    margin-top: clamp(2.5rem, 4vw, 3.5rem);
+    padding: 1.8rem 0;
+    border-top: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-line);
+    overflow: hidden;
+  }
+
+  .tech-band__header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .tech-band__label {
+    color: var(--color-text-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.72rem;
+    white-space: nowrap;
+  }
+
+  .tech-band__line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--color-line), transparent);
+  }
+
+  .tech-band__scroll {
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .tech-band__scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tech-band__list {
+    flex-wrap: nowrap;
+    gap: 0.7rem;
+  }
+
+  @media (max-width: 900px) {
+    .capabilities-grid {
+      grid-template-columns: 1fr;
+      gap: 1.2rem;
+    }
+
+    .capability-card {
+      padding: 1.4rem 1.2rem;
+    }
+  }
+</style>
+
 <script>
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  };
+  const capabilitiesObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          capabilitiesObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.14, rootMargin: "0px 0px -50px 0px" },
+  );
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('show');
-      }
-    });
-  }, observerOptions);
-
-  document.querySelectorAll('#servicios .animate').forEach(el => {
-    observer.observe(el);
+  document.querySelectorAll("#capacidades .reveal").forEach((element) => {
+    capabilitiesObserver.observe(element);
   });
 </script>

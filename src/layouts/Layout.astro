@@ -21,44 +21,53 @@ const { title, description } = Astro.props;
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
-    
+
     <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    
+
     <!-- Web App Manifest -->
     <link rel="manifest" href="/site.webmanifest" />
-    
+
     <!-- Primary Meta Tags -->
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
     <meta name="author" content="Patricio Gómez - Full Stack Developer" />
-    <meta name="keywords" content="desarrollador full stack, Next.js, React, TypeScript, NestJS, Node.js, desarrollo web, aplicaciones web, Chile" />
-    
+    <meta
+      name="keywords"
+      content="desarrollador full stack, Next.js, React, TypeScript, NestJS, Node.js, desarrollo web, aplicaciones web, Chile"
+    />
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://prgm.cl" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="https://prgm.cl/web-app-manifest-512x512.png" />
-    
+    <meta
+      property="og:image"
+      content="https://prgm.cl/web-app-manifest-512x512.png"
+    />
+
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://prgm.cl" />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content="https://prgm.cl/web-app-manifest-512x512.png" />
-    
+    <meta
+      property="twitter:image"
+      content="https://prgm.cl/web-app-manifest-512x512.png"
+    />
+
     <!-- Theme Color -->
     <meta name="theme-color" content="#0a0a0a" />
     <meta name="msapplication-TileColor" content="#0a0a0a" />
   </head>
-  <body class="overflow-x-hidden bg-[#0a0a0a]">
+  <body>
     <Header />
-    <main>
+    <main class="site-shell">
       <slot />
     </main>
     <Footer />
@@ -66,32 +75,48 @@ const { title, description } = Astro.props;
 </html>
 
 <style is:global>
-  * {
-    box-sizing: border-box;
-  }
   html,
   body {
-    overflow-x: hidden;
+    overflow-x: clip;
     max-width: 100%;
-    margin: 0;
-    padding: 0;
   }
-  :root {
-    color-scheme: light dark;
+  body.menu-open {
+    overflow: hidden;
   }
-  html {
-    font-family: "Onest Variable";
-    scroll-behavior: smooth;
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
   }
-  body {
-    background: #0a0a0a;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg);
   }
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(212, 168, 83, 0.3);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(212, 168, 83, 0.5);
+  }
+
+  /* Smooth image loading */
+  img {
+    opacity: 0;
+    transition: opacity 400ms ease;
+  }
+  img.loaded,
+  img[loading="eager"] {
+    opacity: 1;
   }
 </style>
+
+<script>
+  // Add loaded class to images when they load
+  document.querySelectorAll("img").forEach((img) => {
+    if (img instanceof HTMLImageElement && img.complete) {
+      img.classList.add("loaded");
+    } else {
+      img.addEventListener("load", () => img.classList.add("loaded"));
+    }
+  });
+</script>
