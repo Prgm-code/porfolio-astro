@@ -1,0 +1,51 @@
+---
+import { CERTIFICATIONS } from "../utils/data";
+---
+
+<section id="certificaciones" class="py-20 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="section-title animate">Certificaciones</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      {CERTIFICATIONS.map((cert, index) => (
+        <div 
+          class={`glass-card p-4 animate animate-delay-${(index % 4 + 1) * 100} group hover:border-[var(--color-primary)]/40 transition-all`}
+        >
+          <!-- Year -->
+          <span class="text-xs text-[var(--color-primary)] font-medium">
+            {cert.year}
+          </span>
+
+          <!-- Title -->
+          <h3 class="text-sm font-semibold text-white mt-1 mb-2 line-clamp-2 group-hover:text-[var(--color-primary)] transition-colors">
+            {cert.title}
+          </h3>
+
+          <!-- Issuer -->
+          <p class="text-xs text-[var(--color-text-muted)]">
+            {cert.issuer}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('#certificaciones .animate').forEach(el => {
+    observer.observe(el);
+  });
+</script>

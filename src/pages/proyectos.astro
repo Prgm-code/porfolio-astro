@@ -1,0 +1,315 @@
+---
+import { Image } from "astro:assets";
+import Layout from "../layouts/Layout.astro";
+import LinkIcon from "../icons/Link.svg?raw";
+import { PROJECTS } from "../utils/data";
+
+const sortedProjects = [...PROJECTS].sort((a, b) => {
+  const score = (project: (typeof PROJECTS)[number]) =>
+    Number(Boolean(project.favorite)) * 2 + Number(Boolean(project.featured));
+  return score(b) - score(a);
+});
+
+const isStaticImagePath = (image: (typeof PROJECTS)[number]["image"]) =>
+  typeof image === "string";
+---
+
+<Layout
+  title="Proyectos | prgm.cl"
+  description="Archivo completo de proyectos de Patricio Gómez: productos web, automatización, plataformas internas y experiencias orientadas a operación real."
+>
+  <section class="page-section archive-list">
+    <div class="section-inner archive-list__inner">
+      <div class="archive-list__header reveal is-visible">
+        <div class="archive-list__intro">
+          <span class="section-kicker">Archivo de proyectos</span>
+          <p class="archive-list__summary">
+            Continuación completa del portafolio: productos web, automatización
+            y sistemas orientados a operación real.
+          </p>
+        </div>
+
+        <div class="archive-list__actions">
+          <a href="/#proyectos" class="button-secondary">Volver a destacados</a>
+          <a href="/#contacto" class="button-primary">Conversar un proyecto</a>
+        </div>
+      </div>
+
+      {
+        sortedProjects.map((project, index) => (
+          <article
+            class="archive-project reveal is-visible"
+            data-delay={String((index % 3) + 1)}
+          >
+            <a
+              href={project.link ?? "/#contacto"}
+              target={project.link ? "_blank" : undefined}
+              rel={project.link ? "noopener noreferrer" : undefined}
+              class="archive-project__media browser-frame"
+              aria-label={`Abrir ${project.title}`}
+            >
+              {isStaticImagePath(project.image) ? (
+                <img
+                  src={project.image}
+                  alt={`Captura del proyecto ${project.title}`}
+                  class="archive-project__image"
+                  loading="lazy"
+                />
+              ) : (
+                <Image
+                  src={project.image}
+                  alt={`Captura del proyecto ${project.title}`}
+                  class="archive-project__image"
+                  widths={[720, 1080, 1600]}
+                  sizes="(max-width: 960px) 100vw, 48vw"
+                  loading="lazy"
+                  format="webp"
+                />
+              )}
+            </a>
+
+            <div class="archive-project__copy">
+              <div class="archive-project__labels">
+                {project.favorite && <span class="archive-flag">Favorito</span>}
+                {project.featured && (
+                  <span class="archive-flag archive-flag--muted">
+                    Destacado
+                  </span>
+                )}
+              </div>
+              <p class="archive-project__kicker">{project.shortLabel}</p>
+              <h2>{project.title}</h2>
+              <p class="archive-project__description">{project.description}</p>
+
+              <div class="archive-project__details">
+                <div>
+                  <span class="archive-project__meta-label">Resultado</span>
+                  <p>{project.outcome}</p>
+                </div>
+                <div>
+                  <span class="archive-project__meta-label">Stack</span>
+                  <ul class="stack-list">
+                    {project.tags.map((tag) => (
+                      <li class="stack-chip">
+                        <span class="stack-chip__icon" set:html={tag.icon} />
+                        <span class="stack-chip__label">{tag.name}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              {project.link ? (
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="project-link"
+                >
+                  <span>Ver implementación</span>
+                  <span
+                    class="project-link__icon [&>svg]:h-full [&>svg]:w-full"
+                    set:html={LinkIcon}
+                  />
+                </a>
+              ) : (
+                <a href="/#contacto" class="project-link">
+                  <span>Pedir más contexto</span>
+                  <span
+                    class="project-link__icon [&>svg]:h-full [&>svg]:w-full"
+                    set:html={LinkIcon}
+                  />
+                </a>
+              )}
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .archive-list {
+    padding-top: calc(clamp(6.5rem, 10vw, 8.5rem) + 1.25rem);
+  }
+
+  .archive-list__inner {
+    display: grid;
+    gap: clamp(2rem, 4vw, 3rem);
+  }
+
+  .archive-list__header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .archive-list__intro {
+    display: grid;
+    gap: 0.85rem;
+    max-width: 42rem;
+  }
+
+  .archive-list__summary {
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+  }
+
+  .archive-list__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    justify-content: flex-end;
+  }
+
+  .archive-project {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(20rem, 26rem);
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    align-items: center;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .archive-project:nth-child(even) {
+    grid-template-columns: minmax(20rem, 26rem) minmax(0, 1fr);
+  }
+
+  .archive-project:nth-child(even) .archive-project__media {
+    order: 2;
+  }
+
+  .archive-project:nth-child(even) .archive-project__copy {
+    order: 1;
+  }
+
+  .archive-project__media {
+    display: block;
+  }
+
+  .archive-project__image {
+    aspect-ratio: 1.58 / 1;
+    transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .archive-project:hover .archive-project__image,
+  .archive-project:focus-within .archive-project__image {
+    transform: translateY(-0.35rem) scale(1.015);
+  }
+
+  .archive-project__copy {
+    display: grid;
+    gap: 1rem;
+    align-content: center;
+  }
+
+  .archive-project__labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+
+  .archive-flag {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2rem;
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid rgba(138, 200, 207, 0.22);
+    background: rgba(138, 200, 207, 0.08);
+    color: var(--color-accent-strong);
+    font-size: 0.76rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .archive-flag--muted {
+    border-color: var(--color-line);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--color-text-soft);
+  }
+
+  .archive-project__kicker,
+  .archive-project__meta-label {
+    color: var(--color-accent);
+    font-size: 0.78rem;
+    line-height: 1;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .archive-project__kicker {
+    margin: 0;
+  }
+
+  .archive-project__copy h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 3vw, 2.7rem);
+    line-height: 0.96;
+    letter-spacing: -0.04em;
+  }
+
+  .archive-project__description,
+  .archive-project__details p {
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+  }
+
+  .archive-project__details {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .archive-project__details > div {
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    width: fit-content;
+    margin-top: 0.25rem;
+    color: var(--color-accent-strong);
+  }
+
+  .project-link__icon {
+    width: 0.9rem;
+    height: 0.9rem;
+    transition: transform var(--transition-base);
+  }
+
+  .project-link:hover .project-link__icon,
+  .project-link:focus-visible .project-link__icon {
+    transform: translate(0.2rem, -0.15rem);
+  }
+
+  @media (max-width: 960px) {
+    .archive-list__header {
+      align-items: start;
+      flex-direction: column;
+    }
+
+    .archive-list__actions {
+      justify-content: flex-start;
+    }
+
+    .archive-project,
+    .archive-project:nth-child(even) {
+      grid-template-columns: 1fr;
+    }
+
+    .archive-project:nth-child(even) .archive-project__media,
+    .archive-project:nth-child(even) .archive-project__copy {
+      order: initial;
+    }
+  }
+</style>

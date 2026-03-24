@@ -1,212 +1,404 @@
 ---
-import { PROJECTS } from "../utils/data";
-import LinkIcon from "../icons/Link.svg";
 import { Image } from "astro:assets";
+import LinkIcon from "../icons/Link.svg?raw";
+import { PROJECTS } from "../utils/data";
+
+const featuredProjects = PROJECTS.filter((project) => project.featured).slice(
+  0,
+  3,
+);
 ---
 
-<div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-  {
-    PROJECTS.map(({ title, description, tags, image, images, link }) => (
-      <article class="flex flex-col justify-between bg-gray-800/30 rounded-xl p-6 border border-gray-700/30 hover:border-gray-600/40 transition-all duration-300">
-        <div class="flex items-center align-middle flex-wrap text-pretty mb-4">
-          <h3 class="text-xl lg:text-2xl font-semibold text-green-300 mb-2 flex-1">
-            {title}
-          </h3>
-          {link && (
-            <a
-              class="transition hover:scale-125 ml-2"
-              href={link}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Link to project"
-            >
-              <LinkIcon class="text-green-300 size-6" />
-            </a>
-          )}
-        </div>
-        <p class="text-base lg:text-lg mb-4 text-pretty text-gray-300 leading-relaxed">
-          {description}
-        </p>
-        <div class="flex flex-wrap gap-2 mb-4">
-          {tags.map((tag) => (
-            <span class="flex items-center gap-2 rounded-full text-xs py-2 px-3 bg-blue-200/20 text-blue-200 transition hover:scale-105">
-              <tag.icon class={`${tag.class} align-middle`} />
-              {tag.name}
-            </span>
-          ))}
-        </div>
-        <div class="relative group">
-          {images && images.length > 1 ? (
-            <!-- Carrusel con autoplay al hover - VERSIÓN DE PRUEBA -->
-            <div
-              id={`carousel-${title.replace(/\s+/g, '-').toLowerCase()}`}
-              class="relative w-full overflow-hidden rounded-lg shadow-xl shadow-black/20 group cursor-pointer"
-            >
-              <!-- Imágenes del carrusel -->
-              <div class="relative h-48 overflow-hidden rounded-lg bg-gray-200">
-                {images.map((img, index) => (
-                  <div
-                    class={`absolute inset-0 transition-opacity duration-500 ${
-                      index === 0 ? 'opacity-100' : 'opacity-0'
-                    }`}
-                    style={`z-index: ${10 - index};`}
-                  >
-                    <img
-                      src={typeof img === 'object' ? img.src : img}
-                      class="w-full h-full object-cover"
-                      alt={`${title} - Imagen ${index + 1}`}
-                      loading="eager"
-                    />
-                      </div>
-                    ))}
+<section id="proyectos" class="page-section">
+  <div class="section-inner">
+    <div class="projects-header reveal">
+      <div class="projects-header__left">
+        <span class="section-kicker">Proyectos destacados</span>
+        <h2 class="section-title">
+          Aplicaciones funcionales con criterio técnico y una UI que sí acompaña.
+        </h2>
+      </div>
+      <p class="projects-header__copy section-copy">
+        Selección breve de sistemas donde la interfaz, la lógica y la operación
+        tenían que convivir sin ruido ni capas innecesarias.
+      </p>
+    </div>
 
+    <div class="projects-list">
+      {
+        featuredProjects.map((project, index) => (
+          <article
+            class="project-card reveal"
+            data-delay={String((index % 3) + 1)}
+            style={`--card-index: ${index};`}
+          >
+            <div class="project-card__media-wrap">
+              <a
+                class="project-card__media browser-frame"
+                href={project.link ?? "#contacto"}
+                target={project.link ? "_blank" : undefined}
+                rel={project.link ? "noopener noreferrer" : undefined}
+                aria-label={`Abrir ${project.title}`}
+              >
+                <Image
+                  src={project.image}
+                  alt={`Captura del proyecto ${project.title}`}
+                  class="project-card__image"
+                  widths={[720, 1080, 1600]}
+                  sizes="(max-width: 960px) 100vw, 50vw"
+                  loading="lazy"
+                  format="webp"
+                />
+
+                <div class="project-card__hover-glow" aria-hidden="true" />
+              </a>
+
+              <div class="project-card__number" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </div>
+            </div>
+
+            <div class="project-card__body">
+              <div class="project-card__meta">
+                <p class="project-card__label">{project.shortLabel}</p>
+                <h3 class="project-card__title">{project.title}</h3>
+                <p class="project-card__description">{project.description}</p>
+              </div>
+
+              <div class="project-card__details">
+                <div class="project-card__outcome">
+                  <span class="project-card__detail-label">Resultado</span>
+                  <p>{project.outcome}</p>
                 </div>
 
-              <!-- Indicadores discretos -->
-              <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                {images.map((_, index) => (
-                  <div
-                    class={`w-2 h-2 rounded-full transition-colors duration-300 ${
-                      index === 0 ? 'bg-white' : 'bg-white/50'
-                    }`}
-                    data-slide-index={index}
-                  />
-                ))}
+                <div class="project-card__stack">
+                  <span class="project-card__detail-label">Stack</span>
+                  <ul class="stack-list">
+                    {project.tags.slice(0, 4).map((tag) => (
+                      <li class="stack-chip">
+                        <span class="stack-chip__icon" set:html={tag.icon} />
+                        <span class="stack-chip__label">{tag.name}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
 
-              <!-- Barra de progreso -->
-              <div class="absolute bottom-0 z-10 left-0 w-full h-1 bg-gray-200/50 rounded-full overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div class="progress-bar h-full bg-gray-600 rounded-full transition-all duration-75 ease-linear" style="width: 0%;"></div>
-              </div>
-
-   
+              {project.link && (
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="project-card__link"
+                >
+                  <span>Ver implementación</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="7" y1="17" x2="17" y2="7"/>
+                    <polyline points="7 7 17 7 17 17"/>
+                  </svg>
+                </a>
+              )}
             </div>
-          ) : (
-            <Image 
-              class="shadow-xl shadow-black/20 w-full h-48 object-contain bg-gray-900/50 rounded-lg"
-              src={typeof image === 'object' ? image.src : image}
-              alt={`Captura de pantalla del proyecto ${title}`} 
-              loading="eager"
-              height={192}
-              width={400}
-            />
-          )}
-          </div>
+          </article>
+        ))
+      }
+    </div>
 
-      </article>
-    ))
+    <div class="projects-archive-cta reveal" data-delay="2">
+      <a href="/proyectos" class="button-secondary projects-archive-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"/>
+          <rect x="14" y="3" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/>
+          <rect x="3" y="14" width="7" height="7"/>
+        </svg>
+        Ver archivo completo
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .projects-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: end;
+    margin-bottom: clamp(3rem, 5vw, 4rem);
   }
-</div>
+
+  .projects-header__left {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .projects-header__copy {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-line);
+    align-self: end;
+  }
+
+  .projects-list {
+    display: grid;
+    gap: clamp(2.5rem, 4vw, 4rem);
+  }
+
+  .project-card {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: center;
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    border: 1px solid var(--color-line);
+    border-radius: 2rem;
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.03),
+      rgba(255, 255, 255, 0.01)
+    );
+    transition:
+      transform var(--transition-slow),
+      border-color var(--transition-base),
+      box-shadow var(--transition-slow);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(212, 168, 83, 0.3),
+      transparent
+    );
+    opacity: 0;
+    transition: opacity var(--transition-slow);
+  }
+
+  .project-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(212, 168, 83, 0.2);
+    box-shadow:
+      0 20px 60px rgba(0, 0, 0, 0.3),
+      0 0 40px rgba(212, 168, 83, 0.05);
+  }
+
+  .project-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Alternate layout for odd cards */
+  .project-card:nth-child(even) {
+    grid-template-columns: 0.9fr 1.1fr;
+  }
+
+  .project-card:nth-child(even) .project-card__media-wrap {
+    order: 2;
+  }
+
+  .project-card:nth-child(even) .project-card__body {
+    order: 1;
+  }
+
+  .project-card__media-wrap {
+    position: relative;
+  }
+
+  .project-card__media {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    transition: transform var(--transition-slow);
+  }
+
+  .project-card:hover .project-card__media {
+    transform: translateY(-4px);
+  }
+
+  .project-card__hover-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at center,
+      rgba(212, 168, 83, 0.1) 0%,
+      transparent 60%
+    );
+    opacity: 0;
+    transition: opacity var(--transition-slow);
+    pointer-events: none;
+  }
+
+  .project-card:hover .project-card__hover-glow {
+    opacity: 1;
+  }
+
+  .project-card__image {
+    aspect-ratio: 1.5 / 1;
+    transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .project-card:hover .project-card__image {
+    transform: scale(1.03);
+  }
+
+  .project-card__number {
+    position: absolute;
+    top: -0.5rem;
+    right: -0.5rem;
+    font-family: var(--font-display);
+    font-size: 5rem;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    color: rgba(212, 168, 83, 0.08);
+    pointer-events: none;
+    user-select: none;
+    z-index: -1;
+  }
+
+  .project-card__body {
+    display: grid;
+    gap: 1.5rem;
+    align-content: start;
+  }
+
+  .project-card__meta {
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .project-card__label,
+  .project-card__detail-label {
+    color: var(--color-accent);
+    font-size: 0.72rem;
+    line-height: 1;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .project-card__detail-label {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .project-card__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    background: linear-gradient(
+      135deg,
+      var(--color-text) 0%,
+      var(--color-accent-strong) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .project-card__description {
+    margin: 0.5rem 0 0;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+    font-size: 0.95rem;
+  }
+
+  .project-card__details {
+    display: grid;
+    gap: 1.2rem;
+    padding: 1.2rem 0;
+    border-top: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .project-card__outcome p {
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    font-size: 0.9rem;
+  }
+
+  .project-card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    width: fit-content;
+    color: var(--color-accent-strong);
+    font-size: 0.92rem;
+    font-weight: 500;
+    transition:
+      gap var(--transition-base),
+      color var(--transition-base);
+  }
+
+  .project-card__link:hover {
+    gap: 0.9rem;
+    color: var(--color-accent);
+  }
+
+  .project-card__link svg {
+    transition: transform var(--transition-base);
+  }
+
+  .project-card__link:hover svg {
+    transform: translate(2px, -2px);
+  }
+
+  .projects-archive-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: clamp(3rem, 5vw, 4rem);
+  }
+
+  .projects-archive-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-width: 14rem;
+  }
+
+  @media (max-width: 960px) {
+    .projects-header {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .project-card,
+    .project-card:nth-child(even) {
+      grid-template-columns: 1fr;
+    }
+
+    .project-card:nth-child(even) .project-card__media-wrap,
+    .project-card:nth-child(even) .project-card__body {
+      order: unset;
+    }
+
+    .project-card__number {
+      font-size: 3.5rem;
+    }
+  }
+</style>
 
 <script>
-  // Inicializar carruseles con autoplay al hover
-  document.addEventListener('DOMContentLoaded', function () {
-    // Obtener todos los carruseles
-    const carousels = document.querySelectorAll('[id^="carousel-"]');
-
-    carousels.forEach(carousel => {
-      const imageContainers = carousel.querySelectorAll('div[class*="absolute inset-0"]');
-      const indicators = carousel.querySelectorAll('[data-slide-index]');
-
-      if (imageContainers.length <= 1) return;
-
-      let currentIndex = 0;
-
-      // Función para mostrar el slide
-      function showSlide(index: number) {
-        // Cambiar opacidad de los contenedores de imagen
-        imageContainers.forEach((container, i) => {
-          if (i === index) {
-            container.classList.remove('opacity-0');
-            container.classList.add('opacity-100');
-          } else {
-            container.classList.remove('opacity-100');
-            container.classList.add('opacity-0');
-          }
-        });
-
-        // Actualizar indicadores
-        indicators.forEach((indicator, i) => {
-          if (i === index) {
-            indicator.className = indicator.className.replace('bg-white/50', 'bg-white');
-          } else {
-            indicator.className = indicator.className.replace('bg-white', 'bg-white/50');
-          }
-        });
-      }
-
-      // Función para ir al siguiente slide
-      function nextSlide() {
-        currentIndex = (currentIndex + 1) % imageContainers.length;
-        showSlide(currentIndex);
-        // Esperar a que termine la transición antes de reiniciar la barra de progreso
-        setTimeout(() => {
-          startProgressBar(carousel);
-        }, 500); // Duración de la transición
-      }
-
-      // Función para animar la barra de progreso
-      function startProgressBar(carouselElement: Element) {
-        const progressBar = carouselElement.querySelector('.progress-bar') as HTMLElement;
-        if (!progressBar) return;
-
-        let startTime = Date.now();
-        const duration = 1200; // Duración del intervalo
-
-        function animate() {
-          const elapsed = Date.now() - startTime;
-          const progress = Math.min((elapsed / duration) * 100, 100);
-
-          progressBar.style.width = `${progress}%`;
-
-          if (progress < 100) {
-            requestAnimationFrame(animate);
-          }
+  const projectObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          projectObserver.unobserve(entry.target);
         }
-
-        // Reiniciar la animación
-        progressBar.style.width = '0%';
-        startTime = Date.now();
-        animate();
-      }
-
-      // Iniciar autoplay al hacer hover
-      carousel.addEventListener('mouseenter', () => {
-        // Empezar autoplay cada 1.2 segundos
-        const interval = setInterval(nextSlide, 1800);
-
-        // Guardar referencia para poder limpiarla después
-        (carousel as any)['carouselInterval'] = interval;
-
-        // Iniciar animación de la barra de progreso después de la transición inicial
-        setTimeout(() => {
-          startProgressBar(carousel);
-        }, 500); // Esperar a que termine la transición inicial
       });
+    },
+    { threshold: 0.12, rootMargin: "0px 0px -60px 0px" },
+  );
 
-      // Detener autoplay al salir del hover
-      carousel.addEventListener('mouseleave', () => {
-        // Limpiar el intervalo
-        if ((carousel as any)['carouselInterval']) {
-          clearInterval((carousel as any)['carouselInterval']);
-          delete (carousel as any)['carouselInterval'];
-        }
-
-        // Resetear la barra de progreso
-        const progressBar = carousel.querySelector('.progress-bar') as HTMLElement;
-        if (progressBar) {
-          progressBar.style.width = '0%';
-        }
-
-        // Volver a la primera imagen después de la transición
-        setTimeout(() => {
-          currentIndex = 0;
-          showSlide(currentIndex);
-        }, 500); // Esperar a que termine la transición
-      });
-
-      // Mostrar primera imagen inicialmente
-      showSlide(0);
-    });
+  document.querySelectorAll("#proyectos .reveal").forEach((element) => {
+    projectObserver.observe(element);
   });
 </script>

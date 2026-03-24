@@ -3,7 +3,6 @@ import "@/styles/global.css";
 import "@fontsource-variable/onest";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import ParticleComponentAstro from "../components/ParticlesComponent.astro";
 import Analytics from "@vercel/analytics/astro";
 
 interface Props {
@@ -22,113 +21,102 @@ const { title, description } = Astro.props;
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
-    
+
     <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    
+
     <!-- Web App Manifest -->
     <link rel="manifest" href="/site.webmanifest" />
-    
+
     <!-- Primary Meta Tags -->
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
-    <meta name="author" content="Pablo Rojas - Desarrollador Full Stack" />
-    <meta name="keywords" content="desarrollador full stack, Next.js, React, TypeScript, NestJS, Node.js, desarrollo web, aplicaciones web, Chile" />
-    
+    <meta name="author" content="Patricio Gómez - Full Stack Developer" />
+    <meta
+      name="keywords"
+      content="desarrollador full stack, Next.js, React, TypeScript, NestJS, Node.js, desarrollo web, aplicaciones web, Chile"
+    />
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://prgm.cl" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="https://prgm.cl/web-app-manifest-512x512.png" />
-    
+    <meta
+      property="og:image"
+      content="https://prgm.cl/web-app-manifest-512x512.png"
+    />
+
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://prgm.cl" />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content="https://prgm.cl/web-app-manifest-512x512.png" />
-    
+    <meta
+      property="twitter:image"
+      content="https://prgm.cl/web-app-manifest-512x512.png"
+    />
+
     <!-- Theme Color -->
-    <meta name="theme-color" content="#050505" />
-    <meta name="msapplication-TileColor" content="#050505" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <meta name="msapplication-TileColor" content="#0a0a0a" />
   </head>
-  <body class="overflow-x-hidden">
-    <div
-      class="fixed top-0 left-0 z-[-2] h-screen w-full bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"
-    >
-      <ParticleComponentAstro
-        class="bg-transparent w-full h-full"
-        id="particles"
-      />
-    </div>
-    <div id="content" class="relative z-10 min-h-screen">
-      <Header />
+  <body>
+    <Header />
+    <main class="site-shell">
       <slot />
-      <Footer />
-    </div>
+    </main>
+    <Footer />
   </body>
 </html>
+
 <style is:global>
-  /* Evitar overflow horizontal */
-  * {
-    box-sizing: border-box;
-  }
   html,
   body {
-    overflow-x: hidden;
+    overflow-x: clip;
     max-width: 100%;
-    margin: 0;
-    padding: 0;
+  }
+  body.menu-open {
+    overflow: hidden;
   }
 
-  /* Estilo para las partículas */
-  #particles {
-    z-index: -1000 !important;
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(212, 168, 83, 0.3);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(212, 168, 83, 0.5);
   }
 
-  /* Contenido principal */
-  #content {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    min-height: 100vh;
+  /* Smooth image loading */
+  img {
+    opacity: 0;
+    transition: opacity 400ms ease;
   }
-
-  /* Color scheme y fuentes */
-  :root {
-    color-scheme: light dark;
-  }
-  html {
-    font-family: "Onest Variable";
-    scroll-behavior: smooth;
-  }
-  body {
-    background: #050505;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-  }
-
-  /* Reducir el movimiento para quienes lo prefieren */
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-  }
-
-  /* Ajustes para pantallas menores a 500px */
-  @media (max-width: 500px) {
-    .bg-custom-gradient {
-      background-image: radial-gradient(
-        ellipse 100% 200% at 50% 0%,
-        rgba(120, 119, 198, 0.3),
-        rgba(255, 255, 255, 0)
-      );
-    }
+  img.loaded,
+  img[loading="eager"] {
+    opacity: 1;
   }
 </style>
+
+<script>
+  // Add loaded class to images when they load
+  document.querySelectorAll("img").forEach((img) => {
+    if (img instanceof HTMLImageElement && img.complete) {
+      img.classList.add("loaded");
+    } else {
+      img.addEventListener("load", () => img.classList.add("loaded"));
+    }
+  });
+</script>

@@ -1,0 +1,71 @@
+---
+import { EDUCATION } from "../utils/data";
+---
+
+<section id="educacion" class="py-20 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="section-title animate">Educación</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {EDUCATION.map((edu, index) => (
+        <div 
+          class={`glass-card p-6 animate animate-delay-${(index + 1) * 100}`}
+        >
+          <!-- Year Badge -->
+          <span class="inline-block text-xs py-1 px-3 rounded-full bg-[var(--color-primary)]/20 text-[var(--color-primary)] border border-[var(--color-primary)]/30 mb-4">
+            {edu.year}
+          </span>
+
+          <!-- Title -->
+          <h3 class="text-xl font-semibold text-white mb-2">
+            {edu.title}
+          </h3>
+
+          <!-- Institution -->
+          <p class="text-[var(--color-primary)] font-medium mb-1">
+            {edu.institution}
+          </p>
+          <p class="text-[var(--color-text-muted)] text-sm mb-4">
+            {edu.location}
+          </p>
+
+          <!-- Description -->
+          <p class="text-[var(--color-text-secondary)] text-sm mb-4">
+            {edu.description}
+          </p>
+
+          <!-- Achievements -->
+          <ul class="space-y-2">
+            {edu.achievements.map((achievement) => (
+              <li class="flex items-start gap-2 text-sm text-[var(--color-text-secondary)]">
+                <svg class="w-4 h-4 text-[var(--color-primary)] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                {achievement}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('#educacion .animate').forEach(el => {
+    observer.observe(el);
+  });
+</script>
