@@ -71,6 +71,10 @@ import relListadoClaro from "../assets/images/rel/listado-claro.webp";
 import relListadoAnalisisOscuro from "../assets/images/rel/listado-analisis-oscuro.webp";
 import relPestañas from "../assets/images/rel/pestañas.webp";
 
+// Importar logos de proyectos
+import sotexLogo from "../assets/projects/sotex-logo.webp";
+import tfmImage from "../assets/projects/TFM.webp";
+
 // ============================================
 // HERO SECTION DATA
 // ============================================
@@ -478,8 +482,8 @@ export const PROJECTS = [
     shortLabel: "Mantenimiento y trazabilidad de flota",
     outcome: "Seguimiento de fallas y gestión operativa por áreas.",
     featured: false,
-    image: "/projects/sotex-logo.webp",
-    images: ["/projects/sotex-logo.webp"],
+    image: sotexLogo,
+    images: [sotexLogo],
     tags: [TAGS.NEXTJS, TAGS.PWA, TAGS.POSTGRESQL],
   },
   {
@@ -491,7 +495,7 @@ export const PROJECTS = [
     outcome:
       "Visualización y seguimiento de embarcaciones sobre mapas interactivos.",
     featured: false,
-    image: "/projects/sotex-logo.webp",
+    image: sotexLogo,
     images: [geopMapaEscritorio, geopMapaMovil, geopMapaDrawer, geopMapa],
     tags: [TAGS.NEXTJS, TAGS.PWA, TAGS.TURSO],
   },
@@ -503,8 +507,8 @@ export const PROJECTS = [
     shortLabel: "Proyecto académico de analítica a escala",
     outcome: "Orquestación de análisis de datos con stack distribuido.",
     featured: false,
-    image: "/projects/TFM.webp",
-    images: ["/projects/TFM.webp"],
+    image: tfmImage,
+    images: [tfmImage],
     tags: [TAGS.NODEJS, TAGS.REACT, TAGS.HADOOP, TAGS.JUPYTER],
   },
 ];
