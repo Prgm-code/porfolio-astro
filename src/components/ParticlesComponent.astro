@@ -1,5 +1,4 @@
 ---
-import Particles from "astro-particles";
 import type { ISourceOptions } from "tsparticles-engine";
 
 const options: ISourceOptions = {
@@ -82,29 +81,21 @@ const options: ISourceOptions = {
 };
 ---
 
-<script>
-  import { type Container, type Engine } from "tsparticles-engine";
+<div id="tsparticles" aria-hidden="true"></div>
+
+<script define:vars={{ options }} type="module">
+  import { tsParticles } from "tsparticles-engine";
   import { loadFull } from "tsparticles";
 
-  declare global {
-    interface Window {
-      particlesInit: (engine: Engine) => Promise<void>;
-      particlesLoaded: (container: Container) => void;
-    }
-  }
-
-  window.particlesInit = async function (engine: Engine) {
-    await loadFull(engine as any);
-  };
-
-  window.particlesLoaded = function (container: Container) {
-    console.log("particlesLoaded callback");
-  };
+  await loadFull(tsParticles);
+  await tsParticles.load({ id: "tsparticles", options });
 </script>
 
-<Particles
-  id="tsparticles"
-  options={options}
-  init="particlesInit"
-  loaded="particlesLoaded"
-/>
+<style>
+  #tsparticles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+</style>
