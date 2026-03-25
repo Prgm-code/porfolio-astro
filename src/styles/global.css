@@ -105,6 +105,7 @@
 .page-section {
   position: relative;
   padding: var(--section-padding) var(--page-gutter);
+  scroll-margin-top: 7rem;
 }
 
 .page-section::before {
@@ -298,6 +299,7 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
+  pointer-events: none;
   background: linear-gradient(
     135deg,
     rgba(212, 168, 83, 0.1) 0%,

@@ -788,7 +788,7 @@ const favoriteProjects = PROJECTS.filter((project) => project.favorite);
     stopAutoplay();
     autoplayId = window.setInterval(() => {
       setActiveSlide((activeIndex + 1) % heroSlides.length);
-    }, 4500);
+    }, 2500);
   }
 
   function stopAutoplay() {
@@ -830,7 +830,7 @@ const favoriteProjects = PROJECTS.filter((project) => project.favorite);
   heroCarousel?.addEventListener("mouseleave", startAutoplay);
 
   requestAnimationFrame(revealHeroItems);
-  setActiveSlide(0);
+  setActiveSlide(Math.floor(Math.random() * heroSlides.length));
   startAutoplay();
   window.addEventListener("scroll", updateHeroDepth, { passive: true });
   updateHeroDepth();

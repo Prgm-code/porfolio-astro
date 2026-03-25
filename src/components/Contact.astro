@@ -99,7 +99,7 @@ import { SOCIAL_LINKS } from "../utils/data";
       </ul>
     </div>
 
-    <div class="contact-form-wrap reveal" data-delay="1">
+    <div class="contact-form-wrap reveal-form" data-delay="1">
       <div class="contact-form-glow" aria-hidden="true"></div>
       <div class="contact-form surface-panel">
         <div class="contact-form__header">
@@ -286,6 +286,12 @@ import { SOCIAL_LINKS } from "../utils/data";
     transform: translateX(0);
   }
 
+  /* Ensure form is always visible even if reveal animation hasn't fired */
+  .reveal-form {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
   /* Form */
   .contact-form-wrap {
     position: relative;
@@ -308,6 +314,13 @@ import { SOCIAL_LINKS } from "../utils/data";
     padding: 1.8rem;
     border-radius: 1.8rem;
     z-index: 1;
+    pointer-events: none;
+  }
+
+  .contact-form > * {
+    position: relative;
+    z-index: 1;
+    pointer-events: auto;
   }
 
   .contact-form__header {
@@ -419,15 +432,19 @@ import { SOCIAL_LINKS } from "../utils/data";
     { threshold: 0.14, rootMargin: "0px 0px -50px 0px" },
   );
 
-  document.querySelectorAll("#contacto .reveal").forEach((element) => {
+  document.querySelectorAll("#contacto .reveal, #contacto .reveal-form").forEach((element) => {
     contactObserver.observe(element);
   });
 
-  // Form submit animation
+  // Form submit with fetch (no page redirect)
   const contactForm = document.querySelector("#contacto form");
-  contactForm?.addEventListener("submit", (e) => {
-    const btn = contactForm.querySelector(".contact-submit");
-    if (btn instanceof HTMLButtonElement) {
+  const btn = contactForm?.querySelector(".contact-submit");
+
+  if (contactForm && btn instanceof HTMLButtonElement) {
+    const originalHTML = btn.innerHTML;
+
+    contactForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
       btn.innerHTML = `
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation: spin 1s linear infinite;">
           <line x1="12" y1="2" x2="12" y2="6"/>
@@ -442,8 +459,35 @@ import { SOCIAL_LINKS } from "../utils/data";
         Enviando...
       `;
       btn.disabled = true;
-    }
-  });
+
+      const formData = new FormData(contactForm as HTMLFormElement);
+      try {
+        const res = await fetch(contactForm.getAttribute("action") || "", {
+          method: "POST",
+          body: formData,
+          headers: { Accept: "application/json" },
+        });
+        if (res.ok) {
+          contactForm.innerHTML = `
+            <div style="text-align:center;padding:2rem 1rem;">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 1rem">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+              <h3 style="margin:0 0 0.5rem;font-family:var(--font-display);font-size:1.3rem">Mensaje enviado</h3>
+              <p style="margin:0;color:var(--color-text-muted);font-size:0.9rem">Te respondo en menos de 24 horas.</p>
+            </div>
+          `;
+        } else {
+          throw new Error("Server error");
+        }
+      } catch {
+        btn.innerHTML = originalHTML;
+        btn.disabled = false;
+        alert("No se pudo enviar. Intenta por WhatsApp o email directo.");
+      }
+    });
+  }
 </script>
 
 <style is:global>
