@@ -9,7 +9,8 @@ import { ABOUT_DATA, EDUCATION, EXPERIENCE } from "../utils/data";
         <div class="section-header">
           <span class="section-kicker">Perfil</span>
           <h2 class="section-title">
-            Contexto técnico, criterio operativo y foco en entrega.
+            Soluciones web con criterio técnico, estabilidad y visión de
+            producto.
           </h2>
           <p class="section-copy">{ABOUT_DATA.summary}</p>
         </div>
@@ -17,9 +18,18 @@ import { ABOUT_DATA, EDUCATION, EXPERIENCE } from "../utils/data";
         <dl class="profile-meta">
           <div class="profile-meta__item">
             <dt>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
               </svg>
               Formación
             </dt>
@@ -27,9 +37,18 @@ import { ABOUT_DATA, EDUCATION, EXPERIENCE } from "../utils/data";
           </div>
           <div class="profile-meta__item">
             <dt>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                <circle cx="12" cy="10" r="3"/>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
               </svg>
               Ubicación
             </dt>
@@ -37,13 +56,24 @@ import { ABOUT_DATA, EDUCATION, EXPERIENCE } from "../utils/data";
           </div>
           <div class="profile-meta__item">
             <dt>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/>
-                <polyline points="12 6 12 12 16 14"/>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
               </svg>
               Disponibilidad
             </dt>
-            <dd class="profile-meta__availability">{ABOUT_DATA.availability}</dd>
+            <dd class="profile-meta__availability">
+              {ABOUT_DATA.availability}
+            </dd>
           </div>
         </dl>
 
@@ -54,7 +84,7 @@ import { ABOUT_DATA, EDUCATION, EXPERIENCE } from "../utils/data";
 
       <div class="profile-column reveal" data-delay="1">
         <div class="portrait-panel surface-panel">
-          <div class="portrait-glow" aria-hidden="true" />
+          <div class="portrait-glow" aria-hidden="true"></div>
           <img src={ABOUT_DATA.image} alt="Patricio Gómez" />
           <div class="portrait-decoration" aria-hidden="true">
             <div class="portrait-decoration__ring"></div>
@@ -64,9 +94,18 @@ import { ABOUT_DATA, EDUCATION, EXPERIENCE } from "../utils/data";
 
         <div class="credentials-block">
           <h3>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-              <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
             </svg>
             Formación
           </h3>
@@ -93,9 +132,10 @@ import { ABOUT_DATA, EDUCATION, EXPERIENCE } from "../utils/data";
           <div class="experience-strip__line" aria-hidden="true"></div>
         </div>
         <p class="section-copy experience-strip__copy">
-          El paso desde telecomunicaciones a software me dejó una forma de
-          trabajo útil para sistemas que tienen que seguir operando, no solo
-          verse bien.
+          Desde telecomunicaciones aprendí las bases de redes, infraestructura e
+          internet, junto con un fuerte enfoque al cliente. Hoy aplico esa
+          experiencia al desarrollo de software para crear soluciones completas,
+          estables y útiles.
         </p>
       </div>
 
@@ -208,7 +248,11 @@ import { ABOUT_DATA, EDUCATION, EXPERIENCE } from "../utils/data";
     width: 0.5rem;
     height: 0.5rem;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-strong));
+    background: linear-gradient(
+      135deg,
+      var(--color-accent),
+      var(--color-accent-strong)
+    );
     box-shadow: 0 0 8px rgba(212, 168, 83, 0.4);
   }
 
@@ -239,7 +283,9 @@ import { ABOUT_DATA, EDUCATION, EXPERIENCE } from "../utils/data";
   }
 
   @keyframes portraitRotate {
-    to { transform: rotate(360deg); }
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   .portrait-panel img {
@@ -286,8 +332,15 @@ import { ABOUT_DATA, EDUCATION, EXPERIENCE } from "../utils/data";
   }
 
   @keyframes ringPulse {
-    0%, 100% { transform: scale(1); opacity: 0.5; }
-    50% { transform: scale(1.1); opacity: 0.8; }
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.5;
+    }
+    50% {
+      transform: scale(1.1);
+      opacity: 0.8;
+    }
   }
 
   .credentials-block {

@@ -478,6 +478,12 @@
   height: 100%;
 }
 
+.stack-chip__icon > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 .stack-chip__label {
   display: inline-flex;
   align-items: center;

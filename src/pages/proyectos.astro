@@ -10,8 +10,13 @@ const sortedProjects = [...PROJECTS].sort((a, b) => {
   return score(b) - score(a);
 });
 
-const isStaticImagePath = (image: (typeof PROJECTS)[number]["image"]) =>
+const isStaticImagePath = (
+  image: (typeof PROJECTS)[number]["images"][number],
+) =>
   typeof image === "string";
+
+const isPortraitImage = (image: (typeof PROJECTS)[number]["images"][number]) =>
+  typeof image !== "string" && image.height > image.width;
 ---
 
 <Layout
@@ -48,24 +53,56 @@ const isStaticImagePath = (image: (typeof PROJECTS)[number]["image"]) =>
               class="archive-project__media browser-frame"
               aria-label={`Abrir ${project.title}`}
             >
-              {isStaticImagePath(project.image) ? (
-                <img
-                  src={project.image}
-                  alt={`Captura del proyecto ${project.title}`}
-                  class="archive-project__image"
-                  loading="lazy"
-                />
-              ) : (
-                <Image
-                  src={project.image}
-                  alt={`Captura del proyecto ${project.title}`}
-                  class="archive-project__image"
-                  widths={[720, 1080, 1600]}
-                  sizes="(max-width: 960px) 100vw, 48vw"
-                  loading="lazy"
-                  format="webp"
-                />
-              )}
+              <div
+                class="project-carousel"
+                data-project-carousel
+                data-slide-count={String(project.images.length)}
+              >
+                {project.images.map((image, imageIndex) => (
+                  <div
+                    class:list={[
+                      "project-carousel__slide",
+                      imageIndex === 0 && "is-active",
+                      isPortraitImage(image) && "is-portrait",
+                    ]}
+                    data-project-slide
+                    aria-hidden={imageIndex === 0 ? "false" : "true"}
+                  >
+                    {isStaticImagePath(image) ? (
+                      <img
+                        src={image}
+                        alt={`Captura ${imageIndex + 1} del proyecto ${project.title}`}
+                        class="archive-project__image project-carousel__image"
+                        loading={imageIndex === 0 ? "lazy" : "eager"}
+                      />
+                    ) : (
+                      <Image
+                        src={image}
+                        alt={`Captura ${imageIndex + 1} del proyecto ${project.title}`}
+                        class="archive-project__image project-carousel__image"
+                        widths={[720, 1080, 1600]}
+                        sizes="(max-width: 960px) 100vw, 48vw"
+                        loading={imageIndex === 0 ? "lazy" : "eager"}
+                        format="webp"
+                      />
+                    )}
+                  </div>
+                ))}
+
+                {project.images.length > 1 && (
+                  <div class="project-carousel__dots" aria-hidden="true">
+                    {project.images.map((_, imageIndex) => (
+                      <span
+                        class:list={[
+                          "project-carousel__dot",
+                          imageIndex === 0 && "is-active",
+                        ]}
+                        data-project-dot
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
             </a>
 
             <div class="archive-project__copy">
@@ -82,10 +119,6 @@ const isStaticImagePath = (image: (typeof PROJECTS)[number]["image"]) =>
               <p class="archive-project__description">{project.description}</p>
 
               <div class="archive-project__details">
-                <div>
-                  <span class="archive-project__meta-label">Resultado</span>
-                  <p>{project.outcome}</p>
-                </div>
                 <div>
                   <span class="archive-project__meta-label">Stack</span>
                   <ul class="stack-list">
@@ -106,7 +139,7 @@ const isStaticImagePath = (image: (typeof PROJECTS)[number]["image"]) =>
                   rel="noopener noreferrer"
                   class="project-link"
                 >
-                  <span>Ver implementación</span>
+                  <span>Ver</span>
                   <span
                     class="project-link__icon [&>svg]:h-full [&>svg]:w-full"
                     set:html={LinkIcon}
@@ -114,7 +147,7 @@ const isStaticImagePath = (image: (typeof PROJECTS)[number]["image"]) =>
                 </a>
               ) : (
                 <a href="/#contacto" class="project-link">
-                  <span>Pedir más contexto</span>
+                  <span>Conversemos</span>
                   <span
                     class="project-link__icon [&>svg]:h-full [&>svg]:w-full"
                     set:html={LinkIcon}
@@ -192,6 +225,83 @@ const isStaticImagePath = (image: (typeof PROJECTS)[number]["image"]) =>
     display: block;
   }
 
+  .project-carousel {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1.58 / 1;
+    overflow: hidden;
+  }
+
+  .project-carousel__slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: scale(1.015);
+    transition:
+      opacity 420ms ease,
+      transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .project-carousel__slide.is-active {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .project-carousel__slide.is-portrait {
+    background:
+      radial-gradient(
+        circle at center,
+        rgba(212, 168, 83, 0.1),
+        transparent 58%
+      ),
+      rgba(8, 10, 13, 0.38);
+  }
+
+  .project-carousel__slide.is-portrait .project-carousel__image {
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .project-carousel__dots {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 2;
+    display: flex;
+    gap: 0.35rem;
+    padding: 0.35rem;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    background: rgba(8, 10, 13, 0.58);
+    opacity: 0;
+    transform: translateY(0.35rem);
+    transition:
+      opacity var(--transition-base),
+      transform var(--transition-base);
+    backdrop-filter: blur(10px);
+  }
+
+  .archive-project__media:hover .project-carousel__dots,
+  .archive-project__media:focus-visible .project-carousel__dots {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .project-carousel__dot {
+    width: 0.38rem;
+    height: 0.38rem;
+    border-radius: 999px;
+    background: rgba(240, 235, 226, 0.35);
+    transition:
+      width var(--transition-base),
+      background-color var(--transition-base);
+  }
+
+  .project-carousel__dot.is-active {
+    width: 1rem;
+    background: var(--color-accent);
+  }
+
   .archive-project__image {
     aspect-ratio: 1.58 / 1;
     transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -255,8 +365,7 @@ const isStaticImagePath = (image: (typeof PROJECTS)[number]["image"]) =>
     letter-spacing: -0.04em;
   }
 
-  .archive-project__description,
-  .archive-project__details p {
+  .archive-project__description {
     margin: 0;
     color: var(--color-text-muted);
     line-height: 1.65;
@@ -313,3 +422,58 @@ const isStaticImagePath = (image: (typeof PROJECTS)[number]["image"]) =>
     }
   }
 </style>
+
+<script>
+  const carouselTimers = new WeakMap();
+
+  document
+    .querySelectorAll("[data-project-carousel]")
+    .forEach((carousel) => {
+      const slides = Array.from(
+        carousel.querySelectorAll("[data-project-slide]"),
+      );
+      const dots = Array.from(carousel.querySelectorAll("[data-project-dot]"));
+      const media = carousel.closest(".archive-project__media");
+      let activeIndex = 0;
+
+      function setActiveSlide(index = 0) {
+        activeIndex = index;
+
+        slides.forEach((slide, slideIndex) => {
+          const isActive = slideIndex === activeIndex;
+          slide.classList.toggle("is-active", isActive);
+          slide.setAttribute("aria-hidden", String(!isActive));
+        });
+
+        dots.forEach((dot, dotIndex) => {
+          dot.classList.toggle("is-active", dotIndex === activeIndex);
+        });
+      }
+
+      function startCarousel() {
+        if (slides.length < 2) return;
+        stopCarousel();
+        carouselTimers.set(
+          carousel,
+          window.setInterval(() => {
+            setActiveSlide((activeIndex + 1) % slides.length);
+          }, 1100),
+        );
+      }
+
+      function stopCarousel() {
+        const timer = carouselTimers.get(carousel);
+        if (timer) {
+          window.clearInterval(timer);
+          carouselTimers.delete(carousel);
+        }
+
+        setActiveSlide(0);
+      }
+
+      media?.addEventListener("mouseenter", startCarousel);
+      media?.addEventListener("focusin", startCarousel);
+      media?.addEventListener("mouseleave", stopCarousel);
+      media?.addEventListener("focusout", stopCarousel);
+    });
+</script>
