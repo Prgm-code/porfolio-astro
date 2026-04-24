@@ -10,8 +10,8 @@ import JavaScriptIcon from "../icons/JavaScript.svg?raw";
 import NodeJSIcon from "../icons/NodeJS.svg?raw";
 import TursoIcon from "../icons/TursoIcon.svg?raw";
 import MongoDBIcon from "../icons/MongoDBIcon.svg?raw";
-import HadoopIcon from "../icons/HadoopIcon.svg?raw";
-import JupyterIcon from "../icons/JupyterIcon.svg?raw";
+import HadoopIconUrl from "../icons/hadoop.webp?url";
+import JupyterIconUrl from "../icons/Jupyter_logo.svg.png?url";
 import CodeIcon from "../icons/Code.svg?raw";
 import DatabaseIcon from "../icons/DatabaseIcon.svg?raw";
 import NestJSIcon from "../icons/NestJS.svg?raw";
@@ -60,9 +60,26 @@ import rosemarieLandingPreguntas from "../assets/images/rosemarie-landing/pregun
 import rosemarieLandingServicios from "../assets/images/rosemarie-landing/servicios.webp";
 import rosemarieLandingSobreMi from "../assets/images/rosemarie-landing/sobre-mi.webp";
 
-import chronusCrearBoleta from "../assets/images/chronus/crear-boleta.webp";
-import chronusCrearCliente from "../assets/images/chronus/crear-cliente.webp";
-import chronusInicio from "../assets/images/chronus/inicio.webp";
+import activaQHero from "../assets/images/activaq/activaq_hero.webp";
+import activaQHome from "../assets/images/activaq/activaq_home2.webp";
+import activaQTecnologia from "../assets/images/activaq/activaq_tecnologia.webp";
+import activaQContacto from "../assets/images/activaq/activaq_contacto.webp";
+
+import chronusLanding from "../assets/images/chronus/chronus_landig.webp";
+import chronusClaroHome from "../assets/images/chronus/chronus_claro_home.webp";
+import chronusAgendaBlack from "../assets/images/chronus/chronus_agenda_black.webp";
+import chronusOscuro from "../assets/images/chronus/chronus_oscuro_2.webp";
+import chronusDetalle from "../assets/images/chronus/chronus_2.webp";
+
+import tesloManagerLanding from "../assets/images/teslo_manager/teslo_manager_landing.webp";
+import tesloManagerHome from "../assets/images/teslo_manager/teslo_manager.webp";
+import tesloManagerAcreditacion from "../assets/images/teslo_manager/Teslo_manager_1.webp";
+import tesloManagerDetalle from "../assets/images/teslo_manager/teslo_manager_2.webp";
+
+import tiroScoreLanding from "../assets/images/tiro_score/tiiro_score_landig.webp";
+import tiroScoreHome from "../assets/images/tiro_score/tiro_score.webp";
+import tiroScorePuntajes from "../assets/images/tiro_score/tiro_score_puntajes.webp";
+import tiroScoreDetalle from "../assets/images/tiro_score/tiro_score_3.webp";
 
 import relCalculo from "../assets/images/rel/calculo.webp";
 import relControlFormulas from "../assets/images/rel/control-formulas.webp";
@@ -74,6 +91,9 @@ import relPestañas from "../assets/images/rel/pestañas.webp";
 // Importar logos de proyectos
 import sotexLogo from "../assets/projects/sotex-logo.webp";
 import tfmImage from "../assets/projects/TFM.webp";
+
+const rasterIcon = (src: string) =>
+  `<img src="${src}" alt="" loading="lazy" decoding="async" />`;
 
 // ============================================
 // HERO SECTION DATA
@@ -209,6 +229,11 @@ const TAGS = {
     icon: AstroIcon,
     class: "size-4",
   },
+  GSAP: {
+    name: "GSAP",
+    icon: ToolIcon,
+    class: "size-4",
+  },
   NODEJS: {
     name: "Node.js",
     icon: NodeJSIcon,
@@ -226,12 +251,12 @@ const TAGS = {
   },
   HADOOP: {
     name: "Hadoop",
-    icon: HadoopIcon,
+    icon: rasterIcon(HadoopIconUrl),
     class: "size-4",
   },
   JUPYTER: {
     name: "Jupyter",
-    icon: JupyterIcon,
+    icon: rasterIcon(JupyterIconUrl),
     class: "size-4",
   },
   NESTJS: {
@@ -242,6 +267,11 @@ const TAGS = {
   POSTGRESQL: {
     name: "PostgreSQL",
     icon: PostgreSQLIcon,
+    class: "size-4",
+  },
+  SQLSERVER: {
+    name: "SQL Server",
+    icon: DatabaseIcon,
     class: "size-4",
   },
   PRISMA: {
@@ -368,6 +398,82 @@ export const TECH_STACK = [
 
 export const PROJECTS = [
   {
+    key: "tiro-score",
+    title: "Tiro Score",
+    description:
+      "Aplicación para controlar puntajes de competencias de tiro, diseñada para entorno competitivo con resultados en tiempo real, clasificación y seguimiento por evento.",
+    shortLabel: "Puntajes en tiempo real para competencia",
+    outcome:
+      "Registro y visualización de puntajes en vivo con calificación ordenada para jueces, participantes y organización.",
+    featured: true,
+    favorite: true,
+    link: "https://tiroscore.app/",
+    image: tiroScoreLanding,
+    images: [
+      tiroScoreLanding,
+      tiroScoreHome,
+      tiroScorePuntajes,
+      tiroScoreDetalle,
+    ],
+    tags: [TAGS.NEXTJS, TAGS.CONVEX, TAGS.TAILWIND, TAGS.TYPESCRIPT],
+  },
+  {
+    key: "teslo-manager",
+    title: "Teslo Manager",
+    description:
+      "Aplicación para control de acreditaciones y documentos de personal, con almacenamiento tipo S3, estadísticas, alertas de cumplimiento y avisos por correo.",
+    shortLabel: "Acreditaciones, documentos y cumplimiento",
+    outcome:
+      "Control documental centralizado con alertas, métricas y seguimiento de vigencia para procesos de acreditación.",
+    featured: true,
+    favorite: true,
+    link: "https://teslo.reactivespa.cl",
+    image: tesloManagerLanding,
+    images: [
+      tesloManagerLanding,
+      tesloManagerHome,
+      tesloManagerAcreditacion,
+      tesloManagerDetalle,
+    ],
+    tags: [TAGS.NEXTJS, TAGS.CONVEX, TAGS.CLOUDFLARE, TAGS.TAILWIND],
+  },
+  {
+    key: "activaq",
+    title: "Landing Page ActivaQ.cl",
+    description:
+      "Landing page construida con Astro y animaciones GSAP para laboratorio de biotecnología e inocuidad alimentaria. Comunica análisis de dioxinas, patógenos y tecnología XDS-CALUX.",
+    shortLabel: "Landing para laboratorio acreditado",
+    outcome:
+      "Presencia web clara, animada y rápida para comunicar servicios técnicos, acreditaciones y canales de contacto.",
+    featured: true,
+    favorite: true,
+    link: "https://www.activaq.cl/?p=1813",
+    image: activaQHero,
+    images: [activaQHero, activaQHome, activaQTecnologia, activaQContacto],
+    tags: [TAGS.ASTRO, TAGS.TAILWIND, TAGS.GSAP, TAGS.VERCEL],
+  },
+  {
+    key: "chronus",
+    title: "Chronus.cl",
+    description:
+      "Aplicación para la gestión de agenda de profesionales médicos, con notificaciones por WhatsApp, control de pagos y administración de documentos.",
+    shortLabel: "Agenda médica, pagos y documentos",
+    outcome:
+      "Agenda centralizada con avisos automáticos, trazabilidad de pagos y documentación por paciente.",
+    featured: true,
+    favorite: true,
+    link: "https://chronus.cl",
+    image: chronusLanding,
+    images: [
+      chronusLanding,
+      chronusClaroHome,
+      chronusAgendaBlack,
+      chronusOscuro,
+      chronusDetalle,
+    ],
+    tags: [TAGS.NEXTJS, TAGS.CONVEX, TAGS.CLOUDFLARE, TAGS.TAILWIND],
+  },
+  {
     key: "vlm360",
     title: "Vlm360.com",
     description:
@@ -401,19 +507,6 @@ export const PROJECTS = [
       Index0Contenido3,
     ],
     tags: [TAGS.NEXTJS, TAGS.CLERK, TAGS.CLOUDFLARE, TAGS.VERCEL],
-  },
-  {
-    key: "chronus",
-    title: "Plataforma de Automatización Chronus",
-    description:
-      "Automatización de tareas repetitivas: documentos, citas y costos. Backend NestJS, frontend Next.js con Playwright para automatización.",
-    shortLabel: "Automatización operativa y flujos internos",
-    outcome: "Menos trabajo manual en documentos, citas y costos.",
-    featured: true,
-    favorite: true,
-    image: chronusInicio,
-    images: [chronusInicio, chronusCrearCliente, chronusCrearBoleta],
-    tags: [TAGS.NEXTJS, TAGS.NESTJS, TAGS.PLAYWRIGHT, TAGS.CLERK],
   },
   {
     key: "reactivespa",
@@ -472,7 +565,7 @@ export const PROJECTS = [
       relCalculo,
       relListadoAnalisisOscuro,
     ],
-    tags: [TAGS.NEXTJS, TAGS.NESTJS, TAGS.TYPESCRIPT],
+    tags: [TAGS.NEXTJS, TAGS.NESTJS, TAGS.SQLSERVER, TAGS.TYPESCRIPT],
   },
   {
     key: "naval-pwa",

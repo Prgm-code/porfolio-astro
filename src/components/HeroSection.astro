@@ -126,7 +126,7 @@ const favoriteProjects = PROJECTS.filter((project) => project.favorite);
 
               <div class="hero-slide__meta">
                 <div class="hero-slide__meta-main">
-                  <span class="hero-slide__label">Ultimas aplicaciones</span>
+                  <span class="hero-slide__label">Últimas aplicaciones</span>
                   <strong>{project.title}</strong>
                   <p class="hero-slide__summary">{project.shortLabel}</p>
                 </div>
@@ -147,7 +147,7 @@ const favoriteProjects = PROJECTS.filter((project) => project.favorite);
 
       <div
         class="hero-carousel__controls"
-        aria-label="Seleccionar ultimas aplicaciones"
+        aria-label="Seleccionar últimas aplicaciones"
       >
         {
           favoriteProjects.map((project, index) => (
@@ -830,7 +830,7 @@ const favoriteProjects = PROJECTS.filter((project) => project.favorite);
   heroCarousel?.addEventListener("mouseleave", startAutoplay);
 
   requestAnimationFrame(revealHeroItems);
-  setActiveSlide(Math.floor(Math.random() * heroSlides.length));
+  setActiveSlide(0);
   startAutoplay();
   window.addEventListener("scroll", updateHeroDepth, { passive: true });
   updateHeroDepth();

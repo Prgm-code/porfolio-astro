@@ -10,21 +10,21 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.6",
+    "@astrojs/check": "^0.9.8",
     "@fontsource-variable/onest": "^5.2.11",
     "@lucide/astro": "^0.544.0",
     "@vercel/analytics": "^1.6.1",
-    "astro": "^5.16.11",
+    "astro": "^5.18.1",
     "flowbite": "^3.1.2",
     "sharp": "^0.34.5",
-    "tailwindcss": "^4.1.18",
+    "tailwindcss": "^4.2.4",
     "tsparticles": "^2.12.0",
     "tsparticles-engine": "^2.12.0",
     "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.18",
-    "prettier": "^3.8.0",
+    "@tailwindcss/vite": "^4.2.4",
+    "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.6.14"
   }

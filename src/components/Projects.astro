@@ -5,8 +5,11 @@ import { PROJECTS } from "../utils/data";
 
 const featuredProjects = PROJECTS.filter((project) => project.featured).slice(
   0,
-  3,
+  6,
 );
+
+const isPortraitImage = (image: (typeof PROJECTS)[number]["images"][number]) =>
+  typeof image !== "string" && image.height > image.width;
 ---
 
 <section id="proyectos" class="page-section">
@@ -19,8 +22,9 @@ const featuredProjects = PROJECTS.filter((project) => project.featured).slice(
         </h2>
       </div>
       <p class="projects-header__copy section-copy">
-        Selección breve de sistemas donde la interfaz, la lógica y la operación
-        tenían que convivir sin ruido ni capas innecesarias.
+        Selección reciente de productos, plataformas internas y landings
+        técnicas donde interfaz, lógica y operación conviven sin capas
+        innecesarias.
       </p>
     </div>
 
@@ -40,15 +44,50 @@ const featuredProjects = PROJECTS.filter((project) => project.featured).slice(
                 rel={project.link ? "noopener noreferrer" : undefined}
                 aria-label={`Abrir ${project.title}`}
               >
-                <Image
-                  src={project.image}
-                  alt={`Captura del proyecto ${project.title}`}
-                  class="project-card__image"
-                  widths={[720, 1080, 1600]}
-                  sizes="(max-width: 960px) 100vw, 50vw"
-                  loading="lazy"
-                  format="webp"
-                />
+                <div
+                  class="project-carousel"
+                  data-project-carousel
+                  data-slide-count={String(project.images.length)}
+                >
+                  {project.images.map((image, imageIndex) => (
+                    <div
+                      class:list={[
+                        "project-carousel__slide",
+                        imageIndex === 0 && "is-active",
+                        isPortraitImage(image) && "is-portrait",
+                      ]}
+                      data-project-slide
+                      aria-hidden={imageIndex === 0 ? "false" : "true"}
+                    >
+                      <Image
+                        src={image}
+                        alt={`Captura ${imageIndex + 1} del proyecto ${project.title}`}
+                        class="project-card__image project-carousel__image"
+                        widths={[720, 1080, 1600]}
+                        sizes="(max-width: 960px) 100vw, 50vw"
+                        loading={imageIndex === 0 ? "lazy" : "eager"}
+                        format="webp"
+                      />
+                    </div>
+                  ))}
+
+                  {project.images.length > 1 && (
+                    <div
+                      class="project-carousel__dots"
+                      aria-hidden="true"
+                    >
+                      {project.images.map((_, imageIndex) => (
+                        <span
+                          class:list={[
+                            "project-carousel__dot",
+                            imageIndex === 0 && "is-active",
+                          ]}
+                          data-project-dot
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
 
                 <div class="project-card__hover-glow" aria-hidden="true" />
               </a>
@@ -66,11 +105,6 @@ const featuredProjects = PROJECTS.filter((project) => project.featured).slice(
               </div>
 
               <div class="project-card__details">
-                <div class="project-card__outcome">
-                  <span class="project-card__detail-label">Resultado</span>
-                  <p>{project.outcome}</p>
-                </div>
-
                 <div class="project-card__stack">
                   <span class="project-card__detail-label">Stack</span>
                   <ul class="stack-list">
@@ -140,7 +174,7 @@ const featuredProjects = PROJECTS.filter((project) => project.featured).slice(
 
   .projects-list {
     display: grid;
-    gap: clamp(2.5rem, 4vw, 4rem);
+    gap: clamp(2rem, 3.3vw, 3.2rem);
   }
 
   .project-card {
@@ -238,6 +272,83 @@ const featuredProjects = PROJECTS.filter((project) => project.featured).slice(
     opacity: 1;
   }
 
+  .project-carousel {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1.5 / 1;
+    overflow: hidden;
+  }
+
+  .project-carousel__slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: scale(1.015);
+    transition:
+      opacity 420ms ease,
+      transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .project-carousel__slide.is-active {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .project-carousel__slide.is-portrait {
+    background:
+      radial-gradient(
+        circle at center,
+        rgba(212, 168, 83, 0.1),
+        transparent 58%
+      ),
+      rgba(8, 10, 13, 0.38);
+  }
+
+  .project-carousel__slide.is-portrait .project-carousel__image {
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .project-carousel__dots {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 2;
+    display: flex;
+    gap: 0.35rem;
+    padding: 0.35rem;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    background: rgba(8, 10, 13, 0.58);
+    opacity: 0;
+    transform: translateY(0.35rem);
+    transition:
+      opacity var(--transition-base),
+      transform var(--transition-base);
+    backdrop-filter: blur(10px);
+  }
+
+  .project-card__media:hover .project-carousel__dots,
+  .project-card__media:focus-visible .project-carousel__dots {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .project-carousel__dot {
+    width: 0.38rem;
+    height: 0.38rem;
+    border-radius: 999px;
+    background: rgba(240, 235, 226, 0.35);
+    transition:
+      width var(--transition-base),
+      background-color var(--transition-base);
+  }
+
+  .project-carousel__dot.is-active {
+    width: 1rem;
+    background: var(--color-accent);
+  }
+
   .project-card__image {
     aspect-ratio: 1.5 / 1;
     transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -317,13 +428,6 @@ const featuredProjects = PROJECTS.filter((project) => project.featured).slice(
     border-bottom: 1px solid var(--color-line);
   }
 
-  .project-card__outcome p {
-    margin: 0;
-    color: var(--color-text-muted);
-    line-height: 1.6;
-    font-size: 0.9rem;
-  }
-
   .project-card__link {
     display: inline-flex;
     align-items: center;
@@ -401,4 +505,57 @@ const featuredProjects = PROJECTS.filter((project) => project.featured).slice(
   document.querySelectorAll("#proyectos .reveal").forEach((element) => {
     projectObserver.observe(element);
   });
+
+  const carouselTimers = new WeakMap();
+
+  document
+    .querySelectorAll("[data-project-carousel]")
+    .forEach((carousel) => {
+      const slides = Array.from(
+        carousel.querySelectorAll("[data-project-slide]"),
+      );
+      const dots = Array.from(carousel.querySelectorAll("[data-project-dot]"));
+      const media = carousel.closest(".project-card__media");
+      let activeIndex = 0;
+
+      function setActiveSlide(index) {
+        activeIndex = index;
+
+        slides.forEach((slide, slideIndex) => {
+          const isActive = slideIndex === activeIndex;
+          slide.classList.toggle("is-active", isActive);
+          slide.setAttribute("aria-hidden", String(!isActive));
+        });
+
+        dots.forEach((dot, dotIndex) => {
+          dot.classList.toggle("is-active", dotIndex === activeIndex);
+        });
+      }
+
+      function startCarousel() {
+        if (slides.length < 2) return;
+        stopCarousel();
+        carouselTimers.set(
+          carousel,
+          window.setInterval(() => {
+            setActiveSlide((activeIndex + 1) % slides.length);
+          }, 1100),
+        );
+      }
+
+      function stopCarousel() {
+        const timer = carouselTimers.get(carousel);
+        if (timer) {
+          window.clearInterval(timer);
+          carouselTimers.delete(carousel);
+        }
+
+        setActiveSlide(0);
+      }
+
+      media?.addEventListener("mouseenter", startCarousel);
+      media?.addEventListener("focusin", startCarousel);
+      media?.addEventListener("mouseleave", stopCarousel);
+      media?.addEventListener("focusout", stopCarousel);
+    });
 </script>
