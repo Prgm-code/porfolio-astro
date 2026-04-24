@@ -18,13 +18,13 @@ const isPortraitImage = (image: (typeof PROJECTS)[number]["images"][number]) =>
       <div class="projects-header__left">
         <span class="section-kicker">Proyectos destacados</span>
         <h2 class="section-title">
-          Aplicaciones funcionales con criterio técnico y una UI que sí acompaña.
+          Proyectos desarrollados con enfoque funcional, técnico y visual.
         </h2>
       </div>
       <p class="projects-header__copy section-copy">
-        Selección reciente de productos, plataformas internas y landings
-        técnicas donde interfaz, lógica y operación conviven sin capas
-        innecesarias.
+        Selección de productos web, plataformas internas y sitios donde se
+        integra interfaz, lógica de negocio y operación técnica en soluciones
+        completas.
       </p>
     </div>
 
@@ -72,10 +72,7 @@ const isPortraitImage = (image: (typeof PROJECTS)[number]["images"][number]) =>
                   ))}
 
                   {project.images.length > 1 && (
-                    <div
-                      class="project-carousel__dots"
-                      aria-hidden="true"
-                    >
+                    <div class="project-carousel__dots" aria-hidden="true">
                       {project.images.map((_, imageIndex) => (
                         <span
                           class:list={[
@@ -125,10 +122,19 @@ const isPortraitImage = (image: (typeof PROJECTS)[number]["images"][number]) =>
                   rel="noopener noreferrer"
                   class="project-card__link"
                 >
-                  <span>Ver implementación</span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="7" y1="17" x2="17" y2="7"/>
-                    <polyline points="7 7 17 7 17 17"/>
+                  <span>Ver</span>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <line x1="7" y1="17" x2="17" y2="7" />
+                    <polyline points="7 7 17 7 17 17" />
                   </svg>
                 </a>
               )}
@@ -140,11 +146,20 @@ const isPortraitImage = (image: (typeof PROJECTS)[number]["images"][number]) =>
 
     <div class="projects-archive-cta reveal" data-delay="2">
       <a href="/proyectos" class="button-secondary projects-archive-link">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="3" width="7" height="7"/>
-          <rect x="14" y="3" width="7" height="7"/>
-          <rect x="14" y="14" width="7" height="7"/>
-          <rect x="3" y="14" width="7" height="7"/>
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
         </svg>
         Ver archivo completo
       </a>
@@ -508,54 +523,52 @@ const isPortraitImage = (image: (typeof PROJECTS)[number]["images"][number]) =>
 
   const carouselTimers = new WeakMap();
 
-  document
-    .querySelectorAll("[data-project-carousel]")
-    .forEach((carousel) => {
-      const slides = Array.from(
-        carousel.querySelectorAll("[data-project-slide]"),
+  document.querySelectorAll("[data-project-carousel]").forEach((carousel) => {
+    const slides = Array.from(
+      carousel.querySelectorAll("[data-project-slide]"),
+    );
+    const dots = Array.from(carousel.querySelectorAll("[data-project-dot]"));
+    const media = carousel.closest(".project-card__media");
+    let activeIndex = 0;
+
+    function setActiveSlide(index: number) {
+      activeIndex = index;
+
+      slides.forEach((slide, slideIndex) => {
+        const isActive = slideIndex === activeIndex;
+        slide.classList.toggle("is-active", isActive);
+        slide.setAttribute("aria-hidden", String(!isActive));
+      });
+
+      dots.forEach((dot, dotIndex) => {
+        dot.classList.toggle("is-active", dotIndex === activeIndex);
+      });
+    }
+
+    function startCarousel() {
+      if (slides.length < 2) return;
+      stopCarousel();
+      carouselTimers.set(
+        carousel,
+        window.setInterval(() => {
+          setActiveSlide((activeIndex + 1) % slides.length);
+        }, 1100),
       );
-      const dots = Array.from(carousel.querySelectorAll("[data-project-dot]"));
-      const media = carousel.closest(".project-card__media");
-      let activeIndex = 0;
+    }
 
-      function setActiveSlide(index) {
-        activeIndex = index;
-
-        slides.forEach((slide, slideIndex) => {
-          const isActive = slideIndex === activeIndex;
-          slide.classList.toggle("is-active", isActive);
-          slide.setAttribute("aria-hidden", String(!isActive));
-        });
-
-        dots.forEach((dot, dotIndex) => {
-          dot.classList.toggle("is-active", dotIndex === activeIndex);
-        });
+    function stopCarousel() {
+      const timer = carouselTimers.get(carousel);
+      if (timer) {
+        window.clearInterval(timer);
+        carouselTimers.delete(carousel);
       }
 
-      function startCarousel() {
-        if (slides.length < 2) return;
-        stopCarousel();
-        carouselTimers.set(
-          carousel,
-          window.setInterval(() => {
-            setActiveSlide((activeIndex + 1) % slides.length);
-          }, 1100),
-        );
-      }
+      setActiveSlide(0);
+    }
 
-      function stopCarousel() {
-        const timer = carouselTimers.get(carousel);
-        if (timer) {
-          window.clearInterval(timer);
-          carouselTimers.delete(carousel);
-        }
-
-        setActiveSlide(0);
-      }
-
-      media?.addEventListener("mouseenter", startCarousel);
-      media?.addEventListener("focusin", startCarousel);
-      media?.addEventListener("mouseleave", stopCarousel);
-      media?.addEventListener("focusout", stopCarousel);
-    });
+    media?.addEventListener("mouseenter", startCarousel);
+    media?.addEventListener("focusin", startCarousel);
+    media?.addEventListener("mouseleave", stopCarousel);
+    media?.addEventListener("focusout", stopCarousel);
+  });
 </script>

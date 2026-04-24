@@ -3,6 +3,8 @@ import { Image } from "astro:assets";
 import { HERO_DATA, PROJECTS } from "../utils/data";
 
 const favoriteProjects = PROJECTS.filter((project) => project.favorite);
+const profileImage =
+  "https://media.licdn.com/dms/image/v2/D4E03AQGQw7z9wYWpeg/profile-displayphoto-crop_800_800/B4EZozJMsOGcAM-/0/1761794643954?e=1778716800&v=beta&t=JXEKBejWLxTMoAm8Rx7hWB8pNkxda-C-nv3yqXjVl2w";
 ---
 
 <section id="hero" class="hero">
@@ -21,20 +23,23 @@ const favoriteProjects = PROJECTS.filter((project) => project.favorite);
   <div class="hero-inner">
     <div class="hero-copy">
       <div class="hero-brand-wrap">
-        <span class="hero-brand-line" aria-hidden="true"></span>
-        <p class="hero-brand reveal">{HERO_DATA.brand}</p>
+        <div class="hero-brand-lockup reveal">
+          <img
+            src={profileImage}
+            alt="Foto de perfil de Patricio Gómez"
+            class="hero-avatar"
+            loading="eager"
+            decoding="async"
+          />
+          <div class="hero-identity">
+            <p class="hero-name">{HERO_DATA.name}</p>
+            <p class="hero-role">{HERO_DATA.role}</p>
+          </div>
+        </div>
+        <span class="hero-brand-line reveal" aria-hidden="true"></span>
       </div>
 
-      <p class="eyebrow reveal" data-delay="1">
-        <span class="eyebrow-dot"></span>
-        Patricio Gómez · Full Stack TypeScript
-      </p>
-
-      <h1 class="hero-title reveal" data-delay="2">
-        <span class="hero-title__line">{HERO_DATA.headline}</span>
-      </h1>
-
-      <p class="hero-support reveal" data-delay="3">
+      <p class="hero-support reveal" data-delay="2">
         {HERO_DATA.supportingText}
       </p>
 
@@ -58,24 +63,6 @@ const favoriteProjects = PROJECTS.filter((project) => project.favorite);
           </svg>
           {HERO_DATA.secondaryCta.label}
         </a>
-      </div>
-
-      <!-- Stats row -->
-      <div class="hero-stats reveal" data-delay="4">
-        <div class="hero-stat">
-          <span class="hero-stat__number">14+</span>
-          <span class="hero-stat__label">Años en ingeniería</span>
-        </div>
-        <div class="hero-stat-divider"></div>
-        <div class="hero-stat">
-          <span class="hero-stat__number">2022</span>
-          <span class="hero-stat__label">Inicio en full stack</span>
-        </div>
-        <div class="hero-stat-divider"></div>
-        <div class="hero-stat">
-          <span class="hero-stat__number">100%</span>
-          <span class="hero-stat__label">Compromiso operativo</span>
-        </div>
       </div>
     </div>
 
@@ -298,8 +285,8 @@ const favoriteProjects = PROJECTS.filter((project) => project.favorite);
     width: min(100%, var(--content-width));
     margin: 0 auto;
     display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-    gap: clamp(3rem, 5vw, 5rem);
+    grid-template-columns: minmax(0, 1fr) minmax(27rem, 0.96fr);
+    gap: clamp(3rem, 4.6vw, 4.5rem);
     align-items: center;
   }
 
@@ -307,6 +294,7 @@ const favoriteProjects = PROJECTS.filter((project) => project.favorite);
     display: flex;
     flex-direction: column;
     min-width: 0;
+    transform: translateY(clamp(-1.35rem, -2vw, -0.65rem));
   }
 
   .hero-copy > * {
@@ -315,35 +303,75 @@ const favoriteProjects = PROJECTS.filter((project) => project.favorite);
 
   .hero-brand-wrap {
     position: relative;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+    display: grid;
+    gap: clamp(1.15rem, 1.9vw, 1.55rem);
+    margin-bottom: clamp(1.6rem, 2.5vw, 2.1rem);
     min-width: 0;
+    max-width: 40.5rem;
   }
 
   .hero-brand-line {
     display: block;
-    width: 3rem;
+    width: 100%;
+    max-width: 35.5rem;
     height: 1px;
-    background: linear-gradient(90deg, var(--color-accent), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(212, 168, 83, 0.62) 12%,
+      rgba(212, 168, 83, 0.2) 100%
+    );
     animation: lineGrow 1s ease-out forwards;
   }
 
   @keyframes lineGrow {
-    from { width: 0; opacity: 0; }
-    to { width: 3rem; opacity: 1; }
+    from {
+      transform: scaleX(0);
+      opacity: 0;
+      transform-origin: left;
+    }
+    to {
+      transform: scaleX(1);
+      opacity: 1;
+      transform-origin: left;
+    }
   }
 
-  .hero-brand {
+  .hero-brand-lockup {
+    display: inline-flex;
+    align-items: center;
+    gap: clamp(1.15rem, 2.1vw, 1.75rem);
+    min-width: 0;
+  }
+
+  .hero-avatar {
+    width: clamp(5.65rem, 8.25vw, 7.75rem);
+    height: clamp(5.65rem, 8.25vw, 7.75rem);
+    border-radius: 50%;
+    border: 1px solid rgba(212, 168, 83, 0.46);
+    object-fit: cover;
+    box-shadow:
+      0 0 0 3px rgba(8, 10, 13, 0.78),
+      0 18px 48px rgba(0, 0, 0, 0.34),
+      0 0 34px rgba(212, 168, 83, 0.14);
+    flex: 0 0 auto;
+  }
+
+  .hero-identity {
+    display: grid;
+    gap: 0.48rem;
+    min-width: 0;
+  }
+
+  .hero-name {
     margin: 0;
     display: block;
     font-family: var(--font-display);
     max-width: 100%;
-    font-size: clamp(4rem, 10.5vw, 8rem);
-    line-height: 1;
-    letter-spacing: -0.06em;
-    padding-block: 0.08em;
+    font-size: clamp(2.8rem, 5.45vw, 4.7rem);
+    line-height: 0.95;
+    letter-spacing: -0.055em;
+    white-space: nowrap;
     background: linear-gradient(
       135deg,
       var(--color-text) 0%,
@@ -357,62 +385,26 @@ const favoriteProjects = PROJECTS.filter((project) => project.favorite);
     animation: gradientShift 8s ease-in-out infinite;
   }
 
+  .hero-role {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: clamp(0.8rem, 1.08vw, 0.98rem);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    line-height: 1.4;
+  }
+
   @keyframes gradientShift {
     0%, 100% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
   }
 
-  .hero-copy :global(.eyebrow) {
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.8rem;
-    margin-bottom: 2rem;
-    color: var(--color-text-muted);
-    font-size: 0.8rem;
-    letter-spacing: 0.15em;
-  }
-
-  .eyebrow-dot {
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--color-accent);
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% {
-      transform: scale(1);
-      opacity: 1;
-    }
-    50% {
-      transform: scale(1.3);
-      opacity: 0.7;
-    }
-  }
-
-  .hero-title {
-    margin: 0 0 1.6rem;
-    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-    line-height: 1.1;
-    letter-spacing: -0.04em;
-    color: var(--color-text);
-    text-wrap: balance;
-  }
-
-  .hero-title__line {
-    display: block;
-  }
-
   .hero-support {
-    margin: 0 0 2rem;
-    max-width: 34rem;
+    margin: 0 0 clamp(2.15rem, 3vw, 2.65rem);
+    max-width: 40rem;
     color: var(--color-text-muted);
-    font-size: clamp(1rem, 1.3vw, 1.1rem);
-    line-height: 1.7;
+    font-size: clamp(1.12rem, 1.5vw, 1.26rem);
+    line-height: 1.78;
   }
 
   .hero :global(.button-row) {
@@ -428,50 +420,6 @@ const favoriteProjects = PROJECTS.filter((project) => project.favorite);
     gap: 0.6rem;
   }
 
-  /* Stats row */
-  .hero-stats {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--color-line);
-  }
-
-  .hero-stat {
-    display: grid;
-    gap: 0.3rem;
-  }
-
-  .hero-stat__number {
-    font-family: var(--font-display);
-    font-size: clamp(1.5rem, 2.5vw, 2rem);
-    font-weight: 400;
-    letter-spacing: -0.03em;
-    color: var(--color-accent-strong);
-    line-height: 1;
-  }
-
-  .hero-stat__label {
-    font-size: 0.72rem;
-    color: var(--color-text-soft);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-
-  .hero-stat-divider {
-    width: 1px;
-    height: 2.5rem;
-    background: linear-gradient(
-      180deg,
-      transparent,
-      var(--color-line),
-      transparent
-    );
-  }
-
   /* Stage / Carousel */
   .hero-stage {
     display: grid;
@@ -483,8 +431,8 @@ const favoriteProjects = PROJECTS.filter((project) => project.favorite);
   .hero-carousel {
     position: relative;
     width: 100%;
-    max-width: 44rem;
-    min-height: 44rem;
+    max-width: 42rem;
+    min-height: clamp(32rem, 43vw, 39rem);
   }
 
   .hero-slide {
@@ -612,7 +560,7 @@ const favoriteProjects = PROJECTS.filter((project) => project.favorite);
   .hero-slide__meta strong {
     display: block;
     font-family: var(--font-display);
-    font-size: 1.2rem;
+    font-size: 1.16rem;
     letter-spacing: -0.02em;
   }
 
@@ -686,6 +634,10 @@ const favoriteProjects = PROJECTS.filter((project) => project.favorite);
       gap: 2.5rem;
     }
 
+    .hero-copy {
+      transform: none;
+    }
+
     .hero-stage {
       width: 100%;
       max-width: 44rem;
@@ -700,22 +652,22 @@ const favoriteProjects = PROJECTS.filter((project) => project.favorite);
       padding-bottom: 2rem;
     }
 
-    .hero-brand {
-      font-size: clamp(3rem, 14vw, 4.75rem);
+    .hero-name {
+      font-size: clamp(2rem, 9.5vw, 2.85rem);
     }
 
-    .hero-title {
-      font-size: clamp(1.6rem, 7vw, 2.2rem);
+    .hero-avatar {
+      width: clamp(3.75rem, 16vw, 4.55rem);
+      height: clamp(3.75rem, 16vw, 4.55rem);
+    }
+
+    .hero-role {
+      font-size: 0.66rem;
+      letter-spacing: 0.06em;
     }
 
     .hero-support {
       font-size: 0.95rem;
-    }
-
-    .hero-stats { gap: 1.2rem; }
-
-    .hero-stat-divider {
-      display: none;
     }
 
     .hero-stage {

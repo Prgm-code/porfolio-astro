@@ -99,11 +99,10 @@ const rasterIcon = (src: string) =>
 // HERO SECTION DATA
 // ============================================
 export const HERO_DATA = {
-  brand: "prgm.cl",
   name: "Patricio Gómez",
-  headline: "Desarrollo productos web claros, rápidos y listos para operar.",
+  role: "Full Stack JavaScript / TypeScript",
   supportingText:
-    "Full stack JavaScript/TypeScript desde Puerto Montt. Diseño, construyo y despliego aplicaciones para automatizar procesos, ordenar operaciones y llevar ideas a producción.",
+    "Soy desarrollador full stack con experiencia creando aplicaciones a medida, desde la idea hasta la puesta en marcha, para simplificar procesos y resolver necesidades reales de negocio.",
   primaryCta: {
     label: "Hablemos por WhatsApp",
     href: "https://wa.me/56976990163?text=Hola%20Patricio,%20quisiera%20conversar%20sobre%20un%20proyecto",
@@ -122,15 +121,16 @@ export const HERO_DATA = {
 export const ABOUT_DATA = {
   title: "Perfil y credenciales",
   summary:
-    "Soy Ingeniero Electrónico y Máster en Desarrollo Web Full Stack. Después de más de 14 años operando infraestructura crítica en telecomunicaciones, hoy construyo software con foco en claridad técnica, continuidad operativa y resultados medibles.",
+        "Ingeniero Electrónico y Máster en Desarrollo Web Full Stack, con experiencia en desarrollo de software, infraestructura y telecomunicaciones. Cuento con una base técnica sólida para crear soluciones web claras, estables y orientadas a resultados.",
+
   image: "https://avatars.githubusercontent.com/u/107218376?v=4",
   location: "Puerto Montt, Chile",
   availability: "Disponible para nuevos proyectos y colaboraciones",
-  highlights: [
-    "Máster en Desarrollo Web Full Stack en Three Points, Barcelona.",
-    "Experiencia construyendo productos con Next.js, NestJS, PostgreSQL, Cloudflare y GCP.",
-    "Base previa en telecomunicaciones e infraestructura crítica, útil para proyectos que requieren operación confiable.",
-  ],
+highlights: [
+  "Máster en Desarrollo Web Full Stack en Three Points, Barcelona.",
+  "Desarrollo de productos web con Next.js, NestJS, PostgreSQL, Cloudflare y GCP.",
+  "Experiencia previa en telecomunicaciones e infraestructura crítica.",
+],
 };
 
 export const SOCIAL_LINKS = {
@@ -358,15 +358,15 @@ const TAGS = {
 
 export const CAPABILITIES = [
   {
-    title: "Producto web y plataformas internas",
+    title: "Desarrollo de productos web",
     description:
-      "Interfaces y flujos full stack para operación diaria, gestión documental, reportes y herramientas internas con foco en velocidad y mantenibilidad.",
+      "Capacidad para desarrollar aplicaciones web y plataformas internas utilizando Next.js, React y TypeScript, integrando backend con NestJS cuando el proyecto requiere autenticación, manejo de datos o lógica de negocio.",
     supportingTech: [TAGS.NEXTJS, TAGS.REACT, TAGS.TYPESCRIPT, TAGS.NESTJS],
   },
   {
-    title: "Automatización y procesos",
+    title: "Automatización e integración de procesos",
     description:
-      "Automatizo tareas repetitivas, validaciones, documentos y procesos sensibles para reducir trabajo manual y aumentar trazabilidad.",
+      "Experiencia en automatización de tareas, integración de sistemas y procesamiento de información mediante Node.js, Playwright, PostgreSQL y OpenAI, orientado a mejorar procesos operativos y reducir trabajo manual.",
     supportingTech: [
       TAGS.PLAYWRIGHT,
       TAGS.NODEJS,
@@ -375,13 +375,12 @@ export const CAPABILITIES = [
     ],
   },
   {
-    title: "Despliegue, datos e infraestructura",
+    title: "Despliegue e infraestructura",
     description:
-      "Paso de prototipo a producción con servicios cloud, bases de datos y pipelines operables para que el software siga funcionando fuera del demo.",
+      "Conocimiento en despliegue de aplicaciones, configuración de servicios cloud, bases de datos e infraestructura necesaria para llevar productos a producción de forma estable y mantenible.",
     supportingTech: [TAGS.CLOUDFLARE, TAGS.GCP, TAGS.VERCEL, TAGS.CONVEX],
   },
 ];
-
 export const TECH_STACK = [
   TAGS.NEXTJS,
   TAGS.TYPESCRIPT,

@@ -139,7 +139,7 @@ const isPortraitImage = (image: (typeof PROJECTS)[number]["images"][number]) =>
                   rel="noopener noreferrer"
                   class="project-link"
                 >
-                  <span>Ver implementación</span>
+                  <span>Ver</span>
                   <span
                     class="project-link__icon [&>svg]:h-full [&>svg]:w-full"
                     set:html={LinkIcon}
@@ -436,7 +436,7 @@ const isPortraitImage = (image: (typeof PROJECTS)[number]["images"][number]) =>
       const media = carousel.closest(".archive-project__media");
       let activeIndex = 0;
 
-      function setActiveSlide(index) {
+      function setActiveSlide(index = 0) {
         activeIndex = index;
 
         slides.forEach((slide, slideIndex) => {
