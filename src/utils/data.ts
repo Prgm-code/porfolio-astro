@@ -87,6 +87,7 @@ import relListadoAnalisis from "../assets/images/rel/listado-analisis-claro.webp
 import relListadoClaro from "../assets/images/rel/listado-claro.webp";
 import relListadoAnalisisOscuro from "../assets/images/rel/listado-analisis-oscuro.webp";
 import relPestañas from "../assets/images/rel/pestañas.webp";
+import profileImage from "../assets/images/profile/patricio-gomez-github.jpg?url";
 
 // Importar logos de proyectos
 import sotexLogo from "../assets/projects/sotex-logo.webp";
@@ -123,7 +124,7 @@ export const ABOUT_DATA = {
   summary:
         "Ingeniero Electrónico y Máster en Desarrollo Web Full Stack, con experiencia en desarrollo de software, infraestructura y telecomunicaciones. Cuento con una base técnica sólida para crear soluciones web claras, estables y orientadas a resultados.",
 
-  image: "https://avatars.githubusercontent.com/u/107218376?v=4",
+  image: profileImage,
   location: "Puerto Montt, Chile",
   availability: "Disponible para nuevos proyectos y colaboraciones",
 highlights: [
