@@ -521,6 +521,9 @@ const isPortraitImage = (image: (typeof PROJECTS)[number]["images"][number]) =>
     projectObserver.observe(element);
   });
 
+  const projectPrefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
   const carouselTimers = new WeakMap();
 
   document.querySelectorAll("[data-project-carousel]").forEach((carousel) => {
@@ -546,6 +549,7 @@ const isPortraitImage = (image: (typeof PROJECTS)[number]["images"][number]) =>
     }
 
     function startCarousel() {
+      if (projectPrefersReducedMotion) return;
       if (slides.length < 2) return;
       stopCarousel();
       carouselTimers.set(

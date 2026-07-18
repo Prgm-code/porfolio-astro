@@ -18,6 +18,7 @@
   --color-accent-strong: #ecc87a;
   --color-accent-deep: #3d2e0f;
   --color-accent-glow: rgba(212, 168, 83, 0.25);
+  --color-accent-cool: #7aa7a4;
   --hero-overlay: linear-gradient(
     135deg,
     rgba(8, 10, 13, 0.96) 0%,
@@ -86,6 +87,21 @@
     text-decoration: none;
   }
 
+  :target,
+  :focus {
+    scroll-margin-top: 7rem;
+    scroll-margin-bottom: 3rem;
+  }
+
+  :focus {
+    outline: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent-cool);
+    outline-offset: 4px;
+  }
+
   img {
     display: block;
     max-width: 100%;
@@ -100,6 +116,28 @@
 .site-shell {
   position: relative;
   overflow-x: clip;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: var(--page-gutter);
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(122, 167, 164, 0.34);
+  border-radius: 999px;
+  color: var(--color-bg);
+  background: var(--color-accent-cool);
+  font-size: 0.88rem;
+  font-weight: 700;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+  transform: translateY(-140%);
+  transition: transform var(--transition-base);
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
 }
 
 .page-section {
@@ -214,6 +252,9 @@
   border-radius: 999px;
   font-size: 0.95rem;
   font-weight: 600;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: anywhere;
   transition:
     transform var(--transition-base),
     border-color var(--transition-base),
@@ -411,6 +452,22 @@
 
 .reveal[data-delay="3"] {
   transition-delay: 270ms;
+}
+
+.form-status {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(133, 201, 158, 0.28);
+  border-radius: 0.9rem;
+  color: var(--color-text);
+  background: rgba(133, 201, 158, 0.08);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.form-status--error {
+  border-color: rgba(236, 200, 122, 0.32);
+  background: rgba(212, 168, 83, 0.08);
 }
 
 .stack-list {

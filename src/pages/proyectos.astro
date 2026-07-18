@@ -424,6 +424,9 @@ const isPortraitImage = (image: (typeof PROJECTS)[number]["images"][number]) =>
 </style>
 
 <script>
+  const archivePrefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
   const carouselTimers = new WeakMap();
 
   document
@@ -451,6 +454,7 @@ const isPortraitImage = (image: (typeof PROJECTS)[number]["images"][number]) =>
       }
 
       function startCarousel() {
+        if (archivePrefersReducedMotion) return;
         if (slides.length < 2) return;
         stopCarousel();
         carouselTimers.set(
