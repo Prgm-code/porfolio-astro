@@ -264,6 +264,16 @@ import { SOCIAL_LINKS } from "../utils/data";
             </svg>
             Enviar mensaje
           </button>
+
+          <p
+            id="form-status"
+            class="form-status"
+            role="status"
+            aria-live="polite"
+            tabindex="-1"
+            hidden
+          >
+          </p>
         </form>
       </div>
     </div>
@@ -479,6 +489,7 @@ import { SOCIAL_LINKS } from "../utils/data";
     background: rgba(255, 255, 255, 0.03);
     font: inherit;
     font-size: 0.92rem;
+    appearance: none;
     transition:
       border-color var(--transition-base),
       background var(--transition-base),
@@ -546,9 +557,15 @@ import { SOCIAL_LINKS } from "../utils/data";
 
   if (contactForm && btn instanceof HTMLButtonElement) {
     const originalHTML = btn.innerHTML;
+    const status = contactForm.querySelector("#form-status");
 
     contactForm.addEventListener("submit", async (e) => {
       e.preventDefault();
+      if (status instanceof HTMLElement) {
+        status.hidden = true;
+        status.textContent = "";
+        status.className = "form-status";
+      }
       btn.innerHTML = `
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation: spin 1s linear infinite;">
           <line x1="12" y1="2" x2="12" y2="6"/>
@@ -588,7 +605,13 @@ import { SOCIAL_LINKS } from "../utils/data";
       } catch {
         btn.innerHTML = originalHTML;
         btn.disabled = false;
-        alert("No se pudo enviar. Intenta por WhatsApp o email directo.");
+        if (status instanceof HTMLElement) {
+          status.hidden = false;
+          status.className = "form-status form-status--error";
+          status.textContent =
+            "No se pudo enviar. Intenta por WhatsApp o email directo.";
+          status.focus();
+        }
       }
     });
   }
