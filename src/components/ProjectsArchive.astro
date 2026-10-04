@@ -1,0 +1,502 @@
+---
+import { Image } from "astro:assets";
+import { getProjects, getUi, localePath, type Lang } from "../i18n";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const ui = getUi(lang);
+const projects = getProjects(lang);
+const homePath = localePath(lang, "/");
+
+const sortedProjects = [...projects].sort((a, b) => {
+  const score = (project: (typeof projects)[number]) =>
+    Number(Boolean(project.favorite)) * 2 + Number(Boolean(project.featured));
+  return score(b) - score(a);
+});
+
+const isPortraitImage = (image: (typeof projects)[number]["images"][number]) =>
+  typeof image !== "string" && image.height > image.width;
+
+const slug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+
+// Tecnologías presentes en 2+ proyectos, ordenadas por frecuencia.
+const techCounts = new Map<string, number>();
+projects.forEach((project) =>
+  project.tags.forEach((tag) =>
+    techCounts.set(tag.name, (techCounts.get(tag.name) ?? 0) + 1),
+  ),
+);
+const filters = [...techCounts.entries()]
+  .filter(([, count]) => count > 1)
+  .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+  .map(([name, count]) => ({ name, count, value: slug(name) }));
+---
+
+<section class="page-section archive">
+  <div class="section-inner">
+    <header class="archive-head">
+      <h1 class="archive-title">{ui.archive.title}</h1>
+      <div class="archive-head__aside">
+        <p class="archive-summary">{ui.archive.summary}</p>
+        <div class="button-row">
+          <a href={homePath} class="button-secondary">{ui.archive.backCta}</a>
+          <a href={`${homePath}#contacto`} class="button-primary"
+            >{ui.archive.contactCta}</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <div class="archive-filters" data-archive-filters hidden>
+      <div
+        class="archive-filters__list"
+        role="group"
+        aria-label={ui.archive.filterLabel}
+      >
+        <button
+          type="button"
+          class="filter-chip is-active"
+          data-filter="all"
+          aria-pressed="true"
+        >
+          {ui.archive.filterAll}
+          <span class="filter-chip__count">{projects.length}</span>
+        </button>
+        {
+          filters.map((filter) => (
+            <button
+              type="button"
+              class="filter-chip"
+              data-filter={filter.value}
+              aria-pressed="false"
+            >
+              {filter.name}
+              <span class="filter-chip__count">{filter.count}</span>
+            </button>
+          ))
+        }
+      </div>
+      <p
+        class="archive-filters__status label"
+        role="status"
+        data-archive-status
+        data-template-one={ui.archive.resultsCount(1)}
+        data-template-many={ui.archive.resultsCount(0)}
+      >
+        {ui.archive.resultsCount(projects.length)}
+      </p>
+    </div>
+
+    <div class="archive-grid">
+      {
+        sortedProjects.map((project, index) => (
+          <article
+            class="archive-project"
+            data-archive-item
+            data-tags={project.tags.map((tag) => slug(tag.name)).join(" ")}
+            style={`--vt-name: project-${project.key}`}
+          >
+            {project.images.length > 0 ? (
+              <a
+                href={project.link ?? `${homePath}#contacto`}
+                target={project.link ? "_blank" : undefined}
+                rel={project.link ? "noopener noreferrer" : undefined}
+                class="archive-project__media browser-frame"
+                aria-label={ui.archive.openProject(project.title)}
+                data-project-carousel-trigger
+              >
+                <div class="project-carousel" data-project-carousel>
+                  {project.images.map((image, imageIndex) => (
+                    <div
+                      class:list={[
+                        "project-carousel__slide",
+                        imageIndex === 0 && "is-active",
+                        isPortraitImage(image) && "is-portrait",
+                      ]}
+                      data-project-slide
+                      aria-hidden={imageIndex === 0 ? "false" : "true"}
+                      inert={imageIndex === 0 ? undefined : true}
+                    >
+                      <Image
+                        src={image}
+                        alt={ui.archive.screenshotAlt(
+                          imageIndex + 1,
+                          project.title,
+                        )}
+                        class="project-carousel__image"
+                        widths={[720, 1080, 1600]}
+                        sizes="(max-width: 860px) 100vw, 46vw"
+                        loading={index < 2 ? "eager" : "lazy"}
+                        format="webp"
+                      />
+                    </div>
+                  ))}
+
+                  {project.images.length > 1 && (
+                    <div class="project-carousel__dots" aria-hidden="true">
+                      {project.images.map((_, imageIndex) => (
+                        <span
+                          class:list={[
+                            "project-carousel__dot",
+                            imageIndex === 0 && "is-active",
+                          ]}
+                          data-project-dot
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </a>
+            ) : (
+              <div class="archive-project__placeholder" aria-hidden="true">
+                <span class="archive-project__placeholder-label">
+                  {ui.archive.noScreenshots}
+                </span>
+              </div>
+            )}
+
+            <div class="archive-project__copy">
+              <h2 class="archive-project__title">{project.title}</h2>
+              <p class="archive-project__label">{project.shortLabel}</p>
+              <p class="archive-project__description">{project.description}</p>
+
+              <div class="archive-project__footer">
+                {project.tags.length > 0 && (
+                  <ul class="stack-list" aria-label={ui.archive.stackLabel}>
+                    {project.tags.map((tag) => (
+                      <li class="stack-chip">
+                        <span
+                          class="stack-chip__icon"
+                          aria-hidden="true"
+                          set:html={tag.icon}
+                        />
+                        <span class="stack-chip__label">{tag.name}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                <div class="archive-project__links">
+                  {project.caseStudy && (
+                    <a
+                      href={localePath(lang, project.caseStudy)}
+                      class="arrow-link"
+                    >
+                      {ui.archive.caseStudy}
+                      <svg
+                        aria-hidden="true"
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="square"
+                      >
+                        <path d="M5 12h14M13 6l6 6-6 6" />
+                      </svg>
+                    </a>
+                  )}
+
+                  <a
+                    href={project.link ?? `${homePath}#contacto`}
+                    target={project.link ? "_blank" : undefined}
+                    rel={project.link ? "noopener noreferrer" : undefined}
+                    class="arrow-link"
+                  >
+                    {project.link ? ui.archive.view : ui.archive.talk}
+                    <svg
+                      aria-hidden="true"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="square"
+                    >
+                      <path d="M7 17 17 7M8 7h9v9" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .archive {
+    padding-top: clamp(2.5rem, 5vw, 4.5rem);
+  }
+
+  .archive-head {
+    display: grid;
+    gap: 1.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-line-strong);
+  }
+
+  .archive-title {
+    font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.055em;
+  }
+
+  .archive-head__aside {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .archive-summary {
+    max-width: 44ch;
+    font-size: 1.125rem;
+    color: var(--color-text-muted);
+  }
+
+  @media (min-width: 960px) {
+    .archive-head {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--page-gutter);
+    }
+
+    .archive-title {
+      grid-column: 1 / -1;
+    }
+
+    .archive-head__aside {
+      grid-column: 1 / -1;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+    }
+  }
+
+  /* Filtros */
+  .archive-filters {
+    display: grid;
+    gap: 0.9rem;
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    padding-block: 1.25rem;
+    border-top: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .archive-filters[hidden] {
+    display: none;
+  }
+
+  .archive-filters__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.25rem;
+    padding: 0 0.75rem;
+    background: transparent;
+    border: 1px solid var(--color-line);
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition:
+      color var(--transition-base),
+      background-color var(--transition-base),
+      border-color var(--transition-base);
+  }
+
+  .filter-chip:hover {
+    border-color: var(--color-ink);
+    color: var(--color-ink);
+  }
+
+  .filter-chip.is-active {
+    background: var(--color-ink);
+    border-color: var(--color-ink);
+    color: var(--color-bg);
+  }
+
+  .filter-chip__count {
+    font-size: 0.7rem;
+    opacity: 0.7;
+  }
+
+  /* Grilla */
+  .archive-grid {
+    display: grid;
+    gap: clamp(3rem, 6vw, 4.5rem) var(--page-gutter);
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  @media (min-width: 860px) {
+    .archive-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .archive-project {
+    display: grid;
+    gap: 1.25rem;
+    align-content: start;
+  }
+
+  .archive-project[hidden] {
+    display: none;
+  }
+
+  /* Proyectos sin capturas públicas */
+  .archive-project__placeholder {
+    display: grid;
+    align-content: end;
+    gap: 0.5rem;
+    aspect-ratio: 16 / 10;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border: 1px solid var(--color-line);
+    background:
+      repeating-linear-gradient(
+        -45deg,
+        transparent 0 11px,
+        var(--color-line) 11px 12px
+      ),
+      var(--color-bg-soft);
+  }
+
+  .archive-project__placeholder-label {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-text-soft);
+  }
+
+  .archive-project__copy {
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .archive-project__title {
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+
+  .archive-project__label {
+    font-weight: 500;
+  }
+
+  .archive-project__description {
+    max-width: 52ch;
+    color: var(--color-text-muted);
+  }
+
+  .archive-project__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+  }
+
+  .archive-project__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.75rem;
+  }
+
+  /* Animación de reordenamiento al filtrar (solo mientras se filtra,
+     para no interferir con la transición de tema) */
+  :global(html.is-filtering) .archive-project {
+    view-transition-name: var(--vt-name);
+  }
+
+  :global(html.is-filtering::view-transition-group(*)) {
+    animation-duration: 450ms;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+</style>
+
+<script>
+  import { initProjectCarousels } from "../scripts/project-carousels";
+
+  initProjectCarousels();
+
+  const filterBar = document.querySelector<HTMLElement>(
+    "[data-archive-filters]",
+  );
+  const chips = Array.from(
+    filterBar?.querySelectorAll<HTMLButtonElement>("[data-filter]") ?? [],
+  );
+  const items = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-archive-item]"),
+  );
+  const status = filterBar?.querySelector<HTMLElement>("[data-archive-status]");
+
+  function applyFilter(value: string) {
+    let visible = 0;
+    items.forEach((item) => {
+      const match =
+        value === "all" || (item.dataset.tags ?? "").split(" ").includes(value);
+      item.hidden = !match;
+      if (match) visible += 1;
+    });
+
+    chips.forEach((chip) => {
+      const isActive = chip.dataset.filter === value;
+      chip.classList.toggle("is-active", isActive);
+      chip.setAttribute("aria-pressed", String(isActive));
+    });
+
+    if (status) {
+      const template =
+        visible === 1
+          ? status.dataset.templateOne
+          : status.dataset.templateMany;
+      status.textContent = (template ?? "").replace(/\d+/, String(visible));
+    }
+
+    const url = new URL(window.location.href);
+    if (value === "all") url.searchParams.delete("stack");
+    else url.searchParams.set("stack", value);
+    history.replaceState(null, "", url);
+  }
+
+  if (filterBar && chips.length) {
+    filterBar.hidden = false;
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    chips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const value = chip.dataset.filter ?? "all";
+        if (!document.startViewTransition || reducedMotion) {
+          applyFilter(value);
+          return;
+        }
+        const root = document.documentElement;
+        root.classList.add("is-filtering");
+        const transition = document.startViewTransition(() =>
+          applyFilter(value),
+        );
+        transition.finished.finally(() =>
+          root.classList.remove("is-filtering"),
+        );
+      });
+    });
+
+    const initial = new URL(window.location.href).searchParams.get("stack");
+    if (initial && chips.some((chip) => chip.dataset.filter === initial)) {
+      applyFilter(initial);
+    }
+  }
+</script>

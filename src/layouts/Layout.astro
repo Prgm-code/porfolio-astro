@@ -1,76 +1,211 @@
 ---
 import "@/styles/global.css";
-import "@fontsource-variable/onest";
+import "@fontsource-variable/schibsted-grotesk";
+import "@fontsource-variable/jetbrains-mono";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import Analytics from "@vercel/analytics/astro";
+import { FULL_NAME, SITE_NAME, SOCIAL_BASE } from "../i18n/data.shared";
+import { alternateUrls, getUi, type Lang } from "../i18n";
 
 interface Props {
   title: string;
   description: string;
+  lang: Lang;
+  keywords?: string;
+  ogImage?: string;
+  ogImageAlt?: string;
 }
 
-const { title, description } = Astro.props;
+const {
+  title,
+  description,
+  lang,
+  keywords,
+  ogImage = "/og-image.png",
+  ogImageAlt,
+} = Astro.props;
+
+if (!Astro.site)
+  throw new Error("astro.config.mjs must define the production site URL");
+
+const ui = getUi(lang);
+const siteUrl = Astro.site;
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
+const absoluteOgImage = new URL(ogImage, siteUrl).toString();
+const socialImageAlt = ogImageAlt ?? ui.meta.ogImageAlt;
+const alternates = alternateUrls(Astro.url.pathname);
+const esUrl = new URL(alternates.es, siteUrl).toString();
+const enUrl = new URL(alternates.en, siteUrl).toString();
+const isSpanishHome = Astro.url.pathname === "/";
+const isVercelProduction = import.meta.env.PROD && process.env.VERCEL === "1";
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: FULL_NAME,
+  alternateName: SITE_NAME,
+  givenName: "Patricio",
+  familyName: "Gómez Meneses",
+  url: siteUrl.toString(),
+  jobTitle: "Full Stack Developer",
+  worksFor: {
+    "@type": "Organization",
+    name: "Reactive SpA",
+  },
+  alumniOf: [
+    {
+      "@type": "CollegeOrUniversity",
+      name: "Universidad de La Frontera",
+    },
+    {
+      "@type": "EducationalOrganization",
+      name: "Three Points (Inesdi)",
+    },
+  ],
+  knowsAbout: [
+    "TypeScript",
+    "React",
+    "Next.js",
+    "TanStack Start",
+    "Node.js",
+    "NestJS",
+    "Convex",
+    "PostgreSQL",
+    "Docker",
+    "Linux",
+    "CI/CD",
+    "Clean Architecture",
+  ],
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Puerto Montt",
+    addressCountry: "CL",
+  },
+  sameAs: [SOCIAL_BASE.github, SOCIAL_BASE.linkedin],
+  knowsLanguage: ["es", "en"],
+};
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={lang} data-spanish-home={isSpanishHome ? "true" : undefined}>
   <head>
-    <Analytics />
     <meta charset="UTF-8" />
-    <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
+    <script is:inline>
+      (() => {
+        if (document.documentElement.dataset.spanishHome !== "true") return;
+
+        try {
+          const stored = localStorage.getItem("prgm:lang");
+          const preferred =
+            stored === "es" || stored === "en"
+              ? stored
+              : (navigator.language || "").toLowerCase().startsWith("es")
+                ? "es"
+                : "en";
+
+          if (stored !== preferred)
+            localStorage.setItem("prgm:lang", preferred);
+          if (preferred === "en") {
+            location.replace(`/en/${location.search}${location.hash}`);
+          }
+        } catch {}
+      })();
+    </script>
+    <script is:inline>
+      (() => {
+        let theme = "light";
+        try {
+          const stored = localStorage.getItem("prgm:theme");
+          theme =
+            stored === "dark" || stored === "light"
+              ? stored
+              : matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+        } catch {}
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+    {isVercelProduction && <Analytics />}
 
     <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon-mark.svg" />
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
     <!-- Web App Manifest -->
-    <link rel="manifest" href="/site.webmanifest" />
+    <link
+      rel="manifest"
+      href={lang === "en" ? "/site.en.webmanifest" : "/site.webmanifest"}
+    />
 
     <!-- Primary Meta Tags -->
     <title>{title}</title>
+    <link rel="canonical" href={canonicalUrl} />
     <meta name="title" content={title} />
     <meta name="description" content={description} />
-    <meta name="author" content="Patricio Gómez - Full Stack Developer" />
-    <meta
-      name="keywords"
-      content="desarrollador full stack, Next.js, React, TypeScript, NestJS, Node.js, desarrollo web, aplicaciones web, Chile"
-    />
+    <meta name="author" content={FULL_NAME} />
+    <meta name="keywords" content={keywords ?? ui.meta.keywords} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+
+    <!-- Hreflang -->
+    <link rel="alternate" hreflang="es-CL" href={esUrl} />
+    <link rel="alternate" hreflang="en-US" href={enUrl} />
+    <link rel="alternate" hreflang="x-default" href={esUrl} />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://prgm.cl" />
+    <meta property="og:site_name" content="prgm.cl" />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta
-      property="og:image"
-      content="https://prgm.cl/web-app-manifest-512x512.png"
-    />
+    <meta property="og:image" content={absoluteOgImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={socialImageAlt} />
+    <meta property="og:locale" content={ui.meta.ogLocale} />
+    <meta property="og:locale:alternate" content={ui.meta.ogLocaleAlternate} />
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://prgm.cl" />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
-    <meta
-      property="twitter:image"
-      content="https://prgm.cl/web-app-manifest-512x512.png"
-    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalUrl} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absoluteOgImage} />
+    <meta name="twitter:image:alt" content={socialImageAlt} />
 
     <!-- Theme Color -->
-    <meta name="theme-color" content="#0a0a0a" />
-    <meta name="msapplication-TileColor" content="#0a0a0a" />
+    <meta
+      name="theme-color"
+      content="#f4f2ed"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#0f0f0e"
+      media="(prefers-color-scheme: dark)"
+    />
+    <meta name="msapplication-TileColor" content="#f4f2ed" />
+
+    <!-- Structured data -->
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(personJsonLd)}
+    />
   </head>
   <body>
-    <Header />
-    <main class="site-shell">
+    <a class="skip-link" href="#contenido">{ui.skipLink}</a>
+    <Header lang={lang} />
+    <main id="contenido" class="site-shell">
       <slot />
     </main>
-    <Footer />
+    <Footer lang={lang} />
   </body>
 </html>
 
@@ -86,37 +221,21 @@ const { title, description } = Astro.props;
 
   /* Custom scrollbar */
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
   }
   ::-webkit-scrollbar-track {
     background: var(--color-bg);
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(212, 168, 83, 0.3);
-    border-radius: 3px;
+    background: var(--color-scrollbar);
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(212, 168, 83, 0.5);
-  }
-
-  /* Smooth image loading */
-  img {
-    opacity: 0;
-    transition: opacity 400ms ease;
-  }
-  img.loaded,
-  img[loading="eager"] {
-    opacity: 1;
+    background: var(--color-ink);
   }
 </style>
 
 <script>
-  // Add loaded class to images when they load
-  document.querySelectorAll("img").forEach((img) => {
-    if (img instanceof HTMLImageElement && img.complete) {
-      img.classList.add("loaded");
-    } else {
-      img.addEventListener("load", () => img.classList.add("loaded"));
-    }
-  });
+  import { initReveal } from "../scripts/reveal";
+
+  initReveal();
 </script>
