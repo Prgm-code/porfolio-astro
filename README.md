@@ -8,6 +8,7 @@ Portfolio profesional de Patricio Gómez, desarrollado con Astro y TypeScript. P
 - `/en/` — landing en inglés.
 - `/proyectos/` — archivo completo de proyectos en español.
 - `/en/proyectos/` — archivo completo de proyectos en inglés.
+- `/proyectos/chronus/` y `/en/proyectos/chronus/` — caso de estudio de Chronus.cl.
 
 El dominio canónico configurado es [`https://prgm.cl`](https://prgm.cl). Antes de publicar, Vercel/DNS debe redirigir `www.prgm.cl` hacia el dominio raíz, no al revés.
 
@@ -80,6 +81,6 @@ google-chrome --headless --disable-gpu --allow-file-access-from-files \
 
 ## SEO y publicación
 
-`astro.config.mjs` define el origen canónico. El layout reutiliza `Astro.site` para canonical, hreflang, Open Graph y JSON-LD. El build genera sitemap para las cuatro rutas y `public/robots.txt` referencia el índice correspondiente.
+`astro.config.mjs` define el origen canónico. El layout reutiliza `Astro.site` para canonical, hreflang, Open Graph y JSON-LD. El build genera sitemap para las seis rutas y `public/robots.txt` referencia el índice correspondiente.
 
 Este repositorio no realiza despliegues automáticamente durante el desarrollo local. Antes de publicar se debe ejecutar `pnpm verify` y comprobar que el dominio raíz sea el destino canónico real en Vercel/DNS.

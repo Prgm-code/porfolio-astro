@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import { getProjects, localePath, localeSectionPath, type Lang } from "../i18n";
 import { CHRONUS_CASE } from "../i18n/case-chronus";
+import SectionHeader from "./SectionHeader.astro";
 
 interface Props {
   lang: Lang;
@@ -81,9 +82,7 @@ const arch = content.architecture;
 
   <section class="page-section">
     <div class="section-inner">
-      <header class="section-head reveal">
-        <h2 class="section-title">{arch.title}</h2>
-      </header>
+      <SectionHeader index="01" title={arch.title} />
 
       <figure class="arch reveal" data-arch>
         <div class="arch-node arch-node--client">
@@ -136,9 +135,7 @@ const arch = content.architecture;
 
   <section class="page-section">
     <div class="section-inner">
-      <header class="section-head reveal">
-        <h2 class="section-title">{content.decisions.title}</h2>
-      </header>
+      <SectionHeader index="02" title={content.decisions.title} />
 
       <ol class="decisions">
         {
@@ -165,9 +162,7 @@ const arch = content.architecture;
 
   <section class="page-section">
     <div class="section-inner">
-      <header class="section-head reveal">
-        <h2 class="section-title">{content.gallery.title}</h2>
-      </header>
+      <SectionHeader index="03" title={content.gallery.title} />
 
       <div class="case-gallery">
         {

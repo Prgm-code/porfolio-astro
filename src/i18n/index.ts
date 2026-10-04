@@ -21,6 +21,11 @@ const LANG_DATA = { es, en } as const;
 // ROUTING HELPERS
 // ============================================
 
+/** "Next.js" → "next-js". Valor del filtro `?stack=` del archivo. */
+export function techSlug(name: string): string {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+}
+
 export function isLang(value: string): value is Lang {
   return value === "es" || value === "en";
 }

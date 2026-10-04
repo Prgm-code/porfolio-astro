@@ -1,5 +1,6 @@
 ---
 import { getData, getUi, type Lang } from "../i18n";
+import SectionHeader from "./SectionHeader.astro";
 
 interface Props {
   lang: Lang;
@@ -8,54 +9,112 @@ interface Props {
 const { lang } = Astro.props;
 const ui = getUi(lang);
 const data = getData(lang);
+
+const experience = data.experience.map((item) => {
+  const [start, end] = item.date.split(" - ");
+  return { ...item, start, end };
+});
 ---
 
 <section id="experiencia" class="page-section">
   <div class="section-inner">
-    <header class="section-head reveal">
-      <h2 class="section-title">{ui.experience.title}</h2>
-    </header>
+    <SectionHeader index="02" title={ui.experience.title} />
 
-    <ol class="timeline">
-      {
-        data.experience.map((item) => (
-          <li class="timeline-row reveal">
-            <div class="timeline-row__meta">
-              <p class="timeline-row__date">{item.date}</p>
-              <p class="timeline-row__location">{item.location}</p>
-            </div>
-            <div class="timeline-row__body">
-              <h3 class="timeline-row__title">
-                {item.role}
-                <span class="timeline-row__org">{item.org}</span>
-              </h3>
-              <p class="timeline-row__description">{item.description}</p>
-              {item.highlights.length > 0 && (
-                <ul class="timeline-row__highlights">
-                  {item.highlights.map((highlight) => (
-                    <li>{highlight}</li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          </li>
-        ))
-      }
-    </ol>
+    <div class="timeline">
+      <span class="timeline__rail" aria-hidden="true"></span>
+      <span class="timeline__fill" aria-hidden="true"></span>
+
+      <ol class="timeline__list">
+        {
+          experience.map((item) => (
+            <li
+              class:list={["timeline-row reveal", item.current && "is-current"]}
+            >
+              <span class="timeline-row__node" aria-hidden="true" />
+              <div class="timeline-row__meta">
+                <p class="timeline-row__date">
+                  <span>{item.start}</span>
+                  {item.end && (
+                    <>
+                      <span class="timeline-row__sep">–</span>
+                      <span class="timeline-row__end">{item.end}</span>
+                    </>
+                  )}
+                </p>
+                <p class="timeline-row__location">{item.location}</p>
+              </div>
+              <div class="timeline-row__body">
+                <h3 class="timeline-row__title">
+                  {item.role}
+                  <span class="timeline-row__org">{item.org}</span>
+                </h3>
+                <p class="timeline-row__description">{item.description}</p>
+                {item.highlights.length > 0 && (
+                  <ul class="timeline-row__highlights">
+                    {item.highlights.map((highlight) => (
+                      <li>{highlight}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
   </div>
 </section>
 
 <style>
+  /* Posición del riel: borde izquierdo en móvil, entre columnas en escritorio */
   .timeline {
+    --rail-x: 0.3rem;
+    --node: 9px;
+    position: relative;
+  }
+
+  .timeline__rail,
+  .timeline__fill {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--rail-x);
+    width: 1px;
+    background: var(--color-line);
+  }
+
+  /* El riel se completa a medida que el centro de la pantalla lo recorre */
+  .timeline__fill {
+    background: var(--color-accent);
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+
+  @supports (animation-timeline: view()) {
+    .timeline__fill {
+      animation: rail-fill linear both;
+      animation-timeline: view();
+      animation-range: cover 50vh cover calc(100% - 50vh);
+    }
+  }
+
+  @keyframes rail-fill {
+    to {
+      transform: scaleY(1);
+    }
+  }
+
+  .timeline__list {
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
   .timeline-row {
+    position: relative;
     display: grid;
     gap: 0.75rem;
-    padding-block: 2rem;
+    padding: 2rem 0 2rem calc(var(--rail-x) + 1.5rem);
     border-bottom: 1px solid var(--color-line);
   }
 
@@ -63,14 +122,71 @@ const data = getData(lang);
     padding-top: 0.5rem;
   }
 
+  .timeline-row__node {
+    position: absolute;
+    left: calc(var(--rail-x) - var(--node) / 2 + 0.5px);
+    top: calc(2rem + 0.35rem);
+    width: var(--node);
+    height: var(--node);
+    border: 1.5px solid var(--color-line-strong);
+    background: var(--color-bg);
+  }
+
+  .timeline-row:first-child .timeline-row__node {
+    top: calc(0.5rem + 0.35rem);
+  }
+
+  .is-current .timeline-row__node {
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+  }
+
+  /* Puesto vigente: un pulso suave alrededor del nodo */
+  .is-current .timeline-row__node::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border: 1px solid var(--color-accent);
+    opacity: 0;
+    animation: node-pulse 2.6s var(--ease-out) infinite;
+  }
+
+  @keyframes node-pulse {
+    0% {
+      opacity: 0.7;
+      transform: scale(0.5);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.4);
+    }
+  }
+
   .timeline-row__meta {
+    display: grid;
+    gap: 0.2rem;
     font-size: 0.9rem;
     color: var(--color-text-soft);
   }
 
   .timeline-row__date {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 0.45rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
     color: var(--color-text);
     font-variant-numeric: tabular-nums;
+  }
+
+  .timeline-row__sep {
+    color: var(--color-text-soft);
+  }
+
+  .is-current .timeline-row__end {
+    color: var(--color-accent);
   }
 
   .timeline-row__body {
@@ -124,14 +240,31 @@ const data = getData(lang);
   }
 
   @media (min-width: 960px) {
+    .timeline {
+      /* Centro del margen entre la columna 3 y la 4 */
+      --rail-x: calc(
+        (100% - 11 * var(--page-gutter)) / 12 * 3 + 2.5 * var(--page-gutter)
+      );
+    }
+
     .timeline-row {
       grid-template-columns: repeat(12, minmax(0, 1fr));
       column-gap: var(--page-gutter);
+      padding-left: 0;
+    }
+
+    .timeline-row__node {
+      top: calc(2rem + 0.55rem);
+    }
+
+    .timeline-row:first-child .timeline-row__node {
+      top: calc(0.5rem + 0.55rem);
     }
 
     .timeline-row__meta {
       grid-column: 1 / span 3;
-      padding-top: 0.2rem;
+      align-content: start;
+      padding-top: 0.25rem;
     }
 
     .timeline-row__body {

@@ -23,6 +23,7 @@ export const en = {
 
   experience: [
     {
+      current: true,
       date: "Mar 2025 - Present",
       role: "Founder and full stack developer",
       org: "Reactive SpA",

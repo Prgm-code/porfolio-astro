@@ -45,18 +45,27 @@ const alternates = alternateUrls(Astro.url.pathname);
       <span class="site-mark__name">prgm.cl</span>
     </a>
 
-    <nav class="header-nav" aria-label={ui.nav.ariaMain}>
+    <nav
+      class="header-nav"
+      aria-label={ui.nav.ariaMain}
+      data-scrollspy={isHome ? "" : undefined}
+    >
       <ul>
         {
           navItems.map((item) => (
             <li>
-              <a href={item.href} class="nav-link">
+              <a
+                href={item.href}
+                class="nav-link"
+                data-section={isHome ? item.section : undefined}
+              >
                 {item.label}
               </a>
             </li>
           ))
         }
       </ul>
+      <span class="nav-indicator" aria-hidden="true" data-nav-indicator></span>
     </nav>
 
     <div class="header-actions">
@@ -167,6 +176,8 @@ const alternates = alternateUrls(Astro.url.pathname);
     </div>
   </div>
 
+  <span class="site-header__progress" aria-hidden="true"></span>
+
   <dialog id="mobile-nav" class="mobile-nav" aria-label={ui.nav.ariaMobile}>
     <div class="mobile-nav__bg" aria-hidden="true"></div>
     <nav aria-label={ui.nav.ariaMobile}>
@@ -237,6 +248,38 @@ const alternates = alternateUrls(Astro.url.pathname);
     -webkit-backdrop-filter: blur(10px) saturate(1.2);
     border-bottom: 1px solid transparent;
     transition: border-color var(--transition-base);
+    /* Se mantiene fijo durante la transición entre páginas */
+    view-transition-name: site-header;
+  }
+
+  :global(html.is-theme-transition) .site-header {
+    view-transition-name: none;
+  }
+
+  /* Progreso de lectura, ligado al scroll (sin JavaScript) */
+  .site-header__progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 2px;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    pointer-events: none;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .site-header__progress {
+      animation: header-progress linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
+
+  @keyframes header-progress {
+    to {
+      transform: scaleX(1);
+    }
   }
 
   .site-header.is-scrolled {
@@ -279,12 +322,37 @@ const alternates = alternateUrls(Astro.url.pathname);
     display: none;
   }
 
+  .header-nav {
+    position: relative;
+  }
+
   .header-nav ul {
     display: flex;
     gap: 1.75rem;
     margin: 0;
     padding: 0;
     list-style: none;
+  }
+
+  /* Sección activa: una marca que se desliza bajo el enlace */
+  .nav-indicator {
+    position: absolute;
+    left: 0;
+    bottom: -0.15rem;
+    width: var(--w, 0px);
+    height: 2px;
+    background: var(--color-accent);
+    opacity: 0;
+    transform: translateX(var(--x, 0px));
+    transition:
+      transform 450ms var(--ease-out),
+      width 450ms var(--ease-out),
+      opacity 200ms var(--ease-out);
+    pointer-events: none;
+  }
+
+  .nav-indicator.is-visible {
+    opacity: 1;
   }
 
   .nav-link {
@@ -298,7 +366,8 @@ const alternates = alternateUrls(Astro.url.pathname);
   }
 
   .nav-link:hover,
-  .nav-link:focus-visible {
+  .nav-link:focus-visible,
+  .nav-link.is-current {
     color: var(--color-ink);
   }
 
@@ -668,7 +737,12 @@ const alternates = alternateUrls(Astro.url.pathname);
         Math.max(y, window.innerHeight - y),
       );
 
+      const root = document.documentElement;
+      root.classList.add("is-theme-transition");
       const transition = document.startViewTransition(() => applyTheme(next));
+      transition.finished.finally(() =>
+        root.classList.remove("is-theme-transition"),
+      );
       transition.ready.then(() => {
         document.documentElement.animate(
           {
@@ -688,6 +762,84 @@ const alternates = alternateUrls(Astro.url.pathname);
   });
 
   syncThemeToggles();
+
+  // Scrollspy: marca en el menú la sección que se está leyendo.
+  const spyNav = document.querySelector<HTMLElement>("[data-scrollspy]");
+  if (spyNav) {
+    const spyLinks = Array.from(
+      spyNav.querySelectorAll<HTMLAnchorElement>("a[data-section]"),
+    );
+    const indicator = spyNav.querySelector<HTMLElement>("[data-nav-indicator]");
+    const sections = spyLinks
+      .map((link) => document.getElementById(link.dataset.section ?? ""))
+      .filter((section): section is HTMLElement => Boolean(section));
+    const visible = new Set<string>();
+    let current = "";
+
+    function placeIndicator() {
+      const link = spyLinks.find((item) => item.dataset.section === current);
+      if (!indicator) return;
+      if (!link) {
+        indicator.classList.remove("is-visible");
+        return;
+      }
+      indicator.style.setProperty("--x", `${link.offsetLeft}px`);
+      indicator.style.setProperty("--w", `${link.offsetWidth}px`);
+      indicator.classList.add("is-visible");
+    }
+
+    function setCurrent(id: string) {
+      if (id === current) return;
+      current = id;
+      spyLinks.forEach((link) => {
+        const isCurrent = link.dataset.section === id;
+        link.classList.toggle("is-current", isCurrent);
+        if (isCurrent) link.setAttribute("aria-current", "location");
+        else link.removeAttribute("aria-current");
+      });
+      placeIndicator();
+    }
+
+    function resolveCurrent() {
+      const atBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 2;
+      const last = sections.at(-1);
+      if (atBottom && last) {
+        setCurrent(last.id);
+        return;
+      }
+      const first = sections.find((section) => visible.has(section.id));
+      setCurrent(first?.id ?? "");
+    }
+
+    // Banda horizontal al 30 % de la altura de la ventana.
+    const spy = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) visible.add(entry.target.id);
+          else visible.delete(entry.target.id);
+        });
+        resolveCurrent();
+      },
+      { rootMargin: "-30% 0px -69% 0px" },
+    );
+    sections.forEach((section) => spy.observe(section));
+
+    let spyFrame = 0;
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (spyFrame) return;
+        spyFrame = requestAnimationFrame(() => {
+          spyFrame = 0;
+          resolveCurrent();
+        });
+      },
+      { passive: true },
+    );
+    window.addEventListener("resize", placeIndicator);
+  }
 
   document.addEventListener("astro:before-swap", () => {
     window.removeEventListener("scroll", updateHeaderState);

@@ -28,6 +28,9 @@ const es = {
       running: "En curso",
       done: "Listo",
     },
+    location: "Ubicación",
+    localTime: "Hora local",
+    caseStudy: "Caso de estudio",
   },
 
   projects: {
@@ -55,11 +58,19 @@ const es = {
 
   services: {
     title: "Stack técnico",
+    keyPrimary: "Uso principal",
+    keyProjects: "Proyectos en el archivo",
+    primarySr: "uso principal",
+    linkLabel: (name: string, count: number) =>
+      `${name}: ver ${count} proyectos`,
   },
 
   contact: {
     title: "Contacto",
     whatsappCta: "Escribir por WhatsApp",
+    copyEmail: "Copiar",
+    copyEmailLabel: "Copiar email",
+    copied: "Copiado",
     emailCta: "Enviar email",
     formTitle: "Formulario de contacto",
     labelName: "Nombre",
@@ -93,6 +104,10 @@ const es = {
     openProject: (title: string) => `Abrir ${title}`,
     screenshotAlt: (index: number, title: string) =>
       `Captura ${index} del proyecto ${title}`,
+  },
+
+  footer: {
+    backToTop: "Volver arriba",
   },
 
   meta: {
@@ -134,6 +149,9 @@ const en: UiDict = {
     pipelineLabel: "Example deployment pipeline",
     pipelineTitle: "deploy · main",
     pipelineStatus: { pending: "Pending", running: "Running", done: "Done" },
+    location: "Location",
+    localTime: "Local time",
+    caseStudy: "Case study",
   },
 
   projects: {
@@ -161,11 +179,19 @@ const en: UiDict = {
 
   services: {
     title: "Tech stack",
+    keyPrimary: "Main stack",
+    keyProjects: "Projects in the archive",
+    primarySr: "main stack",
+    linkLabel: (name: string, count: number) =>
+      `${name}: see ${count} projects`,
   },
 
   contact: {
     title: "Contact",
     whatsappCta: "Message on WhatsApp",
+    copyEmail: "Copy",
+    copyEmailLabel: "Copy email",
+    copied: "Copied",
     emailCta: "Send email",
     formTitle: "Contact form",
     labelName: "Name",
@@ -198,6 +224,10 @@ const en: UiDict = {
     openProject: (title: string) => `Open ${title}`,
     screenshotAlt: (index: number, title: string) =>
       `Screenshot ${index} of project ${title}`,
+  },
+
+  footer: {
+    backToTop: "Back to top",
   },
 
   meta: {

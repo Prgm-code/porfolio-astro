@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import { getProjects, getUi, localePath, type Lang } from "../i18n";
+import { getProjects, getUi, localePath, techSlug, type Lang } from "../i18n";
 
 interface Props {
   lang: Lang;
@@ -20,8 +20,6 @@ const sortedProjects = [...projects].sort((a, b) => {
 const isPortraitImage = (image: (typeof projects)[number]["images"][number]) =>
   typeof image !== "string" && image.height > image.width;
 
-const slug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-
 // Tecnologías presentes en 2+ proyectos, ordenadas por frecuencia.
 const techCounts = new Map<string, number>();
 projects.forEach((project) =>
@@ -32,7 +30,7 @@ projects.forEach((project) =>
 const filters = [...techCounts.entries()]
   .filter(([, count]) => count > 1)
   .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
-  .map(([name, count]) => ({ name, count, value: slug(name) }));
+  .map(([name, count]) => ({ name, count, value: techSlug(name) }));
 ---
 
 <section class="page-section archive">
@@ -96,7 +94,7 @@ const filters = [...techCounts.entries()]
           <article
             class="archive-project"
             data-archive-item
-            data-tags={project.tags.map((tag) => slug(tag.name)).join(" ")}
+            data-tags={project.tags.map((tag) => techSlug(tag.name)).join(" ")}
             style={`--vt-name: project-${project.key}`}
           >
             {project.images.length > 0 ? (

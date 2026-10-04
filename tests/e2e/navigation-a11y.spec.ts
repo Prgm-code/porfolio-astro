@@ -48,23 +48,55 @@ test("mobile dialog manages focus and Escape", async ({ page }) => {
   await expect(trigger).toBeFocused();
 });
 
-test("inactive hero slides are inert and controls update state", async ({
-  page,
-}) => {
+test("project viewer follows the project being read", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
   await page.addInitScript(() => localStorage.setItem("prgm:lang", "es"));
   await page.goto("/");
 
-  const dots = page.locator("[data-carousel-dot]");
-  await dots.nth(1).click();
-  await expect(dots.nth(1)).toHaveAttribute("aria-pressed", "true");
-  await expect(dots.nth(0)).toHaveAttribute("aria-pressed", "false");
-
-  const inactiveAreInert = await page
-    .locator('[data-slide][aria-hidden="true"]')
-    .evaluateAll((slides) =>
-      slides.every((slide) => (slide as HTMLElement).inert),
+  await page
+    .locator("[data-showcase-item]")
+    .nth(2)
+    .evaluate((item) =>
+      item.scrollIntoView({ block: "center", behavior: "instant" }),
     );
+
+  const layers = page.locator("[data-viewer-layer]");
+  await expect(layers.nth(2)).toHaveClass(/is-active/);
+  await expect(page.locator("[data-viewer-count]")).toHaveText("03");
+
+  const inactiveAreInert = await layers.evaluateAll((items) =>
+    items.every((layer, index) => index === 2 || (layer as HTMLElement).inert),
+  );
   expect(inactiveAreInert).toBe(true);
+});
+
+test("navigation marks the section being read", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.addInitScript(() => localStorage.setItem("prgm:lang", "es"));
+  await page.goto("/");
+
+  await page
+    .locator("#stack")
+    .evaluate((section) =>
+      section.scrollIntoView({ block: "start", behavior: "instant" }),
+    );
+  await expect(
+    page.locator('.header-nav a[data-section="stack"]'),
+  ).toHaveAttribute("aria-current", "location");
+});
+
+test("stack items link to the filtered project archive", async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem("prgm:lang", "es"));
+  await page.goto("/");
+
+  const link = page.locator('#stack a[href$="?stack=convex"]');
+  await expect(link).toHaveCount(1);
+  await link.click();
+
+  await expect(page).toHaveURL(/\/proyectos\/\?stack=convex$/);
+  await expect(page.locator("[data-archive-item]:not([hidden])")).toHaveCount(
+    4,
+  );
 });
 
 for (const path of [
