@@ -1,5 +1,5 @@
 <svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" width="256" height="256" preserveAspectRatio="xMidYMid">
-  <circle cx="128" cy="128" r="128" fill="#000"/>
-  <path fill="#fff" d="M212.634 224.028 98.335 76.8H76.8v102.357h17.228V98.68L199.11 234.446a128.433 128.433 0 0 0 13.524-10.418Z"/>
-  <path fill="#fff" d="M163.556 76.8h17.067v102.4h-17.067z"/>
+  <circle cx="128" cy="128" r="128" fill="currentColor"/>
+  <path style="fill: var(--color-bg)" d="M212.634 224.028 98.335 76.8H76.8v102.357h17.228V98.68L199.11 234.446a128.433 128.433 0 0 0 13.524-10.418Z"/>
+  <path style="fill: var(--color-bg)" d="M163.556 76.8h17.067v102.4h-17.067z"/>
 </svg>

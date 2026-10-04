@@ -1,0 +1,12 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import ChronusCaseStudy from "../../../components/ChronusCaseStudy.astro";
+import { CHRONUS_CASE } from "../../../i18n/case-chronus";
+
+const lang = "en";
+const { meta } = CHRONUS_CASE[lang];
+---
+
+<Layout title={meta.title} description={meta.description} lang={lang}>
+  <ChronusCaseStudy lang={lang} />
+</Layout>

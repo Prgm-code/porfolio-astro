@@ -1,0 +1,146 @@
+---
+import { getData, getUi, type Lang } from "../i18n";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const ui = getUi(lang);
+const data = getData(lang);
+---
+
+<section id="experiencia" class="page-section">
+  <div class="section-inner">
+    <header class="section-head reveal">
+      <h2 class="section-title">{ui.experience.title}</h2>
+    </header>
+
+    <ol class="timeline">
+      {
+        data.experience.map((item) => (
+          <li class="timeline-row reveal">
+            <div class="timeline-row__meta">
+              <p class="timeline-row__date">{item.date}</p>
+              <p class="timeline-row__location">{item.location}</p>
+            </div>
+            <div class="timeline-row__body">
+              <h3 class="timeline-row__title">
+                {item.role}
+                <span class="timeline-row__org">{item.org}</span>
+              </h3>
+              <p class="timeline-row__description">{item.description}</p>
+              {item.highlights.length > 0 && (
+                <ul class="timeline-row__highlights">
+                  {item.highlights.map((highlight) => (
+                    <li>{highlight}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .timeline {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .timeline-row {
+    display: grid;
+    gap: 0.75rem;
+    padding-block: 2rem;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .timeline-row:first-child {
+    padding-top: 0.5rem;
+  }
+
+  .timeline-row__meta {
+    font-size: 0.9rem;
+    color: var(--color-text-soft);
+  }
+
+  .timeline-row__date {
+    color: var(--color-text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .timeline-row__body {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .timeline-row__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .timeline-row__org {
+    font-weight: 400;
+    color: var(--color-text-soft);
+  }
+
+  .timeline-row__org::before {
+    content: " · ";
+  }
+
+  .timeline-row__description {
+    max-width: 68ch;
+    color: var(--color-text-muted);
+  }
+
+  .timeline-row__highlights {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0.25rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+  }
+
+  .timeline-row__highlights li {
+    position: relative;
+    padding-left: 1.1rem;
+  }
+
+  .timeline-row__highlights li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.7em;
+    width: 0.45rem;
+    height: 1px;
+    background: var(--color-accent);
+  }
+
+  @media (min-width: 960px) {
+    .timeline-row {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--page-gutter);
+    }
+
+    .timeline-row__meta {
+      grid-column: 1 / span 3;
+      padding-top: 0.2rem;
+    }
+
+    .timeline-row__body {
+      grid-column: 4 / span 9;
+    }
+
+    .timeline-row__highlights {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--page-gutter);
+    }
+  }
+</style>

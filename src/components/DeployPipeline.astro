@@ -1,0 +1,313 @@
+---
+import { getUi, type Lang } from "../i18n";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const ui = getUi(lang);
+
+// Pipeline representativo de cómo despliego: CI con tests y build en Docker
+// hacia un VPS Linux administrado con Coolify.
+// `{sha}` se reemplaza por el commit de cada ejecución.
+const SHA = "3f9c2e1";
+const steps = [
+  { name: "push", cmd: "git push origin main", seconds: 2 },
+  { name: "install", cmd: "pnpm install --frozen-lockfile", seconds: 14 },
+  { name: "check", cmd: "eslint · tsc --noEmit", seconds: 21 },
+  { name: "test", cmd: "playwright test", seconds: 48 },
+  { name: "build", cmd: "docker build -t app:{sha} .", seconds: 72 },
+  { name: "deploy", cmd: "coolify → vps (linux)", seconds: 26 },
+  { name: "health", cmd: "GET /health → 200", seconds: 1 },
+];
+
+const formatTime = (seconds: number) =>
+  seconds >= 60
+    ? `${Math.floor(seconds / 60)}m ${seconds % 60}s`
+    : `${seconds}s`;
+
+const label = `${ui.hero.pipelineLabel}: ${steps
+  .map((step) => `${step.name} (${step.cmd.replace("{sha}", SHA)})`)
+  .join(", ")}`;
+---
+
+<figure class="pipeline" role="img" aria-label={label} data-pipeline>
+  <div class="pipeline__bar" aria-hidden="true">
+    <span data-pipeline-progress></span>
+  </div>
+
+  <header class="pipeline__head">
+    <span class="pipeline__title">
+      <span class="pipeline__live" data-pipeline-live></span>
+      {ui.hero.pipelineTitle}
+    </span>
+    <span class="pipeline__sha" data-sha>{SHA}</span>
+  </header>
+
+  <ol class="pipeline__steps">
+    {
+      steps.map((step) => (
+        <li
+          class="pipeline__step"
+          data-step
+          data-state="done"
+          data-seconds={step.seconds}
+        >
+          <span class="pipeline__icon" />
+          <span class="pipeline__name">{step.name}</span>
+          <span class="pipeline__cmd">
+            {step.cmd.split("{sha}").map((part, index) => (
+              <>
+                {index > 0 && <span data-sha>{SHA}</span>}
+                {part}
+              </>
+            ))}
+          </span>
+          <span class="pipeline__time" data-time>
+            {formatTime(step.seconds)}
+          </span>
+        </li>
+      ))
+    }
+  </ol>
+</figure>
+
+<style>
+  .pipeline {
+    position: relative;
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    background: var(--color-surface);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    line-height: 1.4;
+  }
+
+  .pipeline__bar {
+    height: 2px;
+    background: var(--color-line);
+  }
+
+  .pipeline__bar span {
+    display: block;
+    height: 100%;
+    width: var(--progress, 100%);
+    background: var(--color-accent);
+    transition: width 500ms var(--ease-out);
+  }
+
+  .pipeline__head {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--color-line);
+    color: var(--color-text-muted);
+  }
+
+  .pipeline__title {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-text);
+  }
+
+  .pipeline__live {
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: var(--color-success);
+  }
+
+  .pipeline__live.is-running {
+    background: var(--color-accent);
+  }
+
+  .pipeline__steps {
+    margin: 0;
+    padding: 0.5rem 0;
+    list-style: none;
+  }
+
+  .pipeline__step {
+    display: grid;
+    grid-template-columns: 0.9rem 4.25rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.45rem 1rem;
+    color: var(--color-text-muted);
+    transition:
+      color 300ms var(--ease-out),
+      background-color 300ms var(--ease-out);
+  }
+
+  .pipeline__name {
+    color: var(--color-text);
+  }
+
+  .pipeline__cmd {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .pipeline__time {
+    font-variant-numeric: tabular-nums;
+    color: var(--color-text-soft);
+  }
+
+  /* Iconos de estado dibujados con CSS */
+  .pipeline__icon {
+    position: relative;
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    border: 1.5px solid currentColor;
+  }
+
+  .pipeline__step[data-state="done"] .pipeline__icon {
+    border-color: var(--color-success);
+    background: var(--color-success);
+  }
+
+  .pipeline__step[data-state="done"] .pipeline__icon::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    width: 0.2rem;
+    height: 0.38rem;
+    border: solid var(--color-surface);
+    border-width: 0 1.5px 1.5px 0;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  .pipeline__step[data-state="running"] {
+    background: var(--color-bg-soft);
+    color: var(--color-text);
+  }
+
+  .pipeline__step[data-state="running"] .pipeline__icon {
+    border-color: var(--color-accent);
+    border-right-color: transparent;
+    animation: pipeline-spin 0.8s linear infinite;
+  }
+
+  .pipeline__step[data-state="pending"],
+  .pipeline__step[data-state="pending"] .pipeline__name {
+    color: var(--color-text-soft);
+  }
+
+  .pipeline__step[data-state="pending"] .pipeline__time,
+  .pipeline__step[data-state="running"] .pipeline__time {
+    visibility: hidden;
+  }
+
+  @keyframes pipeline-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (max-width: 420px) {
+    .pipeline__step {
+      grid-template-columns: 0.9rem 3.75rem minmax(0, 1fr);
+    }
+
+    .pipeline__time {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const pipeline = document.querySelector<HTMLElement>("[data-pipeline]");
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  if (pipeline && !reducedMotion) {
+    const steps = Array.from(
+      pipeline.querySelectorAll<HTMLElement>("[data-step]"),
+    );
+    const progress = pipeline.querySelector<HTMLElement>(
+      "[data-pipeline-progress]",
+    );
+    const live = pipeline.querySelector<HTMLElement>("[data-pipeline-live]");
+    // Duración visual base de cada paso (ms), proporcional al tiempo real.
+    const baseDurations = [500, 800, 900, 1300, 1600, 1000, 450];
+    let durations = baseDurations;
+    const shaTargets = Array.from(
+      pipeline.querySelectorAll<HTMLElement>("[data-sha]"),
+    );
+
+    const formatTime = (seconds: number) =>
+      seconds >= 60
+        ? `${Math.floor(seconds / 60)}m ${seconds % 60}s`
+        : `${seconds}s`;
+
+    const randomSha = () =>
+      Array.from({ length: 7 }, () =>
+        Math.floor(Math.random() * 16).toString(16),
+      ).join("");
+
+    // Cada ejecución es un commit nuevo con tiempos que varían ±15 %.
+    function newRun() {
+      const sha = randomSha();
+      shaTargets.forEach((target) => (target.textContent = sha));
+
+      durations = steps.map((step, index) => {
+        const base = Number(step.dataset.seconds) || 1;
+        const factor = 0.85 + Math.random() * 0.3;
+        const seconds = Math.max(1, Math.round(base * factor));
+        const time = step.querySelector<HTMLElement>("[data-time]");
+        if (time) time.textContent = formatTime(seconds);
+        return Math.round((baseDurations[index] ?? 800) * (seconds / base));
+      });
+    }
+    let timer = 0;
+    let visible = false;
+
+    const setProgress = (done: number) =>
+      progress?.parentElement?.style.setProperty(
+        "--progress",
+        `${(done / steps.length) * 100}%`,
+      );
+
+    function run(index: number) {
+      if (!visible) return;
+
+      if (index === 0) {
+        newRun();
+        steps.forEach((step) => (step.dataset.state = "pending"));
+        live?.classList.add("is-running");
+        setProgress(0);
+      }
+
+      if (index >= steps.length) {
+        live?.classList.remove("is-running");
+        timer = window.setTimeout(() => run(0), 3200);
+        return;
+      }
+
+      const step = steps[index];
+      if (!step) return;
+      step.dataset.state = "running";
+      timer = window.setTimeout(() => {
+        step.dataset.state = "done";
+        setProgress(index + 1);
+        run(index + 1);
+      }, durations[index] ?? 800);
+    }
+
+    new IntersectionObserver(([entry]) => {
+      const isVisible = Boolean(entry?.isIntersecting);
+      if (isVisible === visible) return;
+      visible = isVisible;
+      window.clearTimeout(timer);
+      if (visible) run(0);
+    }).observe(pipeline);
+  }
+</script>

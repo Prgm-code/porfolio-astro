@@ -1,506 +1,159 @@
 ---
-import { Image } from "astro:assets";
-import { HERO_DATA, PROJECTS } from "../utils/data";
-import profileImage from "../assets/images/profile/patricio-gomez-photo.png?url";
+import { getData, type Lang } from "../i18n";
+import DeployPipeline from "./DeployPipeline.astro";
+import GitHubIcon from "../icons/GitHub.svg?raw";
+import LinkedInIcon from "../icons/LinkedIn.svg?raw";
 
-const favoriteProjects = PROJECTS.filter((project) => project.favorite);
-const primaryIsExternal = HERO_DATA.primaryCta.href.startsWith("http");
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const { hero, about, social } = getData(lang);
+
+const profiles = [
+  { label: "LinkedIn", href: social.linkedin, icon: LinkedInIcon },
+  { label: "GitHub", href: social.github, icon: GitHubIcon },
+];
 ---
 
 <section id="hero" class="hero">
-  <div class="hero-grid" aria-hidden="true"></div>
-
   <div class="hero-inner">
     <div class="hero-copy">
-      <div class="hero-brand-card reveal">
-        <img
-          src={profileImage}
-          alt="Foto de perfil de Patricio Gómez"
-          class="hero-avatar"
-          loading="eager"
-          decoding="async"
-        />
-        <div class="hero-identity">
-          <h1 class="hero-name">{HERO_DATA.name}</h1>
-          <p class="hero-role">{HERO_DATA.role}</p>
-        </div>
-      </div>
-
-      <p class="hero-support reveal" data-delay="1">
-        {HERO_DATA.supportingText}
+      <h1 class="hero-name reveal">{hero.name}</h1>
+      <p class="hero-role reveal">
+        {hero.role} · {about.location}
       </p>
+      <p class="hero-support reveal">{hero.supportingText}</p>
 
-      <div class="button-row reveal" data-delay="2">
-        <a
-          href={HERO_DATA.primaryCta.href}
-          target={primaryIsExternal ? "_blank" : undefined}
-          rel={primaryIsExternal ? "noopener noreferrer" : undefined}
-          class="button-primary"
-        >
+      <div class="hero-actions reveal">
+        <a href={hero.cta.href} class="button-primary">
+          {hero.cta.label}
           <svg
-            width="18"
-            height="18"
+            width="14"
+            height="14"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
             stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            stroke-linecap="square"
             aria-hidden="true"
           >
-            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+            <path d="M12 5v14M6 13l6 6 6-6"></path>
           </svg>
-          {HERO_DATA.primaryCta.label}
         </a>
-        <a href={HERO_DATA.secondaryCta.href} class="button-secondary">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
-            <rect x="3" y="3" width="7" height="7"></rect>
-            <rect x="14" y="3" width="7" height="7"></rect>
-            <rect x="14" y="14" width="7" height="7"></rect>
-            <rect x="3" y="14" width="7" height="7"></rect>
-          </svg>
-          {HERO_DATA.secondaryCta.label}
-        </a>
+        {
+          profiles.map((profile) => (
+            <a
+              href={profile.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="button-secondary hero-profile"
+            >
+              <span
+                class="hero-profile__icon"
+                aria-hidden="true"
+                set:html={profile.icon}
+              />
+              {profile.label}
+            </a>
+          ))
+        }
       </div>
     </div>
 
-    <div
-      class="hero-stage reveal"
-      data-delay="2"
-      data-carousel
-      aria-label="Carrusel de sistemas destacados"
-    >
-      <div class="hero-stage__header">
-        <span>Últimas aplicaciones</span>
-        <strong>{favoriteProjects.length} destacados</strong>
-      </div>
-
-      <div class="hero-carousel">
-        {
-          favoriteProjects.map((project, index) => (
-            <article
-              class:list={["hero-slide", index === 0 && "is-active"]}
-              data-slide
-              data-project-key={project.key}
-              aria-hidden={index === 0 ? "false" : "true"}
-            >
-              <a
-                href={project.link ?? "#contacto"}
-                target={project.link ? "_blank" : undefined}
-                rel={project.link ? "noopener noreferrer" : undefined}
-                class="hero-slide__frame browser-frame"
-                aria-label={`Abrir ${project.title}`}
-              >
-                <Image
-                  src={project.image}
-                  alt={`Captura del proyecto ${project.title}`}
-                  class="hero-slide__image"
-                  widths={[900, 1280, 1600]}
-                  sizes="(max-width: 960px) 100vw, 52vw"
-                  loading={index === 0 ? "eager" : "lazy"}
-                  format="webp"
-                />
-              </a>
-
-              <div class="hero-slide__meta">
-                <span class="hero-slide__label">Últimas aplicaciones</span>
-                <strong>{project.title}</strong>
-                <p class="hero-slide__summary">{project.shortLabel}</p>
-
-                <ul class="stack-list">
-                  {project.tags.slice(0, 4).map((tag) => (
-                    <li class="stack-chip">
-                      <span class="stack-chip__icon" set:html={tag.icon} />
-                      <span class="stack-chip__label">{tag.name}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </article>
-          ))
-        }
-      </div>
-
-      <div
-        class="hero-carousel__controls"
-        aria-label="Seleccionar últimas aplicaciones"
-      >
-        {
-          favoriteProjects.map((project, index) => (
-            <button
-              type="button"
-              class:list={["hero-carousel__dot", index === 0 && "is-active"]}
-              data-carousel-dot
-              data-index={index}
-              aria-label={`Mostrar ${project.title}`}
-              aria-pressed={index === 0 ? "true" : "false"}
-            />
-          ))
-        }
-      </div>
+    <div class="hero-visual reveal">
+      <DeployPipeline lang={lang} />
     </div>
   </div>
 </section>
 
 <style>
   .hero {
-    position: relative;
-    min-height: 100svh;
-    display: grid;
-    align-items: center;
-    padding: clamp(7rem, 10vw, 9rem) var(--page-gutter) 3.5rem;
-    overflow: hidden;
-    contain: paint;
-  }
-
-  .hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: linear-gradient(
-      180deg,
-      rgba(8, 10, 13, 0.08),
-      rgba(8, 10, 13, 0.86)
-    );
-  }
-
-  .hero-grid {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
-    background-size: 76px 76px;
-    mask-image: linear-gradient(180deg, black 0%, transparent 78%);
-    pointer-events: none;
+    padding-top: clamp(3rem, 8vw, 6.5rem);
   }
 
   .hero-inner {
-    position: relative;
-    z-index: 2;
-    width: min(100%, var(--content-width));
-    margin: 0 auto;
+    width: min(100% - var(--page-gutter) * 2, var(--content-width));
+    margin-inline: auto;
     display: grid;
-    grid-template-columns: minmax(0, 0.9fr) minmax(27rem, 1.1fr);
-    gap: clamp(2.75rem, 5vw, 5.5rem);
+    gap: 3rem;
     align-items: center;
   }
 
   .hero-copy {
     display: grid;
-    gap: clamp(1.35rem, 2vw, 1.8rem);
-    min-width: 0;
-  }
-
-  .hero-brand-card {
-    display: inline-flex;
-    align-items: center;
-    gap: 1rem;
-    width: fit-content;
-    max-width: 100%;
-  }
-
-  .hero-avatar {
-    width: clamp(4.25rem, 6vw, 5.6rem);
-    height: clamp(4.25rem, 6vw, 5.6rem);
-    border-radius: 50%;
-    border: 1px solid rgba(212, 168, 83, 0.38);
-    object-fit: cover;
-    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.32);
-    flex: 0 0 auto;
-  }
-
-  .hero-identity {
-    display: grid;
-    gap: 0.35rem;
-    min-width: 0;
+    gap: 1.25rem;
+    align-content: start;
   }
 
   .hero-name {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: clamp(3.25rem, 6.4vw, 5.75rem);
-    line-height: 0.92;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 600;
+    line-height: 1;
     letter-spacing: -0.045em;
-    color: var(--color-text);
   }
 
   .hero-role {
-    margin: 0;
-    color: var(--color-accent);
-    font-size: clamp(0.82rem, 1vw, 0.94rem);
-    letter-spacing: 0.18em;
-    line-height: 1.35;
-    text-transform: uppercase;
+    font-size: 1.05rem;
+    color: var(--color-text-muted);
   }
 
   .hero-support {
-    margin: 0;
-    max-width: 38rem;
+    max-width: 58ch;
+    margin-top: 0.5rem;
+    font-size: 1.0625rem;
+    line-height: 1.65;
     color: var(--color-text-muted);
-    font-size: clamp(1rem, 1.25vw, 1.14rem);
-    line-height: 1.78;
   }
 
-  .hero :global(.button-row) {
-    gap: 0.85rem;
-  }
-
-  .hero :global(.button-primary),
-  .hero :global(.button-secondary) {
-    display: inline-flex;
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 0.6rem;
-  }
-
-  .hero-stage {
-    display: grid;
-    gap: 1rem;
-    min-width: 0;
-  }
-
-  .hero-stage__header {
-    display: flex;
-    align-items: end;
-    justify-content: space-between;
-    gap: 1rem;
-    padding-bottom: 0.85rem;
-    border-bottom: 1px solid var(--color-line);
-  }
-
-  .hero-stage__header span,
-  .hero-slide__label {
-    color: var(--color-accent);
-    font-size: 0.72rem;
-    line-height: 1;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-  }
-
-  .hero-stage__header strong {
-    color: var(--color-text-muted);
-    font-size: 0.85rem;
-    font-weight: 500;
-  }
-
-  .hero-carousel {
-    position: relative;
-    width: 100%;
-    min-height: clamp(28rem, 40vw, 36rem);
-  }
-
-  .hero-slide {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    gap: 1rem;
-    align-content: start;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(10px);
-    transition:
-      opacity 260ms ease,
-      transform 320ms ease;
-  }
-
-  .hero-slide.is-active {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0);
-  }
-
-  .hero-slide__frame {
-    display: block;
-    width: 100%;
-    transition:
-      transform var(--transition-base),
-      border-color var(--transition-base);
-  }
-
-  .hero-slide__frame:hover,
-  .hero-slide__frame:focus-visible {
-    transform: translateY(-2px);
-    border-color: rgba(212, 168, 83, 0.24);
-  }
-
-  .hero-slide__image {
-    aspect-ratio: 1.5 / 1;
-  }
-
-  .hero-slide__meta {
-    display: grid;
     gap: 0.75rem;
-    width: 100%;
+    margin-top: 1rem;
   }
 
-  .hero-slide__meta strong {
-    display: block;
-    font-family: var(--font-display);
-    font-size: clamp(1.45rem, 2.3vw, 1.9rem);
-    line-height: 1;
-    letter-spacing: -0.03em;
-  }
-
-  .hero-slide__summary {
-    margin: 0;
-    color: var(--color-text-muted);
-    font-size: 0.94rem;
-    line-height: 1.6;
-  }
-
-  .hero-carousel__controls {
-    display: flex;
-    justify-content: flex-start;
-    gap: 0.55rem;
-  }
-
-  .hero-carousel__dot {
-    width: 2.25rem;
-    height: 0.52rem;
-    padding: 0;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 999px;
-    background: rgba(240, 235, 226, 0.14);
-    cursor: pointer;
-    transition:
-      background-color var(--transition-base),
-      border-color var(--transition-base);
-  }
-
-  .hero-carousel__dot:hover,
-  .hero-carousel__dot:focus-visible {
-    border-color: rgba(212, 168, 83, 0.4);
-  }
-
-  .hero-carousel__dot.is-active {
-    background: var(--color-accent);
-    border-color: transparent;
-  }
-
-  @media (max-width: 1180px) {
-    .hero-inner {
-      grid-template-columns: 1fr;
-      gap: 2.6rem;
-    }
-
-    .hero-stage {
-      width: 100%;
-      max-width: 48rem;
-    }
-  }
-
-  @media (max-width: 960px) {
-    .hero {
-      min-height: auto;
-      padding-top: 6.4rem;
-      padding-bottom: 2.5rem;
-    }
-
-    .hero-inner {
-      gap: 2.25rem;
-    }
-
-    .hero-name {
-      font-size: clamp(2.75rem, 13vw, 4.4rem);
-    }
-
-    .hero-brand-card {
-      align-items: flex-start;
-    }
-
-    .hero-support {
-      font-size: 0.98rem;
-    }
-
-    .hero-stage__header {
-      align-items: start;
-      flex-direction: column;
-    }
-
-    .hero-carousel {
-      min-height: 31rem;
-    }
-
-    .hero-carousel__controls {
-      flex-wrap: wrap;
-    }
-
-    .hero-carousel__dot {
-      flex: 1 1 2.4rem;
-      min-width: 2.4rem;
-    }
-  }
-
-  @media (max-width: 560px) {
-    .hero {
-      padding-top: 5.9rem;
-    }
-
-    .hero-brand-card {
+  @media (max-width: 479px) {
+    .hero-actions {
       display: grid;
-      gap: 0.9rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .hero-role {
-      max-width: 16rem;
+    .hero-actions .button-primary {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .hero-profile__icon {
+    display: inline-flex;
+    width: 1rem;
+    height: 1rem;
+    transition: transform var(--transition-base);
+  }
+
+  .hero-profile__icon :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-profile:hover .hero-profile__icon {
+    transform: translateY(-1px);
+  }
+
+  @media (min-width: 1024px) {
+    .hero-inner {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--page-gutter);
     }
 
-    .hero-carousel {
-      min-height: 33rem;
+    .hero-copy {
+      grid-column: 1 / span 6;
     }
 
-    .hero :global(.button-primary),
-    .hero :global(.button-secondary) {
-      width: 100%;
+    .hero-visual {
+      grid-column: 8 / span 5;
     }
   }
 </style>
-
-<script>
-  const heroSection = document.getElementById("hero");
-  const heroItems = heroSection?.querySelectorAll(".reveal");
-  const heroCarousel = heroSection?.querySelector("[data-carousel]");
-  const heroSlides = heroCarousel?.querySelectorAll("[data-slide]") ?? [];
-  const heroDots = heroCarousel?.querySelectorAll("[data-carousel-dot]") ?? [];
-
-  let activeIndex = 0;
-
-  function revealHeroItems() {
-    heroItems?.forEach((item) => item.classList.add("is-visible"));
-  }
-
-  function setActiveSlide(nextIndex) {
-    if (!heroSlides.length) return;
-    activeIndex = nextIndex;
-
-    heroSlides.forEach((slide, index) => {
-      const isActive = index === activeIndex;
-      slide.classList.toggle("is-active", isActive);
-      slide.setAttribute("aria-hidden", String(!isActive));
-    });
-
-    heroDots.forEach((dot, index) => {
-      const isActive = index === activeIndex;
-      dot.classList.toggle("is-active", isActive);
-      dot.setAttribute("aria-pressed", String(isActive));
-    });
-  }
-
-  heroDots.forEach((dot, index) => {
-    dot.addEventListener("click", () => setActiveSlide(index));
-  });
-
-  requestAnimationFrame(revealHeroItems);
-  setActiveSlide(0);
-</script>

@@ -1,17 +1,23 @@
 import { defineConfig } from "astro/config";
-// import vercel from "@astrojs/vercel/serverless";
-
+import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-  // output: "server",
-  // adapter: vercel({
-  //   webAnalytics: {
-  //     enabled: true, // set to false when using @vercel/analytics@1.4.0
-  //   },
-  // }),
-  integrations: [],
+  site: "https://prgm.cl",
+  trailingSlash: "always",
+
+  integrations: [
+    sitemap({
+      i18n: {
+        defaultLocale: "es",
+        locales: {
+          es: "es-CL",
+          en: "en-US",
+        },
+      },
+    }),
+  ],
 
   vite: {
     plugins: [tailwindcss()],

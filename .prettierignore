@@ -1,0 +1,11 @@
+dist/
+.astro/
+node_modules/
+.agents/
+.claude/
+.playwright-cli/
+playwright-report/
+test-results/
+pnpm-lock.yaml
+public/*.pdf
+public/favicon.svg

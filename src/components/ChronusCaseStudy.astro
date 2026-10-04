@@ -1,0 +1,722 @@
+---
+import { Image } from "astro:assets";
+import { getProjects, localePath, localeSectionPath, type Lang } from "../i18n";
+import { CHRONUS_CASE } from "../i18n/case-chronus";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const content = CHRONUS_CASE[lang];
+const project = getProjects(lang).find((item) => item.key === "chronus");
+if (!project?.link) throw new Error("Chronus project data is missing");
+
+const arch = content.architecture;
+---
+
+<article class="case">
+  <header class="case-head section-inner">
+    <p class="case-kicker reveal">{content.kicker}</p>
+    <h1 class="case-title reveal">{project.title}</h1>
+    <p class="case-lead reveal">{content.lead}</p>
+
+    <dl class="case-summary reveal">
+      {
+        content.summary.map((row) => (
+          <div class="case-summary__row">
+            <dt class="label">{row.label}</dt>
+            <dd>{row.value}</dd>
+          </div>
+        ))
+      }
+    </dl>
+
+    <div class="button-row reveal">
+      <a
+        href={project.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="button-primary"
+      >
+        {content.cta.visit}
+        <svg
+          aria-hidden="true"
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="square"
+        >
+          <path d="M7 17 17 7M8 7h9v9"></path>
+        </svg>
+      </a>
+      <a href={localePath(lang, "/proyectos")} class="button-secondary">
+        {content.cta.back}
+      </a>
+    </div>
+  </header>
+
+  <section class="page-section">
+    <div class="section-inner">
+      <ul class="case-facts">
+        {
+          content.facts.map((fact) => (
+            <li class="case-fact reveal">
+              <strong class="case-fact__value">{fact.value}</strong>
+              <span class="case-fact__label">{fact.label}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="case-block reveal">
+        <h2 class="case-block__title">{content.problem.title}</h2>
+        <p class="case-block__body">{content.problem.body}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section">
+    <div class="section-inner">
+      <header class="section-head reveal">
+        <h2 class="section-title">{arch.title}</h2>
+      </header>
+
+      <figure class="arch reveal" data-arch>
+        <div class="arch-node arch-node--client">
+          <span class="arch-node__eyebrow">{arch.client.label}</span>
+          <strong class="arch-node__name">{arch.client.name}</strong>
+          <span class="arch-node__detail">{arch.client.detail}</span>
+        </div>
+
+        <div class="arch-link" aria-hidden="true">
+          <span class="arch-packet"></span>
+          <span class="arch-packet arch-packet--back"></span>
+        </div>
+
+        <div class="arch-node arch-node--core">
+          <span class="arch-node__eyebrow">{arch.core.label}</span>
+          <strong class="arch-node__name">{arch.core.name}</strong>
+          <ul class="arch-core__list">
+            {arch.core.items.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+
+        <div class="arch-link" aria-hidden="true">
+          <span class="arch-packet"></span>
+          <span class="arch-packet arch-packet--back"></span>
+        </div>
+
+        <div class="arch-services">
+          <span class="arch-node__eyebrow">{arch.servicesLabel}</span>
+          <ul class="arch-services__list">
+            {
+              arch.services.map((service, index) => (
+                <li class="arch-service" style={`--i: ${index}`}>
+                  <span class="arch-service__stub" aria-hidden="true">
+                    <span class="arch-packet" />
+                  </span>
+                  <span class="arch-service__body">
+                    <strong class="arch-service__name">{service.name}</strong>
+                    <span class="arch-service__detail">{service.detail}</span>
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <figcaption class="arch-caption">{arch.caption}</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="page-section">
+    <div class="section-inner">
+      <header class="section-head reveal">
+        <h2 class="section-title">{content.decisions.title}</h2>
+      </header>
+
+      <ol class="decisions">
+        {
+          content.decisions.items.map((decision, index) => (
+            <li class="decision reveal">
+              <span class="decision__index" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <h3 class="decision__title">{decision.title}</h3>
+              <p class="decision__body">{decision.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+
+      <div class="case-block reveal">
+        <h2 class="case-block__title">{content.quality.title}</h2>
+        <ul class="case-block__list">
+          {content.quality.items.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section">
+    <div class="section-inner">
+      <header class="section-head reveal">
+        <h2 class="section-title">{content.gallery.title}</h2>
+      </header>
+
+      <div class="case-gallery">
+        {
+          project.images.map((image, index) => (
+            <div
+              class:list={[
+                "case-gallery__item browser-frame reveal",
+                index === 0 && "is-wide",
+              ]}
+            >
+              <Image
+                src={image}
+                alt={`${project.title} · ${index + 1}`}
+                widths={[720, 1080, 1600]}
+                sizes={
+                  index === 0
+                    ? "(max-width: 960px) 100vw, 84rem"
+                    : "(max-width: 960px) 100vw, 42rem"
+                }
+                loading="lazy"
+                format="webp"
+              />
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="case-end reveal">
+        <a href={localeSectionPath(lang, "contacto")} class="arrow-link">
+          {content.cta.contact}
+          <svg
+            aria-hidden="true"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="square"
+          >
+            <path d="M5 12h14M13 6l6 6-6 6"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</article>
+
+<style>
+  /* Cabecera */
+  .case-head {
+    display: grid;
+    gap: 1.25rem;
+    padding-top: clamp(3rem, 7vw, 5.5rem);
+  }
+
+  .case-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-text-soft);
+  }
+
+  .case-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.045em;
+  }
+
+  .case-lead {
+    max-width: 52ch;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+  }
+
+  .case-summary {
+    display: grid;
+    margin: 0.5rem 0 0;
+    border-top: 1px solid var(--color-line-strong);
+  }
+
+  .case-summary__row {
+    display: grid;
+    grid-template-columns: 6rem minmax(0, 1fr);
+    gap: 1rem;
+    padding-block: 0.75rem;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .case-summary dd {
+    margin: 0;
+  }
+
+  /* Cifras */
+  .case-facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    margin: 0 0 clamp(3rem, 6vw, 4.5rem);
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--color-line-strong);
+  }
+
+  .case-fact {
+    display: grid;
+    gap: 0.35rem;
+    padding: 1.25rem 1.25rem 1.25rem 0;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .case-fact__value {
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .case-fact__label {
+    font-size: 0.9rem;
+    color: var(--color-text-soft);
+  }
+
+  /* Bloques de texto */
+  .case-block {
+    display: grid;
+    gap: 1rem;
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  .case-block__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .case-block__body,
+  .case-block__list {
+    max-width: 68ch;
+    color: var(--color-text-muted);
+  }
+
+  .case-block__list {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .case-block__list li {
+    position: relative;
+    padding-left: 1.1rem;
+  }
+
+  .case-block__list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.75em;
+    width: 0.45rem;
+    height: 1px;
+    background: var(--color-accent);
+  }
+
+  @media (min-width: 960px) {
+    .case-head {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--page-gutter);
+    }
+
+    .case-head > * {
+      grid-column: 1 / span 8;
+    }
+
+    .case-block {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--page-gutter);
+    }
+
+    .case-block__title {
+      grid-column: 1 / span 3;
+    }
+
+    .case-block__body,
+    .case-block__list {
+      grid-column: 4 / span 9;
+    }
+  }
+
+  /* ============================================
+     DIAGRAMA DE ARQUITECTURA
+     ============================================ */
+  .arch {
+    --packet: 6px;
+    display: grid;
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
+
+  .arch-node,
+  .arch-services {
+    display: grid;
+    gap: 0.4rem;
+    align-content: start;
+    padding: 1.1rem 1.2rem;
+    border: 1px solid var(--color-line);
+    background: var(--color-surface);
+  }
+
+  .arch-node--core {
+    border-color: var(--color-line-strong);
+  }
+
+  .arch-node__eyebrow {
+    color: var(--color-text-soft);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .arch-node__name {
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .arch-node__detail {
+    color: var(--color-text-muted);
+  }
+
+  .arch-core__list {
+    display: grid;
+    gap: 0.3rem;
+    margin: 0.35rem 0 0;
+    padding: 0;
+    list-style: none;
+    color: var(--color-text-muted);
+  }
+
+  .arch-core__list li::before {
+    content: "› ";
+    color: var(--color-accent);
+  }
+
+  /* Conector entre bloques: vertical en móvil, horizontal en escritorio */
+  .arch-link {
+    position: relative;
+    justify-self: center;
+    width: 1px;
+    height: 2.75rem;
+    background: var(--color-line-strong);
+    transform-origin: top;
+    transition: transform 700ms var(--ease-out);
+  }
+
+  .arch-packet {
+    position: absolute;
+    width: var(--packet);
+    height: var(--packet);
+    background: var(--color-accent);
+    opacity: 0;
+  }
+
+  .arch-link .arch-packet {
+    left: calc(var(--packet) / -2 + 0.5px);
+    animation: packet-down 2.4s var(--ease-out) infinite;
+  }
+
+  .arch-link .arch-packet--back {
+    background: var(--color-ink);
+    animation-name: packet-up;
+    animation-delay: 1.2s;
+  }
+
+  /* Servicios colgando de un bus */
+  .arch-services__list {
+    position: relative;
+    display: grid;
+    gap: 0.5rem;
+    margin: 0.35rem 0 0;
+    padding: 0 0 0 1.5rem;
+    list-style: none;
+  }
+
+  .arch-services__list::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 1.15rem;
+    bottom: 1.15rem;
+    width: 1px;
+    background: var(--color-line-strong);
+    transform-origin: top;
+    transition: transform 700ms var(--ease-out) 300ms;
+  }
+
+  .arch-service {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .arch-service__stub {
+    position: absolute;
+    left: -1.5rem;
+    top: 50%;
+    width: 1.5rem;
+    height: 1px;
+    background: var(--color-line-strong);
+  }
+
+  .arch-service__stub .arch-packet {
+    top: calc(var(--packet) / -2 + 0.5px);
+    animation: packet-right 3.2s var(--ease-out) infinite;
+    animation-delay: calc(var(--i) * 0.45s);
+  }
+
+  .arch-service__body {
+    display: grid;
+    flex: 1;
+    gap: 0.1rem;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid var(--color-line);
+    background: var(--color-bg);
+    transition:
+      border-color var(--transition-base),
+      transform var(--transition-base);
+  }
+
+  .arch-service:hover .arch-service__body {
+    border-color: var(--color-accent);
+    transform: translateX(3px);
+  }
+
+  .arch-service__name {
+    font-family: var(--font-sans);
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+
+  .arch-service__detail {
+    color: var(--color-text-soft);
+  }
+
+  .arch-caption {
+    margin-top: 1.25rem;
+    max-width: 68ch;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+  }
+
+  /* Dibujo de conectores al entrar en pantalla */
+  .arch:global(.is-reveal-pending) .arch-link,
+  .arch:global(.is-reveal-pending) .arch-services__list::before {
+    transform: scaleY(0);
+  }
+
+  .arch:global(.is-reveal-pending.is-visible) .arch-link,
+  .arch:global(.is-reveal-pending.is-visible) .arch-services__list::before {
+    transform: none;
+  }
+
+  @media (min-width: 960px) {
+    .arch {
+      grid-template-columns:
+        minmax(0, 1fr) 4.5rem minmax(0, 1fr) 4.5rem
+        minmax(0, 1.25fr);
+      align-items: center;
+    }
+
+    .arch-link {
+      justify-self: stretch;
+      width: auto;
+      height: 1px;
+      transform-origin: left;
+    }
+
+    .arch-link .arch-packet {
+      left: auto;
+      top: calc(var(--packet) / -2 + 0.5px);
+      animation-name: packet-right;
+    }
+
+    .arch-link .arch-packet--back {
+      animation-name: packet-left;
+    }
+
+    .arch:global(.is-reveal-pending) .arch-link {
+      transform: scaleX(0);
+    }
+
+    .arch-caption {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @keyframes packet-down {
+    0% {
+      top: 0;
+      opacity: 0;
+    }
+    15%,
+    85% {
+      opacity: 1;
+    }
+    100% {
+      top: calc(100% - var(--packet));
+      opacity: 0;
+    }
+  }
+
+  @keyframes packet-up {
+    0% {
+      top: calc(100% - var(--packet));
+      opacity: 0;
+    }
+    15%,
+    85% {
+      opacity: 1;
+    }
+    100% {
+      top: 0;
+      opacity: 0;
+    }
+  }
+
+  @keyframes packet-right {
+    0% {
+      left: 0;
+      opacity: 0;
+    }
+    10%,
+    40% {
+      opacity: 1;
+    }
+    50%,
+    100% {
+      left: calc(100% - var(--packet));
+      opacity: 0;
+    }
+  }
+
+  @keyframes packet-left {
+    0% {
+      left: calc(100% - var(--packet));
+      opacity: 0;
+    }
+    10%,
+    40% {
+      opacity: 1;
+    }
+    50%,
+    100% {
+      left: 0;
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .arch-packet {
+      display: none;
+    }
+  }
+
+  /* Decisiones */
+  .decisions {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--color-line-strong);
+  }
+
+  .decision {
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    gap: 0.5rem 1rem;
+    padding-block: 1.5rem;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .decision__index {
+    grid-row: 1 / span 2;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-accent);
+    padding-top: 0.2rem;
+  }
+
+  .decision__title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+
+  .decision__body {
+    max-width: 68ch;
+    color: var(--color-text-muted);
+  }
+
+  @media (min-width: 960px) {
+    .decision {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--page-gutter);
+    }
+
+    .decision__index {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .decision__title {
+      grid-column: 2 / span 3;
+    }
+
+    .decision__body {
+      grid-column: 5 / span 8;
+    }
+  }
+
+  /* Galería */
+  .case-gallery {
+    display: grid;
+    gap: var(--page-gutter);
+  }
+
+  .case-gallery__item :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  @media (min-width: 960px) {
+    .case-gallery {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .case-gallery__item.is-wide {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .case-end {
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-line-strong);
+  }
+</style>
