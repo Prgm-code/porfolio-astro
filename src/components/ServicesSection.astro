@@ -1,5 +1,14 @@
 ---
-import { getData, getUi, type Lang } from "../i18n";
+import {
+  getData,
+  getProjects,
+  getUi,
+  localePath,
+  techSlug,
+  type Lang,
+} from "../i18n";
+import { PRIMARY_STACK } from "../i18n/data.shared";
+import SectionHeader from "./SectionHeader.astro";
 
 interface Props {
   lang: Lang;
@@ -8,23 +17,66 @@ interface Props {
 const { lang } = Astro.props;
 const ui = getUi(lang);
 const data = getData(lang);
+
+// Cuántos proyectos del archivo usan cada tecnología. Con dos o más, el
+// ítem enlaza al archivo filtrado por esa tecnología.
+const tagCounts = new Map<string, number>();
+getProjects(lang).forEach((project) =>
+  project.tags.forEach((tag) =>
+    tagCounts.set(tag.name, (tagCounts.get(tag.name) ?? 0) + 1),
+  ),
+);
+const archivePath = localePath(lang, "/proyectos");
+const pad = (value: number) => String(value).padStart(2, "0");
 ---
 
 <section id="stack" class="page-section">
   <div class="section-inner">
-    <header class="section-head reveal">
-      <h2 class="section-title">{ui.services.title}</h2>
-    </header>
+    <SectionHeader index="03" title={ui.services.title}>
+      <span class="matrix-key">
+        <span class="matrix-key__mark" aria-hidden="true"></span>
+        {ui.services.keyPrimary}
+      </span>
+      <span class="matrix-key">
+        <span class="matrix-key__count" aria-hidden="true">n</span>
+        {ui.services.keyProjects}
+      </span>
+    </SectionHeader>
 
-    <div class="stack-grid">
+    <div class="matrix">
       {
         data.stack.map((group) => (
-          <div class="stack-group reveal">
-            <h3 class="stack-group__title">{group.title}</h3>
-            <ul class="stack-group__items">
-              {group.items.map((item) => (
-                <li>{item}</li>
-              ))}
+          <div class="matrix-row reveal">
+            <h3 class="matrix-row__title">
+              {group.title}
+              <span class="matrix-row__count" aria-hidden="true">
+                {pad(group.items.length)}
+              </span>
+            </h3>
+            <ul class="matrix-row__items">
+              {group.items.map((item) => {
+                const count = tagCounts.get(item) ?? 0;
+                const isPrimary = PRIMARY_STACK.includes(item);
+                return (
+                  <li class:list={["matrix-item", isPrimary && "is-primary"]}>
+                    {count > 1 ? (
+                      <a
+                        href={`${archivePath}?stack=${techSlug(item)}`}
+                        class="matrix-item__link"
+                        aria-label={ui.services.linkLabel(item, count)}
+                      >
+                        {item}
+                        <sup class="matrix-item__count">{count}</sup>
+                      </a>
+                    ) : (
+                      item
+                    )}
+                    {isPrimary && (
+                      <span class="sr-only">({ui.services.primarySr})</span>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         ))
@@ -34,38 +86,120 @@ const data = getData(lang);
 </section>
 
 <style>
-  .stack-grid {
+  .matrix {
+    border-top: 1px solid var(--color-line);
+  }
+
+  .matrix-row {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
-    gap: 2.5rem var(--page-gutter);
-  }
-
-  @media (min-width: 960px) {
-    .stack-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-  }
-
-  .stack-group {
-    display: grid;
-    gap: 0.9rem;
-    align-content: start;
-  }
-
-  .stack-group__title {
-    padding-bottom: 0.6rem;
+    gap: 0.75rem;
+    padding-block: 1.1rem 1.2rem;
     border-bottom: 1px solid var(--color-line);
+  }
+
+  .matrix-row__title {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
     font-size: 0.95rem;
     font-weight: 600;
+    transition: color var(--transition-base);
   }
 
-  .stack-group__items {
-    display: grid;
-    gap: 0.4rem;
+  .matrix-row:hover .matrix-row__title {
+    color: var(--color-accent);
+  }
+
+  .matrix-row__count {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: var(--color-text-soft);
+  }
+
+  .matrix-row__items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem 1.4rem;
     margin: 0;
     padding: 0;
     list-style: none;
     font-size: 0.95rem;
     color: var(--color-text-muted);
+  }
+
+  .matrix-item {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4rem;
+  }
+
+  /* Uso principal: tinta y una marca cuadrada del acento */
+  .matrix-item.is-primary {
+    color: var(--color-ink);
+    font-weight: 500;
+  }
+
+  .matrix-item.is-primary::before,
+  .matrix-key__mark {
+    content: "";
+    flex-shrink: 0;
+    width: 0.4rem;
+    height: 0.4rem;
+    background: var(--color-accent);
+    transform: translateY(-0.1em);
+  }
+
+  .matrix-item__link {
+    border-bottom: 1px dotted var(--color-text-soft);
+    transition:
+      color var(--transition-base),
+      border-color var(--transition-base);
+  }
+
+  .matrix-item__link:hover,
+  .matrix-item__link:focus-visible {
+    color: var(--color-accent);
+    border-bottom-color: currentColor;
+  }
+
+  .matrix-item__count,
+  .matrix-key__count {
+    margin-left: 0.15rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: var(--color-accent);
+  }
+
+  .matrix-key {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.45rem;
+  }
+
+  .matrix-key__mark {
+    display: inline-block;
+  }
+
+  .matrix-key__count {
+    margin-left: 0;
+    vertical-align: super;
+  }
+
+  @media (min-width: 960px) {
+    .matrix-row {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--page-gutter);
+      align-items: baseline;
+    }
+
+    .matrix-row__title {
+      grid-column: 1 / span 3;
+    }
+
+    .matrix-row__items {
+      grid-column: 4 / span 9;
+    }
   }
 </style>

@@ -1,18 +1,23 @@
 ---
 import { SOCIAL_BASE } from "../i18n/data.shared";
-import type { Lang } from "../i18n";
+import { getUi, type Lang } from "../i18n";
 
 interface Props {
   lang: Lang;
 }
 
+const { lang } = Astro.props;
+const ui = getUi(lang);
 const currentYear = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
   <div class="site-footer__inner">
-    <p>© {currentYear} Patricio Gómez</p>
-    <ul>
+    <p class="site-footer__brand">
+      <span class="site-footer__square" aria-hidden="true"></span>
+      © {currentYear} Patricio Gómez
+    </p>
+    <ul class="site-footer__links">
       <li>
         <a href={SOCIAL_BASE.github} target="_blank" rel="noopener noreferrer"
           >GitHub</a
@@ -25,14 +30,26 @@ const currentYear = new Date().getFullYear();
       </li>
       <li><a href={SOCIAL_BASE.email}>contacto@prgm.cl</a></li>
     </ul>
+    <a href="#top" class="site-footer__top">
+      {ui.footer.backToTop}
+      <svg
+        aria-hidden="true"
+        width="12"
+        height="12"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="square"
+      >
+        <path d="M12 19V5M6 11l6-6 6 6"></path>
+      </svg>
+    </a>
   </div>
 </footer>
 
 <style>
   .site-footer {
-    --color-inverse-text: var(--color-text);
-    --color-inverse-line: var(--color-line);
-    --color-inverse-accent: var(--color-accent);
     color: var(--color-text-soft);
     font-size: 0.875rem;
   }
@@ -42,13 +59,26 @@ const currentYear = new Date().getFullYear();
     margin-inline: auto;
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     justify-content: space-between;
     gap: 0.75rem 2rem;
     padding-block: 1.75rem;
-    border-top: 1px solid var(--color-inverse-line);
+    border-top: 1px solid var(--color-line);
   }
 
-  ul {
+  .site-footer__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .site-footer__square {
+    width: 0.5rem;
+    height: 0.5rem;
+    background: var(--color-accent);
+  }
+
+  .site-footer__links {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem 1.5rem;
@@ -57,16 +87,35 @@ const currentYear = new Date().getFullYear();
     list-style: none;
   }
 
+  .site-footer__top {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+
+  .site-footer__top svg {
+    transition: transform var(--transition-base);
+  }
+
+  .site-footer__top:hover svg,
+  .site-footer__top:focus-visible svg {
+    transform: translateY(-2px);
+  }
+
   a {
     transition: color var(--transition-base);
   }
 
   a:hover,
   a:focus-visible {
-    color: var(--color-inverse-text);
+    color: var(--color-text);
   }
 
-  .site-footer :focus-visible {
-    outline-color: var(--color-inverse-accent);
+  @media (min-width: 960px) {
+    .site-footer__links {
+      margin-left: auto;
+    }
   }
 </style>

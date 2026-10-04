@@ -368,6 +368,15 @@ export const CERTIFICATIONS = {
 export const SITE_NAME = "Patricio Gómez";
 export const FULL_NAME = "Patricio Gómez Meneses";
 
+/** Tecnologías de uso diario; se destacan en el stack técnico. */
+export const PRIMARY_STACK: readonly string[] = [
+  "TypeScript",
+  "Next.js",
+  "TanStack Start",
+  "NestJS",
+  "Convex",
+];
+
 export const SOCIAL_BASE = {
   github: "https://github.com/Prgm-code",
   linkedin: "https://www.linkedin.com/in/prgm/",

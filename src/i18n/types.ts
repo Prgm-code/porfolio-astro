@@ -31,6 +31,8 @@ export type Project = ProjectBase & ProjectText;
 
 export interface ExperienceItem {
   date: string;
+  /** Puesto vigente: se marca en la línea de tiempo. */
+  current?: boolean;
   role: string;
   org: string;
   location: string;

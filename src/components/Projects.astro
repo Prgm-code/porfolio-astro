@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import { getProjects, getUi, localePath, type Lang } from "../i18n";
+import SectionHeader from "./SectionHeader.astro";
 
 interface Props {
   lang: Lang;
@@ -14,6 +15,8 @@ const featuredProjects = projects
   .filter((project) => project.featured)
   .slice(0, 6);
 
+const pad = (value: number) => String(value).padStart(2, "0");
+
 const isPortraitImage = (image: (typeof projects)[number]["images"][number]) =>
   typeof image !== "string" && image.height > image.width;
 
@@ -22,111 +25,62 @@ const hostname = (url: string) => new URL(url).hostname.replace(/^www\./, "");
 
 <section id="proyectos" class="page-section">
   <div class="section-inner">
-    <header class="section-head reveal">
-      <h2 class="section-title">{ui.projects.title}</h2>
-      <p class="section-meta">
-        {ui.projects.count(featuredProjects.length, projects.length)}
-      </p>
-    </header>
+    <SectionHeader index="01" title={ui.projects.title}>
+      <span>{ui.projects.count(featuredProjects.length, projects.length)}</span>
+    </SectionHeader>
 
-    <div
-      class="work reveal"
-      data-carousel
-      role="region"
-      aria-label={ui.projects.regionLabel}
-    >
-      <div
-        class="work__list"
-        role="group"
-        aria-label={ui.projects.listLabel}
-        data-carousel-list
-      >
+    <div class="showcase" data-showcase>
+      <ol class="showcase__list" aria-label={ui.projects.regionLabel}>
         {
           featuredProjects.map((project, index) => (
-            <button
-              type="button"
-              class:list={["work__item", index === 0 && "is-active"]}
-              data-carousel-dot
+            <li
+              class:list={["showcase__item", index === 0 && "is-active"]}
+              data-showcase-item
               data-index={index}
-              aria-pressed={index === 0 ? "true" : "false"}
+              data-title={project.title}
             >
-              <span class="work__name">{project.title}</span>
-              <span class="work__hint">{project.shortLabel}</span>
-            </button>
-          ))
-        }
-      </div>
+              <article class="entry reveal">
+                {project.image && (
+                  <div class="entry__media browser-frame">
+                    <Image
+                      src={project.image}
+                      alt={ui.projects.screenshotAlt(1, project.title)}
+                      class="entry__image"
+                      widths={[480, 720, 1080]}
+                      sizes="100vw"
+                      loading="lazy"
+                      format="webp"
+                    />
+                  </div>
+                )}
 
-      <div class="work__stage">
-        {
-          featuredProjects.map((project, index) => (
-            <article
-              class:list={["work__slide", index === 0 && "is-active"]}
-              data-slide
-              data-project-key={project.key}
-              aria-hidden={index === 0 ? "false" : "true"}
-              inert={index === 0 ? undefined : true}
-            >
-              <a
-                class="work__media browser-frame"
-                href={project.link ?? "#contacto"}
-                target={project.link ? "_blank" : undefined}
-                rel={project.link ? "noopener noreferrer" : undefined}
-                aria-label={ui.projects.openProject(project.title)}
-                data-project-carousel-trigger
-              >
-                <div class="project-carousel" data-project-carousel>
-                  {project.images.map((image, imageIndex) => (
-                    <div
-                      class:list={[
-                        "project-carousel__slide",
-                        imageIndex === 0 && "is-active",
-                        isPortraitImage(image) && "is-portrait",
-                      ]}
-                      data-project-slide
-                      aria-hidden={imageIndex === 0 ? "false" : "true"}
-                      inert={imageIndex === 0 ? undefined : true}
-                    >
-                      <Image
-                        src={image}
-                        alt={ui.projects.screenshotAlt(
-                          imageIndex + 1,
-                          project.title,
-                        )}
-                        class="project-carousel__image"
-                        widths={[720, 1080, 1600]}
-                        sizes="(max-width: 960px) 100vw, 64vw"
-                        loading={index === 0 ? "eager" : "lazy"}
-                        format="webp"
+                <p class="entry__index" aria-hidden="true">
+                  {pad(index + 1)}
+                </p>
+                <h3 class="entry__title">{project.title}</h3>
+                <p class="entry__label">{project.shortLabel}</p>
+                <p class="entry__description">{project.description}</p>
+
+                <ul class="stack-list" aria-label="Stack">
+                  {project.tags.map((tag) => (
+                    <li class="stack-chip">
+                      <span
+                        class="stack-chip__icon"
+                        aria-hidden="true"
+                        set:html={tag.icon}
                       />
-                    </div>
+                      <span class="stack-chip__label">{tag.name}</span>
+                    </li>
                   ))}
+                </ul>
 
-                  {project.images.length > 1 && (
-                    <div class="project-carousel__dots" aria-hidden="true">
-                      {project.images.map((_, imageIndex) => (
-                        <span
-                          class:list={[
-                            "project-carousel__dot",
-                            imageIndex === 0 && "is-active",
-                          ]}
-                          data-project-dot
-                        />
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </a>
-
-              <div class="work__detail">
-                <div class="work__heading">
-                  <h3 class="work__title">{project.title}</h3>
+                <div class="entry__links">
                   {project.link && (
                     <a
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      class="arrow-link work__link"
+                      class="arrow-link entry__site"
                     >
                       {hostname(project.link)}
                       <svg
@@ -143,47 +97,116 @@ const hostname = (url: string) => new URL(url).hostname.replace(/^www\./, "");
                       </svg>
                     </a>
                   )}
-                </div>
-
-                <p class="work__description">{project.description}</p>
-
-                <ul class="stack-list" aria-label="Stack">
-                  {project.tags.map((tag) => (
-                    <li class="stack-chip">
-                      <span
-                        class="stack-chip__icon"
-                        aria-hidden="true"
-                        set:html={tag.icon}
-                      />
-                      <span class="stack-chip__label">{tag.name}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {project.caseStudy && (
-                  <a
-                    href={localePath(lang, project.caseStudy)}
-                    class="arrow-link work__case"
-                  >
-                    {ui.projects.caseStudy}
-                    <svg
-                      aria-hidden="true"
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="square"
+                  {project.caseStudy && (
+                    <a
+                      href={localePath(lang, project.caseStudy)}
+                      class="arrow-link"
                     >
-                      <path d="M5 12h14M13 6l6 6-6 6" />
-                    </svg>
-                  </a>
-                )}
-              </div>
-            </article>
+                      {ui.projects.caseStudy}
+                      <svg
+                        aria-hidden="true"
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="square"
+                      >
+                        <path d="M5 12h14M13 6l6 6-6 6" />
+                      </svg>
+                    </a>
+                  )}
+                </div>
+              </article>
+            </li>
           ))
         }
+      </ol>
+
+      <!-- Visor de escritorio: repite las capturas de la lista, por eso se
+           oculta a lectores de pantalla y queda fuera del orden de tabulación. -->
+      <div class="showcase__viewer reveal" aria-hidden="true">
+        <div class="viewer">
+          <span class="viewer__mark viewer__mark--tl"></span>
+          <span class="viewer__mark viewer__mark--tr"></span>
+          <span class="viewer__mark viewer__mark--bl"></span>
+          <span class="viewer__mark viewer__mark--br"></span>
+
+          {
+            featuredProjects.map((project, index) => (
+              <a
+                class:list={[
+                  "viewer__layer browser-frame",
+                  index === 0 && "is-active",
+                ]}
+                href={project.link ?? localePath(lang, "/proyectos")}
+                target={project.link ? "_blank" : undefined}
+                rel={project.link ? "noopener noreferrer" : undefined}
+                tabindex="-1"
+                inert={index === 0 ? undefined : true}
+                data-viewer-layer
+                data-project-carousel-trigger
+              >
+                <div class="project-carousel" data-project-carousel>
+                  {project.images.map((image, imageIndex) => (
+                    <div
+                      class:list={[
+                        "project-carousel__slide",
+                        imageIndex === 0 && "is-active",
+                        isPortraitImage(image) && "is-portrait",
+                      ]}
+                      data-project-slide
+                    >
+                      <Image
+                        src={image}
+                        alt=""
+                        class="project-carousel__image"
+                        widths={[720, 1080, 1600]}
+                        sizes="(max-width: 1023px) 100vw, 56vw"
+                        loading="lazy"
+                        format="webp"
+                      />
+                    </div>
+                  ))}
+
+                  {project.images.length > 1 && (
+                    <div class="project-carousel__dots">
+                      {project.images.map((_, imageIndex) => (
+                        <span
+                          class:list={[
+                            "project-carousel__dot",
+                            imageIndex === 0 && "is-active",
+                          ]}
+                          data-project-dot
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </a>
+            ))
+          }
+        </div>
+
+        <div class="viewer__caption">
+          <span class="viewer__count">
+            <span data-viewer-count>01</span> / {pad(featuredProjects.length)}
+          </span>
+          <span class="viewer__bars">
+            {
+              featuredProjects.map((_, index) => (
+                <span
+                  class:list={["viewer__bar", index === 0 && "is-active"]}
+                  data-viewer-bar
+                />
+              ))
+            }
+          </span>
+          <span class="viewer__title" data-viewer-title>
+            {featuredProjects[0]?.title}
+          </span>
+        </div>
       </div>
     </div>
 
@@ -208,184 +231,274 @@ const hostname = (url: string) => new URL(url).hostname.replace(/^www\./, "");
 </section>
 
 <style>
-  .work {
+  .showcase__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Ficha de cada proyecto */
+  .entry {
+    position: relative;
     display: grid;
-    gap: 1.5rem;
-  }
-
-  /* Lista de proyectos: chips con scroll en móvil, índice vertical en escritorio */
-  .work__list {
-    display: flex;
-    gap: 0.5rem;
-    overflow-x: auto;
-    scrollbar-width: none;
-    margin-inline: calc(var(--page-gutter) * -1);
-    padding-inline: var(--page-gutter);
-  }
-
-  .work__list::-webkit-scrollbar {
-    display: none;
-  }
-
-  .work__item {
-    display: flex;
-    align-items: baseline;
-    gap: 0.6rem;
-    flex-shrink: 0;
-    min-height: 2.75rem;
-    padding: 0.55rem 0.85rem;
-    background: transparent;
-    border: 1px solid var(--color-line);
-    color: var(--color-text-muted);
-    font: inherit;
-    font-size: 0.92rem;
-    text-align: left;
-    cursor: pointer;
-    transition:
-      color var(--transition-base),
-      background-color var(--transition-base),
-      border-color var(--transition-base),
-      padding var(--transition-base);
-  }
-
-  .work__hint {
-    display: none;
-  }
-
-  .work__item:hover {
-    color: var(--color-ink);
-    border-color: var(--color-ink);
-  }
-
-  .work__item.is-active {
-    background: var(--color-ink);
-    border-color: var(--color-ink);
-    color: var(--color-bg);
-  }
-
-  /* Escenario */
-  .work__stage {
-    display: grid;
-  }
-
-  .work__slide {
-    grid-area: 1 / 1;
-    display: grid;
-    gap: 1.75rem;
+    gap: 0.7rem;
     align-content: start;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(8px);
-    transition:
-      opacity 420ms var(--ease-out),
-      transform 420ms var(--ease-out),
-      visibility 0s linear 420ms;
+    padding-block: 2rem 2.5rem;
+    border-bottom: 1px solid var(--color-line);
   }
 
-  .work__slide.is-active {
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-    transition:
-      opacity 420ms var(--ease-out),
-      transform 420ms var(--ease-out),
-      visibility 0s;
+  .showcase__item:first-child .entry {
+    padding-top: 0.5rem;
   }
 
-  .work__detail {
-    display: grid;
-    gap: 1.25rem;
+  .entry__media {
+    margin-bottom: 0.75rem;
+    aspect-ratio: 16 / 10;
   }
 
-  .work__heading {
+  .entry__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  .entry__index {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-accent);
+    transition: color 300ms var(--ease-out);
+  }
+
+  .entry__title {
+    font-size: clamp(1.4rem, 2.2vw, 1.75rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    transition: color 300ms var(--ease-out);
+  }
+
+  .entry__label {
+    font-weight: 500;
+  }
+
+  .entry__description {
+    max-width: 52ch;
+    color: var(--color-text-muted);
+  }
+
+  .entry .stack-list {
+    margin-top: 0.35rem;
+  }
+
+  .entry__links {
     display: flex;
     flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 0.5rem 1.5rem;
+    gap: 0.75rem 1.5rem;
+    margin-top: 0.6rem;
   }
 
-  .work__title {
-    font-size: clamp(1.35rem, 2vw, 1.625rem);
-    font-weight: 600;
-    line-height: 1.05;
-    letter-spacing: -0.035em;
-  }
-
-  .work__link {
+  .entry__site {
     font-family: var(--font-mono);
     font-size: 0.85rem;
     font-weight: 400;
   }
 
-  .work__case {
-    justify-self: start;
+  /* Sin JavaScript: grilla de dos columnas, cada ficha con su captura */
+  @media (min-width: 1024px) {
+    :global(html:not(.js)) .showcase__list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--page-gutter);
+    }
+
+    :global(html:not(.js)) .showcase__item:first-child .entry {
+      padding-top: 2rem;
+    }
   }
 
-  .work__description {
-    max-width: 60ch;
-    color: var(--color-text-muted);
-    font-size: 1.05rem;
+  /* Visor (solo escritorio con JavaScript) */
+  .showcase__viewer {
+    display: none;
   }
 
-  @media (min-width: 960px) {
-    .work {
+  @media (min-width: 1024px) {
+    :global(.js) .showcase {
+      display: grid;
       grid-template-columns: repeat(12, minmax(0, 1fr));
       column-gap: var(--page-gutter);
       align-items: start;
     }
 
-    .work__list {
-      grid-column: 1 / span 3;
-      position: sticky;
-      top: calc(var(--header-height) + 1.5rem);
-      flex-direction: column;
-      gap: 0;
-      margin: 0;
-      padding: 0;
-      overflow: visible;
-      border-top: 1px solid var(--color-line-strong);
+    :global(.js) .showcase__list {
+      grid-column: 1 / span 5;
     }
 
-    .work__item {
+    :global(.js) .showcase__viewer {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 0.15rem;
-      width: 100%;
-      padding: 0.9rem 0.25rem;
-      border: 0;
-      border-bottom: 1px solid var(--color-line);
-      font-size: 1.02rem;
+      gap: 1rem;
+      grid-column: 6 / span 7;
+      position: sticky;
+      top: calc(var(--header-height) + 2.5rem);
+      padding: 0.75rem 0 0 0.75rem;
     }
 
-    .work__hint {
-      display: block;
-      font-size: 0.8rem;
-      line-height: 1.35;
+    :global(.js) .entry__media {
+      display: none;
+    }
+
+    :global(.js) .entry {
+      min-height: clamp(17rem, 42vh, 24rem);
+      padding-left: 1.5rem;
+    }
+
+    /* Marca de la ficha activa */
+    :global(.js) .entry::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 2rem;
+      bottom: 2.5rem;
+      width: 2px;
+      background: var(--color-accent);
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 500ms var(--ease-out);
+    }
+
+    :global(.js) .showcase__item:first-child .entry::before {
+      top: 0.5rem;
+    }
+
+    :global(.js) .showcase__item.is-active .entry::before {
+      transform: scaleY(1);
+    }
+
+    :global(.js) .showcase__item:not(.is-active) .entry__index {
       color: var(--color-text-soft);
     }
 
-    .work__item:hover {
-      padding-left: 0.75rem;
-      background: transparent;
+    :global(.js) .showcase__item:not(.is-active) .entry__title {
+      color: var(--color-text-soft);
     }
+  }
 
-    .work__item.is-active {
-      background: transparent;
-      border-bottom-color: var(--color-line);
-      color: var(--color-ink);
-      font-weight: 600;
-      padding-left: 0.75rem;
-      box-shadow: inset 2px 0 0 var(--color-accent);
-    }
+  .viewer {
+    position: relative;
+    aspect-ratio: 16 / 10;
+  }
 
-    .work__item.is-active .work__hint {
-      font-weight: 400;
-    }
+  /* Marcas de corte en las esquinas del visor */
+  .viewer__mark {
+    position: absolute;
+    width: 0.75rem;
+    height: 0.75rem;
+    border: 0 solid var(--color-text-soft);
+  }
 
-    .work__stage {
-      grid-column: 4 / span 9;
+  .viewer__mark--tl {
+    top: -0.75rem;
+    left: -0.75rem;
+    border-top-width: 1px;
+    border-left-width: 1px;
+  }
+
+  .viewer__mark--tr {
+    top: -0.75rem;
+    right: -0.75rem;
+    border-top-width: 1px;
+    border-right-width: 1px;
+  }
+
+  .viewer__mark--bl {
+    bottom: -0.75rem;
+    left: -0.75rem;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+  }
+
+  .viewer__mark--br {
+    bottom: -0.75rem;
+    right: -0.75rem;
+    border-bottom-width: 1px;
+    border-right-width: 1px;
+  }
+
+  .viewer__layer {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 450ms var(--ease-out),
+      visibility 0s linear 450ms;
+  }
+
+  .viewer__layer.is-active {
+    opacity: 1;
+    visibility: visible;
+    transition:
+      opacity 450ms var(--ease-out),
+      visibility 0s;
+  }
+
+  .viewer__layer .project-carousel {
+    height: 100%;
+    aspect-ratio: auto;
+  }
+
+  .viewer__layer.is-active .project-carousel__image {
+    animation: viewer-settle 900ms var(--ease-out);
+  }
+
+  /* Solo se cargan las capturas extra del proyecto activo */
+  .viewer__layer:not(.is-active) .project-carousel__slide:not(:first-child) {
+    display: none;
+  }
+
+  @keyframes viewer-settle {
+    from {
+      transform: scale(1.03);
     }
+  }
+
+  .viewer__caption {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 0.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-soft);
+  }
+
+  .viewer__count {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .viewer__count span {
+    color: var(--color-ink);
+  }
+
+  .viewer__bars {
+    display: flex;
+    gap: 4px;
+  }
+
+  .viewer__bar {
+    width: 1.1rem;
+    height: 2px;
+    background: var(--color-line);
+    transition: background-color 300ms var(--ease-out);
+  }
+
+  .viewer__bar.is-active {
+    background: var(--color-accent);
+  }
+
+  .viewer__title {
+    margin-left: auto;
+    color: var(--color-text);
   }
 
   .work-archive {
@@ -405,48 +518,60 @@ const hostname = (url: string) => new URL(url).hostname.replace(/^www\./, "");
 
   initProjectCarousels();
 
-  const work = document.querySelector<HTMLElement>(
-    "#proyectos [data-carousel]",
-  );
-  const slides = Array.from(
-    work?.querySelectorAll<HTMLElement>("[data-slide]") ?? [],
-  );
-  const items = Array.from(
-    work?.querySelectorAll<HTMLButtonElement>("[data-carousel-dot]") ?? [],
-  );
+  // El visor muestra el proyecto que cruza la mitad de la pantalla.
+  const showcase = document.querySelector<HTMLElement>("[data-showcase]");
 
-  function setActive(nextIndex: number) {
-    slides.forEach((slide, index) => {
-      const isActive = index === nextIndex;
-      slide.classList.toggle("is-active", isActive);
-      slide.setAttribute("aria-hidden", String(!isActive));
-      slide.inert = !isActive;
-    });
+  if (showcase) {
+    const items = Array.from(
+      showcase.querySelectorAll<HTMLElement>("[data-showcase-item]"),
+    );
+    const layers = Array.from(
+      showcase.querySelectorAll<HTMLElement>("[data-viewer-layer]"),
+    );
+    const bars = Array.from(
+      showcase.querySelectorAll<HTMLElement>("[data-viewer-bar]"),
+    );
+    const count = showcase.querySelector<HTMLElement>("[data-viewer-count]");
+    const title = showcase.querySelector<HTMLElement>("[data-viewer-title]");
+    let active = 0;
+    let pending = 0;
+
+    const setActive = (index: number) => {
+      if (index === active) return;
+      active = index;
+      items.forEach((item, i) =>
+        item.classList.toggle("is-active", i === index),
+      );
+      layers.forEach((layer, i) => {
+        const isActive = i === index;
+        layer.classList.toggle("is-active", isActive);
+        layer.inert = !isActive;
+      });
+      bars.forEach((bar, i) => bar.classList.toggle("is-active", i === index));
+      if (count) count.textContent = String(index + 1).padStart(2, "0");
+      if (title) title.textContent = items[index]?.dataset.title ?? "";
+    };
+
+    // Un retraso corto evita cambios en cadena al hacer scroll rápido.
+    const schedule = (index: number) => {
+      window.clearTimeout(pending);
+      pending = window.setTimeout(() => setActive(index), 90);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            schedule(Number((entry.target as HTMLElement).dataset.index));
+          }
+        });
+      },
+      { rootMargin: "-45% 0px -54% 0px" },
+    );
 
     items.forEach((item, index) => {
-      const isActive = index === nextIndex;
-      item.classList.toggle("is-active", isActive);
-      item.setAttribute("aria-pressed", String(isActive));
+      observer.observe(item);
+      item.addEventListener("focusin", () => setActive(index));
     });
-
-    // En móvil, mantener visible el chip activo.
-    items[nextIndex]?.scrollIntoView({ block: "nearest", inline: "nearest" });
   }
-
-  items.forEach((item, index) => {
-    item.addEventListener("click", () => setActive(index));
-    item.addEventListener("keydown", (event) => {
-      const step =
-        event.key === "ArrowDown" || event.key === "ArrowRight"
-          ? 1
-          : event.key === "ArrowUp" || event.key === "ArrowLeft"
-            ? -1
-            : 0;
-      if (!step) return;
-      event.preventDefault();
-      const next = (index + step + items.length) % items.length;
-      setActive(next);
-      items[next]?.focus();
-    });
-  });
 </script>

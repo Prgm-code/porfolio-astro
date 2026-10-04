@@ -1,0 +1,31 @@
+---
+interface Props {
+  title: string;
+  /** Número de sección ("01"); se oculta a lectores de pantalla. */
+  index?: string;
+  headingId?: string;
+}
+
+const { title, index, headingId } = Astro.props;
+const hasMeta = Astro.slots.has("default");
+---
+
+<header class="section-head reveal">
+  <h2 class="section-title" id={headingId}>
+    {
+      index && (
+        <span class="section-index" aria-hidden="true">
+          {index}
+        </span>
+      )
+    }
+    <span>{title}</span>
+  </h2>
+  {
+    hasMeta && (
+      <div class="section-meta">
+        <slot />
+      </div>
+    )
+  }
+</header>

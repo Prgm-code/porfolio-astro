@@ -127,6 +127,8 @@ const personJsonLd = {
                 : "light";
         } catch {}
         document.documentElement.dataset.theme = theme;
+        // Habilita los estilos que dependen de JavaScript antes de pintar.
+        document.documentElement.classList.add("js");
       })();
     </script>
     {isVercelProduction && <Analytics />}
@@ -199,7 +201,7 @@ const personJsonLd = {
       set:html={JSON.stringify(personJsonLd)}
     />
   </head>
-  <body>
+  <body id="top">
     <a class="skip-link" href="#contenido">{ui.skipLink}</a>
     <Header lang={lang} />
     <main id="contenido" class="site-shell">
