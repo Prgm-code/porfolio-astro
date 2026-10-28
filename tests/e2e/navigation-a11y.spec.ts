@@ -106,6 +106,8 @@ for (const path of [
   "/en/proyectos/",
   "/proyectos/chronus/",
   "/en/proyectos/chronus/",
+  "/proyectos/vlm360/",
+  "/en/proyectos/energy/",
 ]) {
   test(`${path} has no critical WCAG A/AA axe violations`, async ({ page }) => {
     await page.addInitScript(() => localStorage.setItem("prgm:lang", "es"));

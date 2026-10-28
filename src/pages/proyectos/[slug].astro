@@ -1,0 +1,28 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ProjectDetail from "../../components/ProjectDetail.astro";
+import { getProjects, getUi, type Project } from "../../i18n";
+
+// Los proyectos con caso de estudio tienen su propia página.
+export function getStaticPaths() {
+  return getProjects("es")
+    .filter((project) => !project.caseStudy)
+    .map((project) => ({ params: { slug: project.key }, props: { project } }));
+}
+
+interface Props {
+  project: Project;
+}
+
+const lang = "es";
+const ui = getUi(lang);
+const { project } = Astro.props;
+---
+
+<Layout
+  title={ui.project.metaTitle(project.title)}
+  description={project.description}
+  lang={lang}
+>
+  <ProjectDetail lang={lang} project={project} />
+</Layout>

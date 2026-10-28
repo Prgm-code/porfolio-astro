@@ -1,13 +1,7 @@
 import { UI, type UiDict } from "./ui";
 import { es } from "./data.es";
 import { en } from "./data.en";
-import {
-  ABOUT_BASE,
-  CERTIFICATIONS,
-  PROJECTS_BASE,
-  SITE_NAME,
-  SOCIAL_BASE,
-} from "./data.shared";
+import { LOCATION, PROJECTS_BASE, SITE_NAME, SOCIAL_BASE } from "./data.shared";
 import type { Lang, Project, SiteData } from "./types";
 
 export type { Lang, Project, SiteData, UiDict };
@@ -83,6 +77,11 @@ export function getProjects(lang: Lang): readonly Project[] {
   }));
 }
 
+/** Página de detalle: el caso de estudio si existe, si no la ficha. */
+export function projectPath(lang: Lang, project: Project): string {
+  return localePath(lang, project.caseStudy ?? `/proyectos/${project.key}`);
+}
+
 export function getData(lang: Lang): SiteData {
   const d = LANG_DATA[lang];
   return {
@@ -92,14 +91,8 @@ export function getData(lang: Lang): SiteData {
       supportingText: d.hero.supportingText,
       cta: { label: d.hero.ctaLabel, href: "#contacto" },
     },
-    about: {
-      location: ABOUT_BASE.location,
-    },
-    experience: d.experience,
-    education: d.education,
+    location: LOCATION,
     stack: d.stack,
-    languages: d.languages,
-    certifications: CERTIFICATIONS[lang],
     projects: getProjects(lang),
     social: { ...SOCIAL_BASE, whatsapp: d.whatsapp },
   };

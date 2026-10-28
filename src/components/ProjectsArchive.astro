@@ -1,6 +1,13 @@
 ---
 import { Image } from "astro:assets";
-import { getProjects, getUi, localePath, techSlug, type Lang } from "../i18n";
+import {
+  getProjects,
+  getUi,
+  localePath,
+  projectPath,
+  techSlug,
+  type Lang,
+} from "../i18n";
 
 interface Props {
   lang: Lang;
@@ -99,10 +106,10 @@ const filters = [...techCounts.entries()]
           >
             {project.images.length > 0 ? (
               <a
-                href={project.link ?? `${homePath}#contacto`}
-                target={project.link ? "_blank" : undefined}
-                rel={project.link ? "noopener noreferrer" : undefined}
+                href={projectPath(lang, project)}
                 class="archive-project__media browser-frame"
+                style={`--vt-media: media-${project.key}`}
+                data-vt-media
                 aria-label={ui.archive.openProject(project.title)}
                 data-project-carousel-trigger
               >
@@ -178,34 +185,10 @@ const filters = [...techCounts.entries()]
                 )}
 
                 <div class="archive-project__links">
-                  {project.caseStudy && (
-                    <a
-                      href={localePath(lang, project.caseStudy)}
-                      class="arrow-link"
-                    >
-                      {ui.archive.caseStudy}
-                      <svg
-                        aria-hidden="true"
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="square"
-                      >
-                        <path d="M5 12h14M13 6l6 6-6 6" />
-                      </svg>
-                    </a>
-                  )}
-
-                  <a
-                    href={project.link ?? `${homePath}#contacto`}
-                    target={project.link ? "_blank" : undefined}
-                    rel={project.link ? "noopener noreferrer" : undefined}
-                    class="arrow-link"
-                  >
-                    {project.link ? ui.archive.view : ui.archive.talk}
+                  <a href={projectPath(lang, project)} class="arrow-link">
+                    {project.caseStudy
+                      ? ui.archive.caseStudy
+                      : ui.archive.details}
                     <svg
                       aria-hidden="true"
                       width="14"
@@ -216,9 +199,32 @@ const filters = [...techCounts.entries()]
                       stroke-width="2"
                       stroke-linecap="square"
                     >
-                      <path d="M7 17 17 7M8 7h9v9" />
+                      <path d="M5 12h14M13 6l6 6-6 6" />
                     </svg>
                   </a>
+
+                  {project.link && (
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="arrow-link"
+                    >
+                      {ui.archive.view}
+                      <svg
+                        aria-hidden="true"
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="square"
+                      >
+                        <path d="M7 17 17 7M8 7h9v9" />
+                      </svg>
+                    </a>
+                  )}
                 </div>
               </div>
             </div>

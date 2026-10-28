@@ -7,8 +7,6 @@ const es = {
 
   nav: {
     projects: "Proyectos",
-    experience: "Experiencia",
-    profile: "Perfil",
     stack: "Stack",
     contact: "Contacto",
     ariaMain: "Navegación principal",
@@ -43,17 +41,7 @@ const es = {
     screenshotAlt: (index: number, title: string) =>
       `Captura ${index} del proyecto ${title}`,
     caseStudy: "Leer caso de estudio",
-  },
-
-  experience: {
-    title: "Experiencia",
-  },
-
-  about: {
-    title: "Perfil",
-    educationHeading: "Formación",
-    certificationsHeading: "Certificaciones",
-    languagesHeading: "Idiomas",
+    details: "Ver proyecto",
   },
 
   services: {
@@ -100,10 +88,34 @@ const es = {
     view: "Ver sitio",
     talk: "Preguntar por este proyecto",
     caseStudy: "Caso de estudio",
+    details: "Ver proyecto",
     noScreenshots: "Sin capturas públicas",
     openProject: (title: string) => `Abrir ${title}`,
     screenshotAlt: (index: number, title: string) =>
       `Captura ${index} del proyecto ${title}`,
+  },
+
+  project: {
+    back: "Todos los proyectos",
+    privateNote: "Sin enlace público",
+    highlightsTitle: "Qué se construyó",
+    stackTitle: "Tecnologías",
+    galleryTitle: "Capturas",
+    yearLabel: "Año",
+    siteLabel: "Sitio",
+    repoLabel: "Código",
+    next: "Siguiente proyecto",
+    contact: "¿Algo parecido en mente? Conversemos",
+    layers: {
+      frontend: "Frontend",
+      backend: "Backend",
+      data: "Datos",
+      auth: "Autenticación",
+      services: "Servicios",
+      infra: "Infraestructura",
+      quality: "Calidad",
+    },
+    metaTitle: (title: string) => `${title} | Patricio Gómez`,
   },
 
   footer: {
@@ -132,8 +144,6 @@ const en: UiDict = {
 
   nav: {
     projects: "Projects",
-    experience: "Experience",
-    profile: "Profile",
     stack: "Stack",
     contact: "Contact",
     ariaMain: "Main navigation",
@@ -164,17 +174,7 @@ const en: UiDict = {
     screenshotAlt: (index: number, title: string) =>
       `Screenshot ${index} of project ${title}`,
     caseStudy: "Read case study",
-  },
-
-  experience: {
-    title: "Experience",
-  },
-
-  about: {
-    title: "Profile",
-    educationHeading: "Education",
-    certificationsHeading: "Certifications",
-    languagesHeading: "Languages",
+    details: "View project",
   },
 
   services: {
@@ -220,10 +220,34 @@ const en: UiDict = {
     view: "Visit site",
     talk: "Ask about this project",
     caseStudy: "Case study",
+    details: "View project",
     noScreenshots: "No public screenshots",
     openProject: (title: string) => `Open ${title}`,
     screenshotAlt: (index: number, title: string) =>
       `Screenshot ${index} of project ${title}`,
+  },
+
+  project: {
+    back: "All projects",
+    privateNote: "No public link",
+    highlightsTitle: "What was built",
+    stackTitle: "Technologies",
+    galleryTitle: "Screenshots",
+    yearLabel: "Year",
+    siteLabel: "Site",
+    repoLabel: "Code",
+    next: "Next project",
+    contact: "Something similar in mind? Let's talk",
+    layers: {
+      frontend: "Frontend",
+      backend: "Backend",
+      data: "Data",
+      auth: "Authentication",
+      services: "Services",
+      infra: "Infrastructure",
+      quality: "Quality",
+    },
+    metaTitle: (title: string) => `${title} | Patricio Gómez`,
   },
 
   footer: {

@@ -23,6 +23,16 @@ const routes = [
     lang: "en",
     canonical: "https://prgm.cl/en/proyectos/chronus/",
   },
+  {
+    path: "/proyectos/vlm360/",
+    lang: "es",
+    canonical: "https://prgm.cl/proyectos/vlm360/",
+  },
+  {
+    path: "/en/proyectos/rel/",
+    lang: "en",
+    canonical: "https://prgm.cl/en/proyectos/rel/",
+  },
 ] as const;
 
 for (const route of routes) {

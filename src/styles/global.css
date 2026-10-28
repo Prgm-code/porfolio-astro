@@ -97,6 +97,23 @@ html.is-theme-transition::view-transition-new(root) {
   navigation: auto;
 }
 
+/* La captura de un proyecto viaja de la tarjeta a la portada del detalle.
+   Cada elemento marcado lleva un nombre único en --vt-media. */
+[data-vt-media] {
+  view-transition-name: var(--vt-media);
+  view-transition-class: project-media;
+}
+
+[data-viewer-layer]:not(.is-active),
+html.is-theme-transition [data-vt-media] {
+  view-transition-name: none;
+}
+
+::view-transition-group(.project-media) {
+  animation-duration: 600ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 @media (prefers-reduced-motion: reduce) {
   @view-transition {
     navigation: none;
