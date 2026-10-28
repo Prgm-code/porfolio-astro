@@ -1,0 +1,696 @@
+---
+import { Image } from "astro:assets";
+import {
+  getProjects,
+  getUi,
+  localePath,
+  localeSectionPath,
+  projectPath,
+  type Lang,
+  type Project,
+} from "../i18n";
+import type { StackLayer } from "../i18n/types";
+import SectionHeader from "./SectionHeader.astro";
+
+interface Props {
+  lang: Lang;
+  project: Project;
+}
+
+const { lang, project } = Astro.props;
+const ui = getUi(lang);
+const t = ui.project;
+
+const projects = getProjects(lang);
+const position = projects.findIndex((item) => item.key === project.key);
+const next = projects[(position + 1) % projects.length]!;
+
+const [cover, ...gallery] = project.images;
+const hostname = project.link
+  ? new URL(project.link).hostname.replace(/^www\./, "")
+  : undefined;
+
+const LAYER_ORDER: readonly StackLayer[] = [
+  "frontend",
+  "backend",
+  "data",
+  "auth",
+  "services",
+  "quality",
+  "infra",
+];
+const layers = LAYER_ORDER.flatMap((layer) => {
+  const items = project.stack[layer];
+  return items?.length ? [{ label: t.layers[layer], items }] : [];
+});
+
+// "Next.js 16" usa el icono de "Next.js" si el proyecto lo tiene.
+const iconFor = (item: string) =>
+  project.tags.find(
+    (tag) => item === tag.name || item.startsWith(`${tag.name} `),
+  )?.icon;
+
+const isPortrait = (image: (typeof project.images)[number]) =>
+  image.height > image.width;
+
+let sectionIndex = 0;
+const nextIndex = () => String(++sectionIndex).padStart(2, "0");
+---
+
+<article class="detail">
+  <header class="detail-head section-inner">
+    <a href={localePath(lang, "/proyectos")} class="detail-back reveal">
+      <svg
+        aria-hidden="true"
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="square"
+      >
+        <path d="M19 12H5M11 6l-6 6 6 6"></path>
+      </svg>
+      {t.back}
+    </a>
+
+    <p class="detail-kicker reveal">
+      <span class="detail-kicker__mark" aria-hidden="true"></span>
+      {project.shortLabel}
+    </p>
+    <h1 class="detail-title reveal">{project.title}</h1>
+    <p class="detail-lead reveal">{project.overview}</p>
+
+    <dl class="detail-meta reveal">
+      <div class="detail-meta__row">
+        <dt>{t.yearLabel}</dt>
+        <dd>{project.year}</dd>
+      </div>
+      {/* Sin sitio pero con repositorio: basta con el enlace al código. */}
+      <div class="detail-meta__row" hidden={!project.link && !!project.repo}>
+        <dt>{t.siteLabel}</dt>
+        <dd>
+          {
+            project.link ? (
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="detail-site"
+              >
+                {hostname}
+                <svg
+                  aria-hidden="true"
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="square"
+                >
+                  <path d="M7 17 17 7M8 7h9v9" />
+                </svg>
+              </a>
+            ) : (
+              <span class="detail-private">{t.privateNote}</span>
+            )
+          }
+        </dd>
+      </div>
+      {
+        project.repo && (
+          <div class="detail-meta__row">
+            <dt>{t.repoLabel}</dt>
+            <dd>
+              <a
+                href={project.repo}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="detail-site"
+              >
+                GitHub
+                <svg
+                  aria-hidden="true"
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="square"
+                >
+                  <path d="M7 17 17 7M8 7h9v9" />
+                </svg>
+              </a>
+            </dd>
+          </div>
+        )
+      }
+    </dl>
+  </header>
+
+  {
+    cover && (
+      <div class="section-inner detail-cover-wrap">
+        <figure
+          class:list={[
+            "detail-cover browser-frame",
+            isPortrait(cover) && "is-portrait",
+          ]}
+          style={`--vt-media: media-${project.key}`}
+          data-vt-media
+        >
+          <Image
+            src={cover}
+            alt={ui.archive.screenshotAlt(1, project.title)}
+            widths={[720, 1080, 1600, 2160]}
+            sizes="(max-width: 1400px) 100vw, 84rem"
+            loading="eager"
+            fetchpriority="high"
+            format="webp"
+          />
+        </figure>
+      </div>
+    )
+  }
+
+  {
+    project.highlights.length > 0 && (
+      <section class="page-section">
+        <div class="section-inner">
+          <SectionHeader index={nextIndex()} title={t.highlightsTitle} />
+          <ol class="detail-points">
+            {project.highlights.map((point, index) => (
+              <li class="detail-point reveal">
+                <span class="detail-point__index" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <p>{point}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    layers.length > 0 && (
+      <section class="page-section">
+        <div class="section-inner">
+          <SectionHeader index={nextIndex()} title={t.stackTitle} />
+          <dl class="detail-stack">
+            {layers.map((layer) => (
+              <div class="detail-stack__row reveal">
+                <dt>{layer.label}</dt>
+                <dd>
+                  <ul class="detail-stack__items">
+                    {layer.items.map((item) => {
+                      const icon = iconFor(item);
+                      return (
+                        <li class="detail-chip">
+                          {icon && (
+                            <span
+                              class="stack-chip__icon"
+                              aria-hidden="true"
+                              set:html={icon}
+                            />
+                          )}
+                          {item}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    gallery.length > 0 && (
+      <section class="page-section">
+        <div class="section-inner">
+          <SectionHeader index={nextIndex()} title={t.galleryTitle} />
+          <div class="detail-gallery">
+            {gallery.map((image, index) => (
+              <figure
+                class:list={[
+                  "detail-gallery__item browser-frame reveal",
+                  isPortrait(image) && "is-portrait",
+                ]}
+              >
+                <Image
+                  src={image}
+                  alt={ui.archive.screenshotAlt(index + 2, project.title)}
+                  widths={[720, 1080, 1600]}
+                  sizes="(max-width: 960px) 100vw, 42rem"
+                  loading="lazy"
+                  format="webp"
+                />
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="page-section">
+    <div class="section-inner">
+      <nav class="detail-end reveal" aria-label={t.next}>
+        <a href={projectPath(lang, next)} class="detail-next">
+          <span class="detail-next__label">{t.next}</span>
+          <span class="detail-next__title">
+            {next.title}
+            <svg
+              aria-hidden="true"
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.75"
+              stroke-linecap="square"
+            >
+              <path d="M5 12h14M13 6l6 6-6 6"></path>
+            </svg>
+          </span>
+          <span class="detail-next__meta">{next.shortLabel}</span>
+        </a>
+        <a href={localeSectionPath(lang, "contacto")} class="arrow-link">
+          {t.contact}
+          <svg
+            aria-hidden="true"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="square"
+          >
+            <path d="M5 12h14M13 6l6 6-6 6"></path>
+          </svg>
+        </a>
+      </nav>
+    </div>
+  </section>
+</article>
+
+<style>
+  /* Cabecera */
+  .detail-head {
+    display: grid;
+    gap: 1.25rem;
+    padding-top: clamp(2.5rem, 6vw, 4.5rem);
+  }
+
+  .detail-back {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: clamp(1rem, 3vw, 2rem);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-text-soft);
+    transition: color var(--transition-base);
+  }
+
+  .detail-back svg {
+    transition: transform var(--transition-base);
+  }
+
+  .detail-back:hover,
+  .detail-back:focus-visible {
+    color: var(--color-ink);
+  }
+
+  .detail-back:hover svg,
+  .detail-back:focus-visible svg {
+    transform: translateX(-3px);
+  }
+
+  .detail-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-text-soft);
+  }
+
+  .detail-kicker__mark {
+    width: 0.45rem;
+    height: 0.45rem;
+    background: var(--color-accent);
+  }
+
+  .detail-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 600;
+    line-height: 0.98;
+    letter-spacing: -0.05em;
+  }
+
+  .detail-lead {
+    max-width: 58ch;
+    font-size: clamp(1.0625rem, 1.4vw, 1.1875rem);
+    line-height: 1.65;
+    color: var(--color-text-muted);
+  }
+
+  .detail-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+    margin: 0.75rem 0 0;
+    border-top: 1px solid var(--color-line-strong);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .detail-meta__row {
+    display: grid;
+    gap: 0.3rem;
+    align-content: start;
+    padding: 0.9rem 1rem 1rem 0;
+  }
+
+  .detail-meta__row[hidden] {
+    display: none;
+  }
+
+  .detail-meta__row + .detail-meta__row:not([hidden]),
+  .detail-meta__row[hidden] + .detail-meta__row {
+    padding-left: 1rem;
+    border-left: 1px solid var(--color-line);
+  }
+
+  .detail-meta dt {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-soft);
+  }
+
+  .detail-meta dd {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  .detail-site {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    border-bottom: 1px solid currentColor;
+    transition: color var(--transition-base);
+  }
+
+  .detail-site svg {
+    transition: transform var(--transition-base);
+  }
+
+  .detail-site:hover,
+  .detail-site:focus-visible {
+    color: var(--color-accent);
+  }
+
+  .detail-site:hover svg,
+  .detail-site:focus-visible svg {
+    transform: translate(2px, -2px);
+  }
+
+  .detail-private {
+    color: var(--color-text-muted);
+  }
+
+  @media (min-width: 960px) {
+    .detail-head {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--page-gutter);
+    }
+
+    .detail-head > * {
+      grid-column: 1 / -1;
+    }
+
+    .detail-lead {
+      grid-column: 1 / span 8;
+    }
+
+    .detail-meta {
+      grid-column: 1 / span 6;
+    }
+  }
+
+  /* Portada en color real. Sin fundido de entrada: llega desde la tarjeta
+     con la transición de vista y un fundido la haría desaparecer. */
+  .detail-cover-wrap {
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .detail-cover {
+    margin: 0;
+  }
+
+  .detail-cover :global(img) {
+    width: 100%;
+    height: auto;
+    animation: cover-settle 1400ms var(--ease-out) both;
+  }
+
+  .detail-cover.is-portrait,
+  .detail-gallery__item.is-portrait {
+    display: grid;
+    place-items: center;
+    padding: clamp(1rem, 3vw, 2rem);
+  }
+
+  .detail-cover.is-portrait :global(img) {
+    width: auto;
+    max-height: 80vh;
+  }
+
+  .detail-cover :global(img),
+  .detail-gallery__item :global(img) {
+    filter: none;
+  }
+
+  .detail-cover::after,
+  .detail-gallery__item::after {
+    opacity: 0;
+  }
+
+  @keyframes cover-settle {
+    from {
+      transform: scale(1.04);
+    }
+  }
+
+  /* Qué se construyó */
+  .detail-points {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .detail-point {
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    gap: 1rem;
+    align-items: baseline;
+    padding-block: 1.1rem;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .detail-point p {
+    max-width: 62ch;
+    font-size: 1.0625rem;
+  }
+
+  .detail-point__index {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-accent);
+  }
+
+  @media (min-width: 960px) {
+    .detail-points {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--page-gutter);
+    }
+  }
+
+  /* Tecnologías por capa */
+  .detail-stack {
+    margin: 0;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .detail-stack__row {
+    display: grid;
+    gap: 0.75rem;
+    padding-block: 1.1rem 1.2rem;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .detail-stack__row dt {
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: color var(--transition-base);
+  }
+
+  .detail-stack__row:hover dt {
+    color: var(--color-accent);
+  }
+
+  .detail-stack__row dd {
+    margin: 0;
+  }
+
+  .detail-stack__items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .detail-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.7rem;
+    border: 1px solid var(--color-line);
+    font-size: 0.875rem;
+    color: var(--color-text);
+    transition:
+      border-color var(--transition-base),
+      transform var(--transition-base);
+  }
+
+  .detail-chip:hover {
+    border-color: var(--color-ink);
+    transform: translateY(-1px);
+  }
+
+  @media (min-width: 960px) {
+    .detail-stack__row {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--page-gutter);
+      align-items: baseline;
+    }
+
+    .detail-stack__row dt {
+      grid-column: 1 / span 3;
+    }
+
+    .detail-stack__row dd {
+      grid-column: 4 / span 9;
+    }
+  }
+
+  /* Capturas */
+  .detail-gallery {
+    display: grid;
+    gap: var(--page-gutter);
+  }
+
+  .detail-gallery__item {
+    margin: 0;
+  }
+
+  .detail-gallery__item :global(img) {
+    width: 100%;
+    height: auto;
+    transition: transform 900ms var(--ease-out);
+  }
+
+  .detail-gallery__item.is-portrait :global(img) {
+    width: auto;
+    max-height: 70vh;
+  }
+
+  .detail-gallery__item:hover :global(img) {
+    transform: scale(1.015);
+  }
+
+  @media (min-width: 960px) {
+    .detail-gallery {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* Una sola captura, o la última sin pareja, ocupa el ancho */
+    .detail-gallery__item:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* Cierre: siguiente proyecto y contacto */
+  .detail-end {
+    display: grid;
+    gap: 2rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-line-strong);
+  }
+
+  .detail-next {
+    display: grid;
+    gap: 0.4rem;
+    justify-self: start;
+  }
+
+  .detail-next__label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-soft);
+  }
+
+  .detail-next__title {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    transition: color var(--transition-base);
+  }
+
+  .detail-next__title svg {
+    flex-shrink: 0;
+    transition: transform var(--transition-base);
+  }
+
+  .detail-next__meta {
+    color: var(--color-text-muted);
+  }
+
+  .detail-next:hover .detail-next__title,
+  .detail-next:focus-visible .detail-next__title {
+    color: var(--color-accent);
+  }
+
+  .detail-next:hover .detail-next__title svg,
+  .detail-next:focus-visible .detail-next__title svg {
+    transform: translateX(6px);
+  }
+
+  @media (min-width: 960px) {
+    .detail-end {
+      grid-template-columns: 1fr auto;
+      align-items: end;
+    }
+  }
+</style>

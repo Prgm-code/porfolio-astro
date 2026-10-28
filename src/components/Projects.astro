@@ -1,6 +1,12 @@
 ---
 import { Image } from "astro:assets";
-import { getProjects, getUi, localePath, type Lang } from "../i18n";
+import {
+  getProjects,
+  getUi,
+  localePath,
+  projectPath,
+  type Lang,
+} from "../i18n";
 import SectionHeader from "./SectionHeader.astro";
 
 interface Props {
@@ -11,9 +17,7 @@ const { lang } = Astro.props;
 const ui = getUi(lang);
 const projects = getProjects(lang);
 
-const featuredProjects = projects
-  .filter((project) => project.featured)
-  .slice(0, 6);
+const featuredProjects = projects.filter((project) => project.featured);
 
 const pad = (value: number) => String(value).padStart(2, "0");
 
@@ -41,7 +45,11 @@ const hostname = (url: string) => new URL(url).hostname.replace(/^www\./, "");
             >
               <article class="entry reveal">
                 {project.image && (
-                  <div class="entry__media browser-frame">
+                  <div
+                    class="entry__media browser-frame"
+                    style={`--vt-media: media-${project.key}`}
+                    data-vt-media
+                  >
                     <Image
                       src={project.image}
                       alt={ui.projects.screenshotAlt(1, project.title)}
@@ -75,14 +83,31 @@ const hostname = (url: string) => new URL(url).hostname.replace(/^www\./, "");
                 </ul>
 
                 <div class="entry__links">
-                  {project.link && (
+                  <a href={projectPath(lang, project)} class="arrow-link">
+                    {project.caseStudy
+                      ? ui.projects.caseStudy
+                      : ui.projects.details}
+                    <svg
+                      aria-hidden="true"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="square"
+                    >
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </a>
+                  {(project.link ?? project.repo) && (
                     <a
-                      href={project.link}
+                      href={project.link ?? project.repo}
                       target="_blank"
                       rel="noopener noreferrer"
                       class="arrow-link entry__site"
                     >
-                      {hostname(project.link)}
+                      {project.link ? hostname(project.link) : "GitHub"}
                       <svg
                         aria-hidden="true"
                         width="14"
@@ -94,26 +119,6 @@ const hostname = (url: string) => new URL(url).hostname.replace(/^www\./, "");
                         stroke-linecap="square"
                       >
                         <path d="M7 17 17 7M8 7h9v9" />
-                      </svg>
-                    </a>
-                  )}
-                  {project.caseStudy && (
-                    <a
-                      href={localePath(lang, project.caseStudy)}
-                      class="arrow-link"
-                    >
-                      {ui.projects.caseStudy}
-                      <svg
-                        aria-hidden="true"
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="square"
-                      >
-                        <path d="M5 12h14M13 6l6 6-6 6" />
                       </svg>
                     </a>
                   )}
@@ -140,10 +145,10 @@ const hostname = (url: string) => new URL(url).hostname.replace(/^www\./, "");
                   "viewer__layer browser-frame",
                   index === 0 && "is-active",
                 ]}
-                href={project.link ?? localePath(lang, "/proyectos")}
-                target={project.link ? "_blank" : undefined}
-                rel={project.link ? "noopener noreferrer" : undefined}
+                href={projectPath(lang, project)}
                 tabindex="-1"
+                style={`--vt-media: media-${project.key}`}
+                data-vt-media
                 inert={index === 0 ? undefined : true}
                 data-viewer-layer
                 data-project-carousel-trigger
@@ -447,8 +452,14 @@ const hostname = (url: string) => new URL(url).hostname.replace(/^www\./, "");
     aspect-ratio: auto;
   }
 
+  /* El proyecto seleccionado se ve en color; el resto queda en la paleta. */
   .viewer__layer.is-active .project-carousel__image {
+    filter: none;
     animation: viewer-settle 900ms var(--ease-out);
+  }
+
+  .viewer__layer.is-active::after {
+    opacity: 0;
   }
 
   /* Solo se cargan las capturas extra del proyecto activo */

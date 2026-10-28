@@ -63,6 +63,14 @@ test("project viewer follows the project being read", async ({ page }) => {
   const layers = page.locator("[data-viewer-layer]");
   await expect(layers.nth(2)).toHaveClass(/is-active/);
   await expect(page.locator("[data-viewer-count]")).toHaveText("03");
+  await expect(layers.nth(2).locator("img").first()).toHaveCSS(
+    "filter",
+    "none",
+  );
+  await expect(layers.nth(0).locator("img").first()).not.toHaveCSS(
+    "filter",
+    "none",
+  );
 
   const inactiveAreInert = await layers.evaluateAll((items) =>
     items.every((layer, index) => index === 2 || (layer as HTMLElement).inert),
@@ -95,7 +103,7 @@ test("stack items link to the filtered project archive", async ({ page }) => {
 
   await expect(page).toHaveURL(/\/proyectos\/\?stack=convex$/);
   await expect(page.locator("[data-archive-item]:not([hidden])")).toHaveCount(
-    4,
+    6,
   );
 });
 
@@ -106,6 +114,11 @@ for (const path of [
   "/en/proyectos/",
   "/proyectos/chronus/",
   "/en/proyectos/chronus/",
+  "/proyectos/vlm360/",
+  "/proyectos/vlm360-v2/",
+  "/en/proyectos/energy/",
+  "/proyectos/misport/",
+  "/proyectos/backupforge/",
 ]) {
   test(`${path} has no critical WCAG A/AA axe violations`, async ({ page }) => {
     await page.addInitScript(() => localStorage.setItem("prgm:lang", "es"));

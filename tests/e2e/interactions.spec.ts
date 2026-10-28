@@ -76,8 +76,7 @@ test("content remains visible without JavaScript", async ({ browser }) => {
 
   await expect(page.locator("h1")).toBeVisible();
   await expect(page.locator("#proyectos")).toBeVisible();
-  await expect(page.locator("#experiencia")).toBeVisible();
-  await expect(page.locator("#perfil")).toBeVisible();
+  await expect(page.locator("#stack")).toBeVisible();
   await expect(page.locator("#contacto")).toBeVisible();
   expect(
     await page
@@ -101,4 +100,20 @@ test("project previews do not rotate when reduced motion is requested", async ({
   await expect(
     firstCarousel.locator("[data-project-slide]").first(),
   ).toHaveClass(/is-active/);
+});
+
+test("each featured project links to its detail page", async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem("prgm:lang", "es"));
+  await page.goto("/");
+
+  await page
+    .locator('#proyectos .entry__links a[href="/proyectos/tiro-score/"]')
+    .click();
+  await expect(page).toHaveURL(/\/proyectos\/tiro-score\/$/);
+  await expect(page.locator("h1")).toHaveText("Tiro Score");
+  await expect(page.locator(".detail-stack")).toContainText("Convex");
+  await expect(page.locator(".detail-next")).toHaveAttribute(
+    "href",
+    "/proyectos/misport/",
+  );
 });

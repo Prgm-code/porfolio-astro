@@ -10,7 +10,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const ui = getUi(lang);
-const { hero, about, social } = getData(lang);
+const { hero, location, social } = getData(lang);
 const caseProject = getProjects(lang).find((project) => project.caseStudy);
 
 const profiles = [
@@ -69,7 +69,7 @@ const profiles = [
     <dl class="hero-facts reveal">
       <div class="hero-fact">
         <dt>{ui.hero.location}</dt>
-        <dd>{about.location}</dd>
+        <dd>{location}</dd>
       </div>
       <div class="hero-fact" data-clock hidden>
         <dt>{ui.hero.localTime}</dt>

@@ -12,11 +12,23 @@ export interface ProjectText {
   title: string;
   description: string;
   shortLabel: string;
+  /** Contexto del proyecto: para quién es y qué problema resuelve. */
+  overview: string;
+  /** Lo que se construyó, en frases cortas. */
+  highlights: readonly string[];
 }
+
+/** Capa del stack de un proyecto; la etiqueta se traduce en ui.ts. */
+export type StackLayer =
+  "frontend" | "backend" | "data" | "auth" | "services" | "infra" | "quality";
 
 export interface ProjectBase {
   key: string;
+  /** Año o periodo del proyecto. */
+  year: string;
   link?: string;
+  /** Repositorio público, si el código es abierto. */
+  repo?: string;
   featured: boolean;
   favorite?: boolean;
   /** Ruta del caso de estudio, si existe (sin prefijo de idioma). */
@@ -25,42 +37,15 @@ export interface ProjectBase {
   image?: ImageMetadata;
   images: readonly ImageMetadata[];
   tags: readonly Tag[];
+  /** Stack completo por capa, con versiones cuando importan. */
+  stack: Partial<Record<StackLayer, readonly string[]>>;
 }
 
 export type Project = ProjectBase & ProjectText;
 
-export interface ExperienceItem {
-  date: string;
-  /** Puesto vigente: se marca en la línea de tiempo. */
-  current?: boolean;
-  role: string;
-  org: string;
-  location: string;
-  description: string;
-  highlights: readonly string[];
-}
-
-export interface EducationItem {
-  title: string;
-  institution: string;
-  year: string;
-  topics: readonly string[];
-}
-
 export interface StackGroup {
   title: string;
   items: readonly string[];
-}
-
-export interface LanguageItem {
-  name: string;
-  level: string;
-}
-
-export interface Certification {
-  title: string;
-  area: string;
-  year: string;
 }
 
 export interface HeroData {
@@ -70,18 +55,10 @@ export interface HeroData {
   cta: { label: string; href: string };
 }
 
-export interface AboutData {
-  location: string;
-}
-
 export interface SiteData {
   hero: HeroData;
-  about: AboutData;
-  experience: readonly ExperienceItem[];
-  education: readonly EducationItem[];
+  location: string;
   stack: readonly StackGroup[];
-  languages: readonly LanguageItem[];
-  certifications: readonly Certification[];
   projects: readonly Project[];
   social: {
     github: string;
