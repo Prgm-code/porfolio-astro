@@ -117,6 +117,22 @@ export const es = {
         "Exportación a PDF y Excel, códigos QR y notificaciones push.",
       ],
     },
+    misport: {
+      title: "MiSport.app",
+      description:
+        "ERP para clubes deportivos: socios, cobranza, tesorería con conciliación bancaria, competencias y un portal para cada socio.",
+      shortLabel: "ERP para clubes deportivos",
+      overview:
+        "Los clubes deportivos suelen llevar socios, cuotas y finanzas en planillas separadas, y el tesorero cuadra la cartola a mano cada mes. MiSport reúne todo en una plataforma multi-club: la directiva administra y cada socio ve su estado, su credencial y las competencias desde su propio portal.",
+      highlights: [
+        "Cartolas bancarias con conciliación sugerida por socio, imputación a cuentas contables y centros de costo.",
+        "Libro mayor, estado de resultados, cierres de periodo, rendiciones y bóveda, con exportación a Excel y PDF.",
+        "Padrón de socios con estado de cuotas, cobranza automática por email y comprobantes en PDF.",
+        "Competencias por disciplina (Trap, Skeet, IPSC, Compak, Long Range) con inscripciones y resultados.",
+        "Portal del socio con credencial digital y QR verificable, calendario y recordatorios.",
+        "Multi-club, con permisos de lectura y escritura por módulo y por rol.",
+      ],
+    },
     "teslo-manager": {
       title: "Teslo Manager",
       description:
@@ -144,6 +160,21 @@ export const es = {
         "Proveedor de IA a elección (OpenAI, OpenRouter, MiniMax, compatibles con OpenAI o HTTP propio). Las llamadas salen desde Rust, nunca desde la interfaz.",
         "La API key se guarda en el llavero del sistema. Sin telemetría ni historial por defecto.",
         "Builds para macOS, Windows y Linux, publicados desde GitHub Actions.",
+      ],
+    },
+    backupforge: {
+      title: "BackupForge",
+      description:
+        "Panel open source para respaldar despliegues de Convex: respaldos manuales o programados en contenedores Docker, con almacenamiento S3 y logs en vivo.",
+      shortLabel: "Respaldos open source",
+      overview:
+        "Los respaldos de sistemas autoalojados suelen ser scripts sueltos: credenciales repartidas, logs que se pierden y nadie sabe si el último respaldo se puede descargar. BackupForge los convierte en un panel de control: el servidor maneja identidad, políticas y estado, y cada respaldo corre en un contenedor que vive solo lo que dura el trabajo.",
+      highlights: [
+        "Respaldos manuales o programados con cron y zona horaria, con retención configurable.",
+        "Cada trabajo corre convex export en un contenedor Docker efímero y sube backup.zip, manifest.json y logs.txt a S3 o MinIO.",
+        "Máquina de estados por trabajo (en cola, exportando, subiendo, verificando…) con reintentos.",
+        "Estado, logs y artefactos llegan a la interfaz en vivo mediante Server-Sent Events.",
+        "Secretos cifrados con AES-GCM, roles admin, operador y lector, y API documentada con OpenAPI.",
       ],
     },
     activaq: {
@@ -174,18 +205,20 @@ export const es = {
         "Agente de IA que consulta y propone acciones sobre citas y pacientes.",
       ],
     },
-    vlm360: {
-      title: "Vlm360.com",
+    "vlm360-v2": {
+      title: "Vlm360 v2",
       description:
-        "Plataforma de reportes para inspecciones submarinas hechas con sónar. Maneja trabajos, reportes y archivos con permisos por rol.",
+        "Plataforma de reportes para inspecciones submarinas con sónar: mapas con capas GIS, mosaicos de sónar, hallazgos con fotos y videos, y bitácoras de terreno.",
       shortLabel: "Inspección submarina",
       overview:
-        "VLM escanea el fondo marino con sónar y recupera los objetos que encuentra. Las cuadrillas en terreno registran su avance y los clientes ven los datos de sus zonas sobre un mapa, cada uno con los permisos de su rol.",
+        "VLM escanea el fondo marino de centros de cultivo con sónar y recupera los objetos que encuentra. La v2, reescrita desde cero, convierte cada inspección en un informe sobre un mapa: capas de jaulas y estaciones, el mosaico de sónar georreferenciado, cada hallazgo con su evidencia y los videos de las pasadas. Las cuadrillas registran su avance en terreno y cada cliente ve solo lo publicado para sus centros.",
       highlights: [
-        "Reportes con mapa, mosaico de sónar, hallazgos y cálculo de áreas.",
-        "Bitácoras de terreno y reportes diarios generados automáticamente.",
-        "Capas GIS (KMZ, Shapefile, PMTiles) sobre MapLibre.",
-        "Workers en Python que procesan los datos de sónar y la cartografía.",
+        "Constructor de informes sobre MapLibre: capas de jaulas, estaciones, hallazgos y registros multimedia, con mapas base satelital, claro y oscuro.",
+        "Importación de KML, KMZ y shapefiles: un worker en Python con GDAL y Tippecanoe los convierte en PMTiles.",
+        "Mosaico de sónar posicionado con archivos TFW, con ajuste de opacidad, rotación, escala o GPS de terreno, y exportación del compuesto.",
+        "Registros V4LOG de sonares Tritech reconstruidos como barridos polares y codificados a MP4 con FFmpeg.",
+        "Hallazgos con galería de evidencia, y registros con fotos y videos de hasta 4 GB convertidos en el servidor.",
+        "Bitácoras de terreno que funcionan sin conexión, flujo de aprobación y reporte diario en PDF.",
       ],
     },
     index0: {
@@ -200,6 +233,21 @@ export const es = {
         "Búsqueda semántica y chat RAG que cita los fragmentos de origen.",
         "Vista previa de PDF y documentos de Office en el navegador.",
         "Interfaz en varios idiomas e invitaciones con Clerk.",
+      ],
+    },
+    vlm360: {
+      title: "Vlm360 v1",
+      description:
+        "Primera versión de la plataforma de VLM: reportes de inspecciones submarinas por empresa, objetos ubicados sobre la imagen de cada centro, archivos para el cliente y bitácoras de terreno.",
+      shortLabel: "Inspección submarina",
+      overview:
+        "VLM escanea el fondo marino de centros de cultivo con sónar y recupera los objetos que encuentra. La v1 reemplazó planillas y correos por una aplicación web: el equipo arma cada reporte con sus nodos y objetos, carga los archivos de la inspección y cada empresa cliente entra a ver solo lo suyo.",
+      highlights: [
+        "Reportes por empresa organizados en nodos, con objetos ubicados sobre la imagen georreferenciada del centro.",
+        "Importación de objetos y coordenadas desde Excel.",
+        "Explorador de archivos por reporte sobre S3, con carpetas para el cliente.",
+        "Bitácora de terreno y libro de petróleo con horómetros, recepciones y consumo.",
+        "Usuarios por invitación con Clerk, aprobación de cuentas y permisos por rol y empresa.",
       ],
     },
     reactivespa: {

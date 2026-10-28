@@ -203,14 +203,14 @@ const filters = [...techCounts.entries()]
                     </svg>
                   </a>
 
-                  {project.link && (
+                  {(project.link ?? project.repo) && (
                     <a
-                      href={project.link}
+                      href={project.link ?? project.repo}
                       target="_blank"
                       rel="noopener noreferrer"
                       class="arrow-link"
                     >
-                      {ui.archive.view}
+                      {project.link ? ui.archive.view : "GitHub"}
                       <svg
                         aria-hidden="true"
                         width="14"

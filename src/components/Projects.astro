@@ -17,9 +17,7 @@ const { lang } = Astro.props;
 const ui = getUi(lang);
 const projects = getProjects(lang);
 
-const featuredProjects = projects
-  .filter((project) => project.featured)
-  .slice(0, 6);
+const featuredProjects = projects.filter((project) => project.featured);
 
 const pad = (value: number) => String(value).padStart(2, "0");
 
@@ -102,14 +100,14 @@ const hostname = (url: string) => new URL(url).hostname.replace(/^www\./, "");
                       <path d="M5 12h14M13 6l6 6-6 6" />
                     </svg>
                   </a>
-                  {project.link && (
+                  {(project.link ?? project.repo) && (
                     <a
-                      href={project.link}
+                      href={project.link ?? project.repo}
                       target="_blank"
                       rel="noopener noreferrer"
                       class="arrow-link entry__site"
                     >
-                      {hostname(project.link)}
+                      {project.link ? hostname(project.link) : "GitHub"}
                       <svg
                         aria-hidden="true"
                         width="14"
@@ -454,8 +452,14 @@ const hostname = (url: string) => new URL(url).hostname.replace(/^www\./, "");
     aspect-ratio: auto;
   }
 
+  /* El proyecto seleccionado se ve en color; el resto queda en la paleta. */
   .viewer__layer.is-active .project-carousel__image {
+    filter: none;
     animation: viewer-settle 900ms var(--ease-out);
+  }
+
+  .viewer__layer.is-active::after {
+    opacity: 0;
   }
 
   /* Solo se cargan las capturas extra del proyecto activo */

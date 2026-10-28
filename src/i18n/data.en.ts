@@ -117,6 +117,22 @@ export const en = {
         "PDF and Excel exports, QR codes and push notifications.",
       ],
     },
+    misport: {
+      title: "MiSport.app",
+      description:
+        "ERP for sports clubs: members, dues collection, treasury with bank reconciliation, competitions and a portal for every member.",
+      shortLabel: "ERP for sports clubs",
+      overview:
+        "Sports clubs tend to keep members, dues and finances in separate spreadsheets, and the treasurer reconciles the bank statement by hand every month. MiSport brings it all into one multi-club platform: the board runs the club and each member sees their status, credential and competitions in their own portal.",
+      highlights: [
+        "Bank statements with suggested matches per member, booked to accounts and cost centers.",
+        "General ledger, income statement, period closes, expense reports and a vault, with Excel and PDF exports.",
+        "Member registry with dues status, automated email collection and PDF receipts.",
+        "Competitions by discipline (Trap, Skeet, IPSC, Compak, Long Range) with entries and results.",
+        "Member portal with a digital credential and verifiable QR, calendar and reminders.",
+        "Multi-club, with read and write permissions per module and per role.",
+      ],
+    },
     "teslo-manager": {
       title: "Teslo Manager",
       description:
@@ -144,6 +160,21 @@ export const en = {
         "Bring your own AI provider (OpenAI, OpenRouter, MiniMax, OpenAI-compatible or custom HTTP). Calls go out from Rust, never from the UI.",
         "The API key lives in the system keychain. No telemetry and no history by default.",
         "Builds for macOS, Windows and Linux, released from GitHub Actions.",
+      ],
+    },
+    backupforge: {
+      title: "BackupForge",
+      description:
+        "Open source control plane for backing up Convex deployments: manual or scheduled backups in Docker containers, with S3 storage and live logs.",
+      shortLabel: "Open source backups",
+      overview:
+        "Backups for self-hosted systems are often loose scripts: scattered credentials, lost logs and nobody sure the last backup can be downloaded. BackupForge turns them into a control plane: the server owns identity, policies and state, and each backup runs in a container that lives only as long as the job.",
+      highlights: [
+        "Manual or scheduled backups with cron and time zones, and configurable retention.",
+        "Each job runs convex export in an ephemeral Docker container and uploads backup.zip, manifest.json and logs.txt to S3 or MinIO.",
+        "A state machine per job (queued, exporting, uploading, verifying…) with retries.",
+        "Status, logs and artifacts reach the UI live through Server-Sent Events.",
+        "Secrets encrypted with AES-GCM, admin, operator and viewer roles, and an API documented with OpenAPI.",
       ],
     },
     activaq: {
@@ -174,18 +205,20 @@ export const en = {
         "An AI agent that looks up and proposes actions on appointments and patients.",
       ],
     },
-    vlm360: {
-      title: "Vlm360.com",
+    "vlm360-v2": {
+      title: "Vlm360 v2",
       description:
-        "Reporting platform for sonar-based underwater inspections. It handles jobs, reports and files with role-based permissions.",
+        "Reporting platform for sonar-based underwater inspections: maps with GIS layers, sonar mosaics, findings with photos and videos, and field logbooks.",
       shortLabel: "Underwater inspection",
       overview:
-        "VLM scans the seabed with sonar and recovers the objects it finds. Field crews log their progress and clients see the data for their zones on a map, each with the permissions of their role.",
+        "VLM scans the seabed under fish farms with sonar and recovers the objects it finds. Version 2, rebuilt from scratch, turns each inspection into a report on a map: cage and station layers, the georeferenced sonar mosaic, every finding with its evidence and the videos of each pass. Field crews log their progress and each client sees only what has been published for their sites.",
       highlights: [
-        "Reports with a map, sonar mosaic, findings and area calculations.",
-        "Field logbooks and daily reports generated automatically.",
-        "GIS layers (KMZ, Shapefile, PMTiles) on MapLibre.",
-        "Python workers that process sonar data and cartography.",
+        "Report builder on MapLibre: cage, station, finding and media layers, with satellite, light and dark basemaps.",
+        "KML, KMZ and shapefile imports: a Python worker with GDAL and Tippecanoe turns them into PMTiles.",
+        "Sonar mosaic positioned from TFW files, with opacity, rotation, scale or field GPS adjustments, and export of the composite.",
+        "V4LOG logs from Tritech sonars rebuilt as polar sweeps and encoded to MP4 with FFmpeg.",
+        "Findings with an evidence gallery, and media records with photos and videos up to 4 GB converted on the server.",
+        "Offline-capable field logbooks, an approval workflow and a daily PDF report.",
       ],
     },
     index0: {
@@ -200,6 +233,21 @@ export const en = {
         "Semantic search and a RAG chat that cites its source fragments.",
         "In-browser preview of PDF and Office documents.",
         "Multilingual interface and invitations with Clerk.",
+      ],
+    },
+    vlm360: {
+      title: "Vlm360 v1",
+      description:
+        "The first version of VLM's platform: underwater inspection reports per company, objects placed on each site's image, client files and field logbooks.",
+      shortLabel: "Underwater inspection",
+      overview:
+        "VLM scans the seabed under fish farms with sonar and recovers the objects it finds. Version 1 replaced spreadsheets and email with a web app: the team builds each report with its nodes and objects, uploads the inspection files, and each client company signs in to see only its own data.",
+      highlights: [
+        "Reports per company organized in nodes, with objects placed on the site's georeferenced image.",
+        "Object and coordinate imports from Excel.",
+        "Per-report file browser on S3, with folders for the client.",
+        "Field logbook and a fuel log with hour meters, deliveries and consumption.",
+        "Invitation-based users with Clerk, account approval and permissions by role and company.",
       ],
     },
     reactivespa: {

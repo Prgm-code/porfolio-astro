@@ -114,6 +114,6 @@ test("each featured project links to its detail page", async ({ page }) => {
   await expect(page.locator(".detail-stack")).toContainText("Convex");
   await expect(page.locator(".detail-next")).toHaveAttribute(
     "href",
-    "/proyectos/teslo-manager/",
+    "/proyectos/misport/",
   );
 });

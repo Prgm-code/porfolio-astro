@@ -29,6 +29,11 @@ const routes = [
     canonical: "https://prgm.cl/proyectos/vlm360/",
   },
   {
+    path: "/en/proyectos/vlm360-v2/",
+    lang: "en",
+    canonical: "https://prgm.cl/en/proyectos/vlm360-v2/",
+  },
+  {
     path: "/en/proyectos/rel/",
     lang: "en",
     canonical: "https://prgm.cl/en/proyectos/rel/",

@@ -36,6 +36,11 @@ import ToolIcon from "../icons/ToolIcon.svg?raw";
 // Imágenes de proyectos
 import Vlm360Portada from "../assets/images/vlm360/vlm360-portada.webp";
 import Vlm360Contenido from "../assets/images/vlm360/vlm360-Contenido.webp";
+import vlm360Mapa from "../assets/images/vlm360/vlm360v2_mapa.webp";
+import vlm360Mosaico from "../assets/images/vlm360/vlm360v2_mosaico.webp";
+import vlm360Media from "../assets/images/vlm360/vlm360v2_media.webp";
+import vlm360Hallazgos from "../assets/images/vlm360/vlm360v2_hallazgos.webp";
+import vlm360SonarVideo from "../assets/images/vlm360/vlm360v2_sonar-video.webp";
 
 import Index0Portada from "../assets/images/index0/index0-portada.webp";
 import Index0Contenido from "../assets/images/index0/index0-contenido.webp";
@@ -91,6 +96,18 @@ import fatFingersAtajos from "../assets/images/fatfingers/fatfingers_atajos.webp
 import fatFingersIdiomas from "../assets/images/fatfingers/fatfingers_idiomas.webp";
 import fatFingersProveedor from "../assets/images/fatfingers/fatfingers_proveedor.webp";
 
+import misportLanding from "../assets/images/misport/misport_landing.webp";
+import misportTesoreria from "../assets/images/misport/misport_app_tesoreria.webp";
+import misportSocios from "../assets/images/misport/misport_app_socios.webp";
+import misportPortal from "../assets/images/misport/misport_app_portal.webp";
+import misportFunciones from "../assets/images/misport/misport_landing_features.webp";
+
+import backupForgeDashboard from "../assets/images/backupforge/backupforge_dashboard.webp";
+import backupForgeDeployment from "../assets/images/backupforge/backupforge_deployment.webp";
+import backupForgeJob from "../assets/images/backupforge/backupforge_job.webp";
+import backupForgeJobLogs from "../assets/images/backupforge/backupforge_job_logs.webp";
+import backupForgeCrons from "../assets/images/backupforge/backupforge_crons.webp";
+
 import sotexLogo from "../assets/projects/sotex-logo.webp";
 import tfmImage from "../assets/projects/TFM.webp";
 
@@ -143,6 +160,9 @@ export const TAGS = {
   },
   REACTNATIVE: { name: "React Native", icon: ReactNativeIcon, class: "size-4" },
   EXPO: { name: "Expo", icon: ExpoIcon, class: "size-4" },
+  GO: { name: "Go", icon: ToolIcon, class: "size-4" },
+  DOCKER: { name: "Docker", icon: ToolIcon, class: "size-4" },
+  BETTER_AUTH: { name: "Better Auth", icon: ToolIcon, class: "size-4" },
   TAURI: { name: "Tauri", icon: ToolIcon, class: "size-4" },
   RUST: { name: "Rust", icon: ToolIcon, class: "size-4" },
 } satisfies Record<string, Tag>;
@@ -187,73 +207,40 @@ export const PROJECTS_BASE = [
     },
   },
   {
-    key: "teslo-manager",
-    year: "2025 – 2026",
-    featured: true,
-    favorite: true,
-    link: "https://manager.teslo.cl",
-    image: tesloManagerLanding,
-    images: [
-      tesloManagerLanding,
-      tesloManagerHome,
-      tesloManagerAcreditacion,
-      tesloManagerDetalle,
-    ],
-    tags: [TAGS.NEXTJS, TAGS.CONVEX, TAGS.CLOUDFLARE, TAGS.TAILWIND],
-    stack: {
-      frontend: ["Next.js 16", "React 19", "Tailwind CSS 4", "shadcn/ui"],
-      backend: ["Convex"],
-      auth: ["Better Auth", "2FA"],
-      services: ["Cloudflare R2", "Resend", "React Email", "ExcelJS"],
-      quality: ["Vitest", "Testing Library"],
-      infra: ["Vercel"],
-    },
-  },
-  {
-    key: "fatfingers",
+    key: "misport",
     year: "2026",
     featured: true,
     favorite: true,
-    link: "https://fatfingers.lakebed.app/",
-    repo: "https://github.com/Prgm-code/FatFingers",
-    image: fatFingersHero,
+    link: "https://misport.app",
+    image: misportLanding,
     images: [
-      fatFingersHero,
-      fatFingersAtajos,
-      fatFingersIdiomas,
-      fatFingersProveedor,
+      misportLanding,
+      misportTesoreria,
+      misportSocios,
+      misportPortal,
+      misportFunciones,
     ],
-    tags: [TAGS.TAURI, TAGS.RUST, TAGS.REACT, TAGS.TYPESCRIPT],
-    stack: {
-      frontend: ["React 19", "TypeScript", "Vite 8"],
-      backend: ["Rust", "Tauri 2", "reqwest", "enigo"],
-      services: ["OpenAI", "OpenRouter", "MiniMax", "OpenAI-compatible"],
-      data: ["keyring"],
-      quality: ["Vitest", "cargo test"],
-      infra: ["GitHub Actions", "AppImage / .deb / .rpm", "macOS", "Windows"],
-    },
-  },
-  {
-    key: "activaq",
-    year: "2026",
-    featured: true,
-    favorite: true,
-    link: "https://www.activaq.cl/?p=1813",
-    image: activaQHero,
-    images: [activaQHero, activaQHome, activaQTecnologia, activaQContacto],
-    tags: [TAGS.ASTRO, TAGS.TAILWIND, TAGS.GSAP, TAGS.VERCEL],
+    tags: [TAGS.TANSTACK_START, TAGS.CONVEX, TAGS.TAILWIND, TAGS.TYPESCRIPT],
     stack: {
       frontend: [
-        "Astro 5",
+        "TanStack Start",
         "React 19",
+        "TanStack Query",
+        "TanStack Table",
         "Tailwind CSS 4",
-        "GSAP",
-        "Three.js",
-        "Lenis",
+        "shadcn/ui",
       ],
-      backend: ["Strapi 5"],
-      data: ["SQLite"],
-      infra: ["Vercel"],
+      backend: ["Convex", "Convex rate limiter", "Convex migrations"],
+      auth: ["Better Auth", "2FA"],
+      services: [
+        "Cloudflare R2",
+        "Resend",
+        "React Email",
+        "React PDF",
+        "ExcelJS",
+      ],
+      quality: ["Vitest", "Testing Library", "Biome"],
+      infra: ["Dokku", "Railpack"],
     },
   },
   {
@@ -298,28 +285,135 @@ export const PROJECTS_BASE = [
     },
   },
   {
-    key: "vlm360",
-    year: "2025 – 2026",
+    key: "vlm360-v2",
+    year: "2026",
     featured: true,
     favorite: true,
     link: "https://vlm360.com",
-    image: Vlm360Portada,
-    images: [Vlm360Portada, Vlm360Contenido],
-    tags: [TAGS.TANSTACK_START, TAGS.CONVEX, TAGS.TYPESCRIPT],
+    image: vlm360Mapa,
+    images: [
+      vlm360Mapa,
+      vlm360Mosaico,
+      vlm360Media,
+      vlm360Hallazgos,
+      vlm360SonarVideo,
+    ],
+    tags: [TAGS.TANSTACK_START, TAGS.CONVEX, TAGS.PYTHON, TAGS.TYPESCRIPT],
     stack: {
       frontend: [
         "TanStack Start",
         "React 19",
+        "TanStack Query",
+        "TanStack Table",
         "Tailwind CSS 4",
-        "MapLibre GL",
-        "Recharts",
+        "shadcn/ui",
       ],
-      backend: ["Convex", "Python workers"],
-      data: ["PMTiles", "proj4", "KMZ / Shapefile"],
+      backend: ["Convex", "Python workers", "Node workers"],
+      data: ["MapLibre GL 5", "PMTiles", "GDAL", "Tippecanoe", "proj4"],
       auth: ["Better Auth", "2FA"],
-      services: ["Cloudflare R2", "Resend"],
+      services: ["FFmpeg", "Cloudflare R2", "Resend", "Chromium (PDF)"],
       quality: ["Vitest", "Biome"],
       infra: ["Railpack", "GitHub Actions"],
+    },
+  },
+  {
+    key: "fatfingers",
+    year: "2026",
+    featured: true,
+    favorite: true,
+    link: "https://fatfingers.lakebed.app/",
+    repo: "https://github.com/Prgm-code/FatFingers",
+    image: fatFingersHero,
+    images: [
+      fatFingersHero,
+      fatFingersAtajos,
+      fatFingersIdiomas,
+      fatFingersProveedor,
+    ],
+    tags: [TAGS.TAURI, TAGS.RUST, TAGS.REACT, TAGS.TYPESCRIPT],
+    stack: {
+      frontend: ["React 19", "TypeScript", "Vite 8"],
+      backend: ["Rust", "Tauri 2", "reqwest", "enigo"],
+      services: ["OpenAI", "OpenRouter", "MiniMax", "OpenAI-compatible"],
+      data: ["keyring"],
+      quality: ["Vitest", "cargo test"],
+      infra: ["GitHub Actions", "AppImage / .deb / .rpm", "macOS", "Windows"],
+    },
+  },
+  {
+    key: "backupforge",
+    year: "2026",
+    featured: true,
+    favorite: true,
+    repo: "https://github.com/Prgm-code/BackupForge",
+    image: backupForgeDashboard,
+    images: [
+      backupForgeDashboard,
+      backupForgeDeployment,
+      backupForgeJob,
+      backupForgeJobLogs,
+      backupForgeCrons,
+    ],
+    tags: [TAGS.GO, TAGS.TANSTACK_START, TAGS.DOCKER, TAGS.CONVEX],
+    stack: {
+      frontend: [
+        "TanStack Start",
+        "React 19",
+        "TanStack Query",
+        "Zustand",
+        "Tailwind CSS 4",
+      ],
+      backend: ["Go 1.26", "chi", "GORM", "Docker SDK", "robfig/cron"],
+      data: ["SQLite", "S3 / MinIO"],
+      services: ["Server-Sent Events", "OpenAPI", "Convex CLI"],
+      quality: ["Vitest", "Biome", "go test"],
+      infra: ["Docker Compose"],
+    },
+  },
+  {
+    key: "teslo-manager",
+    year: "2025 – 2026",
+    featured: true,
+    favorite: true,
+    link: "https://manager.teslo.cl",
+    image: tesloManagerLanding,
+    images: [
+      tesloManagerLanding,
+      tesloManagerHome,
+      tesloManagerAcreditacion,
+      tesloManagerDetalle,
+    ],
+    tags: [TAGS.NEXTJS, TAGS.CONVEX, TAGS.CLOUDFLARE, TAGS.TAILWIND],
+    stack: {
+      frontend: ["Next.js 16", "React 19", "Tailwind CSS 4", "shadcn/ui"],
+      backend: ["Convex"],
+      auth: ["Better Auth", "2FA"],
+      services: ["Cloudflare R2", "Resend", "React Email", "ExcelJS"],
+      quality: ["Vitest", "Testing Library"],
+      infra: ["Vercel"],
+    },
+  },
+  {
+    key: "activaq",
+    year: "2026",
+    featured: true,
+    favorite: true,
+    link: "https://www.activaq.cl/?p=1813",
+    image: activaQHero,
+    images: [activaQHero, activaQHome, activaQTecnologia, activaQContacto],
+    tags: [TAGS.ASTRO, TAGS.TAILWIND, TAGS.GSAP, TAGS.VERCEL],
+    stack: {
+      frontend: [
+        "Astro 5",
+        "React 19",
+        "Tailwind CSS 4",
+        "GSAP",
+        "Three.js",
+        "Lenis",
+      ],
+      backend: ["Strapi 5"],
+      data: ["SQLite"],
+      infra: ["Vercel"],
     },
   },
   {
@@ -350,6 +444,32 @@ export const PROJECTS_BASE = [
     },
   },
   {
+    key: "vlm360",
+    year: "2025 – 2026",
+    featured: true,
+    favorite: true,
+    image: Vlm360Portada,
+    images: [Vlm360Portada, Vlm360Contenido],
+    tags: [TAGS.NEXTJS, TAGS.TAILWIND, TAGS.TYPESCRIPT],
+    stack: {
+      frontend: [
+        "Next.js 16",
+        "React 19",
+        "TanStack Query",
+        "TanStack Table",
+        "Tailwind CSS 4",
+        "shadcn/ui",
+        "Recharts",
+      ],
+      backend: ["Next.js Route Handlers", "Prisma"],
+      data: ["PostgreSQL", "ExcelJS / SheetJS"],
+      auth: ["Clerk"],
+      services: ["AWS S3"],
+      quality: ["Vitest", "Playwright"],
+      infra: ["Coolify", "Nixpacks"],
+    },
+  },
+  {
     key: "reactivespa",
     year: "2025",
     featured: false,
@@ -374,7 +494,7 @@ export const PROJECTS_BASE = [
   },
   {
     key: "rosemarie",
-    year: "2025",
+    year: "2025 – 2026",
     featured: false,
     link: "https://rosemariejara.cl",
     image: rosemarieLandingHero,

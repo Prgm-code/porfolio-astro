@@ -87,7 +87,8 @@ const nextIndex = () => String(++sectionIndex).padStart(2, "0");
         <dt>{t.yearLabel}</dt>
         <dd>{project.year}</dd>
       </div>
-      <div class="detail-meta__row">
+      {/* Sin sitio pero con repositorio: basta con el enlace al código. */}
+      <div class="detail-meta__row" hidden={!project.link && !!project.repo}>
         <dt>{t.siteLabel}</dt>
         <dd>
           {
@@ -380,7 +381,12 @@ const nextIndex = () => String(++sectionIndex).padStart(2, "0");
     padding: 0.9rem 1rem 1rem 0;
   }
 
-  .detail-meta__row + .detail-meta__row {
+  .detail-meta__row[hidden] {
+    display: none;
+  }
+
+  .detail-meta__row + .detail-meta__row:not([hidden]),
+  .detail-meta__row[hidden] + .detail-meta__row {
     padding-left: 1rem;
     border-left: 1px solid var(--color-line);
   }
